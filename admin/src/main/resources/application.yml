@@ -8,3 +8,8 @@ spring:
 logging:
   level:
     org.springframework: DEBUG
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #日志
+    map-underscore-to-camel-case: true  #开启驼峰命名
