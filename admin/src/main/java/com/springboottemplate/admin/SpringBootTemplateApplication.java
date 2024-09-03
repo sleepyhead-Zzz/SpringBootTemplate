@@ -7,8 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.springboottemplate.*")
-@MapperScan(value = "com.springboottemplate.**.db", markerInterface = com.baomidou.mybatisplus.core.mapper.BaseMapper.class)
-
 public class SpringBootTemplateApplication {
 
     public static void main(String[] args) {

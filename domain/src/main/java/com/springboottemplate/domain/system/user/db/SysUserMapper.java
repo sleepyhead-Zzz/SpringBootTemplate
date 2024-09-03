@@ -2,7 +2,6 @@ package com.springboottemplate.domain.system.user.db;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
 
 
 /**
@@ -11,7 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
 * @createDate 2024-09-02 12:26:06
 * @Entity generator.domain.SysUser
 */
-@Mapper
 public interface SysUserMapper extends BaseMapper<SysUserEntity> {
 
 }

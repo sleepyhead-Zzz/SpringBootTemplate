@@ -7,9 +7,10 @@ import lombok.Data;
 /**
  * @TableName sys_user
  */
-@TableName(value ="sys_user")
+@TableName(value = "sys_user")
 @Data
-public class SysUserEntity{
+public class SysUserEntity {
+    
     private Long id;
 
     private String username;
