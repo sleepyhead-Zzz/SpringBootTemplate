@@ -1,7 +1,6 @@
 package com.springboottemplate.admin.common.core.page;
 
 import cn.hutool.core.util.StrUtil;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -11,6 +10,7 @@ import lombok.Data;
 
 /**
  * 如果是简单的排序 和 时间范围筛选  可以使用内置的这几个字段
+ *
  * @author valarchie
  */
 @Data
@@ -70,6 +70,7 @@ public abstract class AbstractQuery<T> {
 
     /**
      * 获取前端传来的排序方向  转换成MyBatisPlus所需的排序参数 boolean=isAsc
+     *
      * @return 排序顺序， null为无排序
      */
     public Boolean convertSortDirection() {

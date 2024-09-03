@@ -10,29 +10,13 @@ import org.springframework.util.Assert;
 public enum ErrorCode implements ErrorCodeInterface {
 
     /**
-     * 错误码集合
-     * ******以下是旧的设计****
-     * 1~9999 为保留错误码 或者 常用错误码
-     * 10000~19999 为内部错误码
-     * 20000~29999 客户端错误码 （客户端异常调用之类的错误）
-     * 30000~39999 为第三方错误码 （代码正常，但是第三方异常）
-     * 40000~49999 为业务逻辑 错误码 （无异常，代码正常流转，并返回提示给用户）
-     * 由于系统内的错误码都是独一无二的，所以错误码应该放在common包集中管理
-     * ---------------------------
-     * 旧的设计的缺陷，比如内部错误码其实并不会很多  但是占用了1~9999的序列，其实是不必要的。
-     * 而且错误码不一定位数一定要相同。比如腾讯的微信接口错误码的位数就并不相同。按照常理错误码的数量大小应该是：
-     * 内部错误码< 客户端错误码< 第三方错误码< 业务错误码
-     * 所以我们应该尽可能的把错误码的数量留给业务错误码
-     * ---------------------------
-     * *******新的设计**********
-     * 1~99 为内部错误码（框架本身的错误）
-     * 100~999 客户端错误码 （客户端异常调用之类的错误）
-     * 1000~9999为第三方错误码 （代码正常，但是第三方异常）
-     * 10000~99999 为业务逻辑 错误码 （无异常，代码正常流转，并返回提示给用户）
-     * 由于系统内的错误码都是独一无二的，所以错误码应该放在common包集中管理
-     * ---------------------------
-     * 总体设计就是值越小  错误严重性越高
-     * 目前10000~19999是初始系统内嵌功能使用的错误码，后续开发者可以直接使用20000以上的错误码作为业务错误码
+     * 错误码集合 ******以下是旧的设计**** 1~9999 为保留错误码 或者 常用错误码 10000~19999 为内部错误码 20000~29999 客户端错误码 （客户端异常调用之类的错误） 30000~39999
+     * 为第三方错误码 （代码正常，但是第三方异常） 40000~49999 为业务逻辑 错误码 （无异常，代码正常流转，并返回提示给用户） 由于系统内的错误码都是独一无二的，所以错误码应该放在common包集中管理
+     * --------------------------- 旧的设计的缺陷，比如内部错误码其实并不会很多  但是占用了1~9999的序列，其实是不必要的。
+     * 而且错误码不一定位数一定要相同。比如腾讯的微信接口错误码的位数就并不相同。按照常理错误码的数量大小应该是： 内部错误码< 客户端错误码< 第三方错误码< 业务错误码 所以我们应该尽可能的把错误码的数量留给业务错误码
+     * --------------------------- *******新的设计********** 1~99 为内部错误码（框架本身的错误） 100~999 客户端错误码 （客户端异常调用之类的错误）
+     * 1000~9999为第三方错误码 （代码正常，但是第三方异常） 10000~99999 为业务逻辑 错误码 （无异常，代码正常流转，并返回提示给用户） 由于系统内的错误码都是独一无二的，所以错误码应该放在common包集中管理
+     * --------------------------- 总体设计就是值越小  错误严重性越高 目前10000~19999是初始系统内嵌功能使用的错误码，后续开发者可以直接使用20000以上的错误码作为业务错误码
      */
 
     SUCCESS(0, "操作成功", "SUCCESS"),
@@ -64,9 +48,8 @@ public enum ErrorCode implements ErrorCodeInterface {
     }
 
     /**
-     * 10000~99999 为业务逻辑 错误码 （无代码异常，代码正常流转，并返回提示给用户）
-     * 1XX01   XX是代表模块的意思 比如10101   01是Permission模块
-     * 错误码的命名最好以模块为开头  比如  NOT_ALLOWED_TO_OPERATE前面加上PERMISSION = PERMISSION_NOT_ALLOWED_TO_OPERATE
+     * 10000~99999 为业务逻辑 错误码 （无代码异常，代码正常流转，并返回提示给用户） 1XX01   XX是代表模块的意思 比如10101   01是Permission模块 错误码的命名最好以模块为开头  比如
+     * NOT_ALLOWED_TO_OPERATE前面加上PERMISSION = PERMISSION_NOT_ALLOWED_TO_OPERATE
      */
     public enum Business implements ErrorCodeInterface {
 
@@ -78,13 +61,15 @@ public enum ErrorCode implements ErrorCodeInterface {
 
         COMMON_BULK_DELETE_IDS_IS_INVALID(10003, "批量参数ID列表为空", "Business.BULK_DELETE_IDS_IS_INVALID"),
 
-        COMMON_FILE_NOT_ALLOWED_TO_DOWNLOAD(10004, "文件名称({})非法，不允许下载", "Business.FILE_NOT_ALLOWED_TO_DOWNLOAD"),
+        COMMON_FILE_NOT_ALLOWED_TO_DOWNLOAD(10004, "文件名称({})非法，不允许下载",
+            "Business.FILE_NOT_ALLOWED_TO_DOWNLOAD"),
 
         // ----------------------------- PERMISSION -----------------------------------
 
         PERMISSION_FORBIDDEN_TO_MODIFY_ADMIN(10101, "不允许修改管理员的信息", "Business.FORBIDDEN_TO_MODIFY_ADMIN"),
 
-        PERMISSION_NOT_ALLOWED_TO_OPERATE(10202, "没有权限进行此操作，请联系管理员", "Business.NO_PERMISSION_TO_OPERATE"),
+        PERMISSION_NOT_ALLOWED_TO_OPERATE(10202, "没有权限进行此操作，请联系管理员",
+            "Business.NO_PERMISSION_TO_OPERATE"),
 
         // ----------------------------- LOGIN -----------------------------------------
 
@@ -124,37 +109,48 @@ public enum ErrorCode implements ErrorCodeInterface {
 
         POST_CODE_IS_NOT_UNIQUE(10702, "岗位编号:{}, 已存在", "Business.POST_CODE_IS_NOT_UNIQUE"),
 
-        POST_ALREADY_ASSIGNED_TO_USER_CAN_NOT_BE_DELETED(10703, "职位已分配给用户，请先取消分配再删除", "Business.POST_ALREADY_ASSIGNED_TO_USER_CAN_NOT_BE_DELETED"),
+        POST_ALREADY_ASSIGNED_TO_USER_CAN_NOT_BE_DELETED(10703, "职位已分配给用户，请先取消分配再删除",
+            "Business.POST_ALREADY_ASSIGNED_TO_USER_CAN_NOT_BE_DELETED"),
 
         // ------------------------------- DEPT ---------------------------------------------
 
         DEPT_NAME_IS_NOT_UNIQUE(10801, "部门名称:{}, 已存在", "Business.DEPT_NAME_IS_NOT_UNIQUE"),
 
-        DEPT_PARENT_ID_IS_NOT_ALLOWED_SELF(10802, "父级部门不能选择自己", "Business.DEPT_PARENT_ID_IS_NOT_ALLOWED_SELF"),
+        DEPT_PARENT_ID_IS_NOT_ALLOWED_SELF(10802, "父级部门不能选择自己",
+            "Business.DEPT_PARENT_ID_IS_NOT_ALLOWED_SELF"),
 
-        DEPT_STATUS_ID_IS_NOT_ALLOWED_CHANGE(10803, "子部门还有正在启用的部门，暂时不能停用该部门", "Business.DEPT_STATUS_ID_IS_NOT_ALLOWED_CHANGE"),
+        DEPT_STATUS_ID_IS_NOT_ALLOWED_CHANGE(10803, "子部门还有正在启用的部门，暂时不能停用该部门",
+            "Business.DEPT_STATUS_ID_IS_NOT_ALLOWED_CHANGE"),
 
-        DEPT_EXIST_CHILD_DEPT_NOT_ALLOW_DELETE(10804, "该部门存在下级部门不允许删除", "Business.DEPT_EXIST_CHILD_DEPT_NOT_ALLOW_DELETE"),
+        DEPT_EXIST_CHILD_DEPT_NOT_ALLOW_DELETE(10804, "该部门存在下级部门不允许删除",
+            "Business.DEPT_EXIST_CHILD_DEPT_NOT_ALLOW_DELETE"),
 
-        DEPT_EXIST_LINK_USER_NOT_ALLOW_DELETE(10805, "该部门存在关联的用户不允许删除", "Business.DEPT_EXIST_LINK_USER_NOT_ALLOW_DELETE"),
+        DEPT_EXIST_LINK_USER_NOT_ALLOW_DELETE(10805, "该部门存在关联的用户不允许删除",
+            "Business.DEPT_EXIST_LINK_USER_NOT_ALLOW_DELETE"),
 
-        DEPT_PARENT_DEPT_NO_EXIST_OR_DISABLED(10806, "该父级部门不存在或已停用", "Business.DEPT_PARENT_DEPT_NO_EXIST_OR_DISABLED"),
+        DEPT_PARENT_DEPT_NO_EXIST_OR_DISABLED(10806, "该父级部门不存在或已停用",
+            "Business.DEPT_PARENT_DEPT_NO_EXIST_OR_DISABLED"),
 
         // -------------------------------  MENU -------------------------------------------------
 
         MENU_NAME_IS_NOT_UNIQUE(10901, "新增菜单:{} 失败，菜单名称已存在", "Business.MENU_NAME_IS_NOT_UNIQUE"),
 
-        MENU_EXTERNAL_LINK_MUST_BE_HTTP(10902, "菜单外链必须以 http(s)://开头", "Business.MENU_EXTERNAL_LINK_MUST_BE_HTTP"),
+        MENU_EXTERNAL_LINK_MUST_BE_HTTP(10902, "菜单外链必须以 http(s)://开头",
+            "Business.MENU_EXTERNAL_LINK_MUST_BE_HTTP"),
 
         MENU_PARENT_ID_NOT_ALLOW_SELF(10903, "父级菜单不能选择自身", "Business.MENU_PARENT_ID_NOT_ALLOW_SELF"),
 
-        MENU_EXIST_CHILD_MENU_NOT_ALLOW_DELETE(10904, "存在子菜单不允许删除", "Business.MENU_EXIST_CHILD_MENU_NOT_ALLOW_DELETE"),
+        MENU_EXIST_CHILD_MENU_NOT_ALLOW_DELETE(10904, "存在子菜单不允许删除",
+            "Business.MENU_EXIST_CHILD_MENU_NOT_ALLOW_DELETE"),
 
-        MENU_ALREADY_ASSIGN_TO_ROLE_NOT_ALLOW_DELETE(10905, "菜单已分配给角色，不允许", "Business.MENU_ALREADY_ASSIGN_TO_ROLE_NOT_ALLOW_DELETE"),
+        MENU_ALREADY_ASSIGN_TO_ROLE_NOT_ALLOW_DELETE(10905, "菜单已分配给角色，不允许",
+            "Business.MENU_ALREADY_ASSIGN_TO_ROLE_NOT_ALLOW_DELETE"),
 
-        MENU_NOT_ALLOWED_TO_CREATE_BUTTON_ON_IFRAME_OR_OUT_LINK(10906, "不允许在Iframe和外链跳转类型下创建按钮", "Business.MENU_ONLY_ALLOWED_TO_CREATE_BUTTON_ON_PAGE"),
+        MENU_NOT_ALLOWED_TO_CREATE_BUTTON_ON_IFRAME_OR_OUT_LINK(10906, "不允许在Iframe和外链跳转类型下创建按钮",
+            "Business.MENU_ONLY_ALLOWED_TO_CREATE_BUTTON_ON_PAGE"),
 
-        MENU_ONLY_ALLOWED_TO_CREATE_SUB_MENU_IN_CATALOG(10907, "只允许在目录类型底下创建子菜单", "Business.MENU_ONLY_ALLOWED_TO_CREATE_SUB_MENU_IN_CATALOG"),
+        MENU_ONLY_ALLOWED_TO_CREATE_SUB_MENU_IN_CATALOG(10907, "只允许在目录类型底下创建子菜单",
+            "Business.MENU_ONLY_ALLOWED_TO_CREATE_SUB_MENU_IN_CATALOG"),
 
         MENU_CAN_NOT_CHANGE_MENU_TYPE(10908, "不允许更改菜单的类型", "Business.MENU_CAN_NOT_CHANGE_MENU_TYPE"),
 
@@ -166,7 +162,8 @@ public enum ErrorCode implements ErrorCodeInterface {
 
         ROLE_DATA_SCOPE_DUPLICATED_DEPT(11003, "重复的部门id", "Business.ROLE_DATA_SCOPE_DUPLICATED_DEPT"),
 
-        ROLE_ALREADY_ASSIGN_TO_USER(11004, "角色已分配给用户，请先取消分配，再删除角色", "Business.ROLE_ALREADY_ASSIGN_TO_USER"),
+        ROLE_ALREADY_ASSIGN_TO_USER(11004, "角色已分配给用户，请先取消分配，再删除角色",
+            "Business.ROLE_ALREADY_ASSIGN_TO_USER"),
 
         ROLE_IS_NOT_AVAILABLE(11005, "角色：{} 已禁用，无法分配给用户", "Business.ROLE_IS_NOT_AVAILABLE"),
 
@@ -188,19 +185,22 @@ public enum ErrorCode implements ErrorCodeInterface {
 
         USER_IMPORT_DATA_IS_NULL(10507, "导入的用户为空", "Business.USER_IMPORT_DATA_IS_NULL"),
 
-        USER_PHONE_NUMBER_IS_NOT_UNIQUE(10508, "该电话号码已被其他用户占用", "Business.USER_PHONE_NUMBER_IS_NOT_UNIQUE"),
+        USER_PHONE_NUMBER_IS_NOT_UNIQUE(10508, "该电话号码已被其他用户占用",
+            "Business.USER_PHONE_NUMBER_IS_NOT_UNIQUE"),
 
         USER_EMAIL_IS_NOT_UNIQUE(10509, "该邮件地址已被其他用户占用", "Business.USER_EMAIL_IS_NOT_UNIQUE"),
 
         USER_PASSWORD_IS_NOT_CORRECT(10510, "用户密码错误", "Business.USER_PASSWORD_IS_NOT_CORRECT"),
 
-        USER_NEW_PASSWORD_IS_THE_SAME_AS_OLD(10511, "用户新密码与旧密码相同", "Business.USER_NEW_PASSWORD_IS_THE_SAME_AS_OLD"),
+        USER_NEW_PASSWORD_IS_THE_SAME_AS_OLD(10511, "用户新密码与旧密码相同",
+            "Business.USER_NEW_PASSWORD_IS_THE_SAME_AS_OLD"),
 
         USER_UPLOAD_FILE_FAILED(10512, "用户上传文件失败", "Business.USER_UPLOAD_FILE_FAILED"),
 
         USER_NAME_IS_NOT_UNIQUE(10513, "用户名已被其他用户占用", "Business.USER_NAME_IS_NOT_UNIQUE"),
 
-        USER_CURRENT_USER_CAN_NOT_BE_DELETE(10514, "当前用户不允许被删除", "Business.USER_CURRENT_USER_CAN_NOT_BE_DELETE"),
+        USER_CURRENT_USER_CAN_NOT_BE_DELETE(10514, "当前用户不允许被删除",
+            "Business.USER_CURRENT_USER_CAN_NOT_BE_DELETE"),
 
         USER_ADMIN_CAN_NOT_BE_MODIFY(10515, "管理员不允许做任何修改", "Business.USER_ADMIN_CAN_NOT_BE_MODIFY"),
 
@@ -214,11 +214,13 @@ public enum ErrorCode implements ErrorCodeInterface {
 
         Business(int code, String msg, String i18nKey) {
             Assert.isTrue(code > 10000 && code < 99999,
-                "错误码code值定义失败，Business错误码code值范围在10000~99099之间，请查看ErrorCode.Business类，当前错误码码为" + name());
+                "错误码code值定义失败，Business错误码code值范围在10000~99099之间，请查看ErrorCode.Business类，当前错误码码为"
+                    + name());
 
             String errorTypeName = this.getClass().getSimpleName();
             Assert.isTrue(i18nKey != null && i18nKey.startsWith(errorTypeName),
-                String.format("错误码i18nKey值定义失败，%s错误码i18nKey值必须以%s开头，当前错误码为%s", errorTypeName, errorTypeName, name()));
+                String.format("错误码i18nKey值定义失败，%s错误码i18nKey值必须以%s开头，当前错误码为%s", errorTypeName,
+                    errorTypeName, name()));
             this.code = code;
             this.msg = msg;
             this.i18nKey = i18nKey;
@@ -259,11 +261,13 @@ public enum ErrorCode implements ErrorCodeInterface {
 
         External(int code, String msg, String i18nKey) {
             Assert.isTrue(code > 1000 && code < 9999,
-                "错误码code值定义失败，External错误码code值范围在1000~9999之间，请查看ErrorCode.External类，当前错误码码为" + name());
+                "错误码code值定义失败，External错误码code值范围在1000~9999之间，请查看ErrorCode.External类，当前错误码码为"
+                    + name());
 
             String errorTypeName = this.getClass().getSimpleName();
             Assert.isTrue(i18nKey != null && i18nKey.startsWith(errorTypeName),
-                String.format("错误码i18nKey值定义失败，%s错误码i18nKey值必须以%s开头，当前错误码为%s", errorTypeName, errorTypeName, name()));
+                String.format("错误码i18nKey值定义失败，%s错误码i18nKey值必须以%s开头，当前错误码为%s", errorTypeName,
+                    errorTypeName, name()));
             this.code = code;
             this.msg = msg;
             this.i18nKey = i18nKey;
@@ -289,9 +293,7 @@ public enum ErrorCode implements ErrorCodeInterface {
 
 
     /**
-     * 100~999是客户端错误码
-     * 客户端如 Web+小程序+手机端  调用出错
-     * 可能由于参数问题或者授权问题或者调用过去频繁
+     * 100~999是客户端错误码 客户端如 Web+小程序+手机端  调用出错 可能由于参数问题或者授权问题或者调用过去频繁
      */
     public enum Client implements ErrorCodeInterface {
 
@@ -319,11 +321,13 @@ public enum ErrorCode implements ErrorCodeInterface {
 
         Client(int code, String msg, String i18nKey) {
             Assert.isTrue(code > 100 && code < 999,
-                "错误码code值定义失败，Client错误码code值范围在100~999之间，请查看ErrorCode.Client类，当前错误码码为" + name());
+                "错误码code值定义失败，Client错误码code值范围在100~999之间，请查看ErrorCode.Client类，当前错误码码为"
+                    + name());
 
             String errorTypeName = this.getClass().getSimpleName();
             Assert.isTrue(i18nKey != null && i18nKey.startsWith(errorTypeName),
-                String.format("错误码i18nKey值定义失败，%s错误码i18nKey值必须以%s开头，当前错误码为%s", errorTypeName, errorTypeName, name()));
+                String.format("错误码i18nKey值定义失败，%s错误码i18nKey值必须以%s开头，当前错误码为%s", errorTypeName,
+                    errorTypeName, name()));
             this.code = code;
             this.msg = msg;
             this.i18nKey = i18nKey;
@@ -380,11 +384,13 @@ public enum ErrorCode implements ErrorCodeInterface {
 
         Internal(int code, String msg, String i18nKey) {
             Assert.isTrue(code < 100,
-                "错误码code值定义失败，Internal错误码code值范围在100~999之间，请查看ErrorCode.Internal类，当前错误码码为" + name());
+                "错误码code值定义失败，Internal错误码code值范围在100~999之间，请查看ErrorCode.Internal类，当前错误码码为"
+                    + name());
 
             String errorTypeName = this.getClass().getSimpleName();
             Assert.isTrue(i18nKey != null && i18nKey.startsWith(errorTypeName),
-                String.format("错误码i18nKey值定义失败，%s错误码i18nKey值必须以%s开头，当前错误码为%s", errorTypeName, errorTypeName, name()));
+                String.format("错误码i18nKey值定义失败，%s错误码i18nKey值必须以%s开头，当前错误码为%s", errorTypeName,
+                    errorTypeName, name()));
             this.code = code;
             this.msg = msg;
             this.i18nKey = i18nKey;

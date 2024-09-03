@@ -6,7 +6,7 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name="testAPI")
+@Tag(name = "testAPI")
 @RestController
 public class TestController {
 

@@ -6,10 +6,12 @@ import lombok.Data;
 
 /**
  * 分页模型类
+ *
  * @author valarchie
  */
 @Data
 public class PageDTO<T> {
+
     /**
      * 总记录数
      */
