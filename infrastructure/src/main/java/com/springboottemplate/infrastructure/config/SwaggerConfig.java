@@ -1,4 +1,4 @@
-package com.springboottemplate.admin.config;
+package com.springboottemplate.infrastructure.config;
 
 import cn.hutool.core.util.RandomUtil;
 import io.swagger.v3.oas.models.OpenAPI;
