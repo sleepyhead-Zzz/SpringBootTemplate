@@ -1,10 +1,8 @@
 package com.springboottemplate.domain.common.cache;
 
 import cn.hutool.extra.spring.SpringUtil;
-
-import com.springboottemplate.admin.infrastructure.cache.redis.RedisCacheTemplate;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
-
+import com.springboottemplate.infrastructure.cache.redis.RedisCacheTemplate;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 

@@ -18,8 +18,11 @@
     <developer/>
   </developers>
   <modules>
-    <module>admin</module>
     <module>domain</module>
+    <module>admin</module>
+
+    <module>infrastructure</module>
+    <module>common</module>
   </modules>
   <scm>
     <connection/>
@@ -114,18 +117,29 @@
         <version>8.5.12</version>
       </dependency>
 
-
-      <dependency>
-        <groupId>com.springboottemplate</groupId>
-        <artifactId>domain</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
       <dependency>
         <groupId>com.springboottemplate</groupId>
         <artifactId>admin</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <dependency>
+        <groupId>com.springboottemplate</groupId>
+        <artifactId>domain</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.springboottemplate</groupId>
+        <artifactId>infrastructure</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+
+      <dependency>
+        <groupId>com.springboottemplate</groupId>
+        <artifactId>common</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
 
       <dependency>
         <groupId>org.springframework.boot</groupId>

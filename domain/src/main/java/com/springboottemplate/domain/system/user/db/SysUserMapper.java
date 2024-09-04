@@ -3,7 +3,6 @@ package com.springboottemplate.domain.system.user.db;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-
 /**
  * @author sleepyhead
  * @description 针对表【sys_user】的数据库操作Mapper

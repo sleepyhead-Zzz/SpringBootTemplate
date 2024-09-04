@@ -1,11 +1,11 @@
 package com.springboottemplate.domain.common.cache;
 
 import cn.hutool.extra.spring.SpringUtil;
-import com.springboottemplate.admin.infrastructure.cache.RedisUtil;
-import com.springboottemplate.admin.infrastructure.cache.redis.CacheKeyEnum;
-import com.springboottemplate.admin.infrastructure.cache.redis.RedisCacheTemplate;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.domain.system.user.db.SysUserService;
+import com.springboottemplate.infrastructure.cache.RedisUtil;
+import com.springboottemplate.infrastructure.cache.redis.CacheKeyEnum;
+import com.springboottemplate.infrastructure.cache.redis.RedisCacheTemplate;
 import jakarta.annotation.PostConstruct;
 import java.io.Serializable;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class RedisCacheService {
 
     private final RedisUtil redisUtil;
+
     public RedisCacheTemplate<SysUserEntity> userCache;
 
     @PostConstruct
