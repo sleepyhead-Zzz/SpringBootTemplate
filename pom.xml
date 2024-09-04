@@ -36,6 +36,7 @@
     <hutool.version>5.8.31</hutool.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <commons-lang3.version>3.17.0</commons-lang3.version>
     <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
   </properties>
   <dependencyManagement>
@@ -90,8 +91,21 @@
       <dependency>
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt-api</artifactId>
-        <version>0.12.6</version>
+        <version>0.12.5</version>
       </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <version>0.12.5</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId>
+        <version>0.12.5</version>
+        <scope>runtime</scope>
+      </dependency>
+
       <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
@@ -125,6 +139,14 @@
       </dependency>
 
       <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${commons-lang3.version}</version>
+      </dependency>
+
+
+
+      <dependency>
         <groupId>com.springboottemplate</groupId>
         <artifactId>admin</artifactId>
         <version>${project.version}</version>
@@ -139,6 +161,8 @@
         <artifactId>infrastructure</artifactId>
         <version>${project.version}</version>
       </dependency>
+
+
 
 
       <dependency>

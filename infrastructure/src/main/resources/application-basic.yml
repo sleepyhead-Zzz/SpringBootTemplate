@@ -1,0 +1,10 @@
+token:
+  header: Authorization
+  autoRefreshTime: 20
+  secret: "sdhfkjs123132123312312312231123231321hBN6rr32df38"
+
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #日志
+    map-underscore-to-camel-case: true  #开启驼峰命名
