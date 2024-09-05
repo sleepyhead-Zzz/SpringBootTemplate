@@ -7,6 +7,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 
 /**
  * 用户状态
+ *
  * @author valarchie
  */
 // TODO 表记得改成LoginLog

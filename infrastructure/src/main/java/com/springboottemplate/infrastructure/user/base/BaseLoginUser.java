@@ -1,10 +1,6 @@
 package com.springboottemplate.infrastructure.user.base;
 
-import cn.hutool.extra.servlet.ServletUtil;
-
-import cn.hutool.http.useragent.UserAgent;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -16,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * 登录用户身份权限
+ *
  * @author valarchie
  */
 @Data
@@ -50,7 +47,6 @@ public class BaseLoginUser implements UserDetails {
 
     /**
      * 设置用户代理信息
-     *
      */
     public void fillLoginInfo() {
 //        UserAgent userAgent = UserAgent.parseUserAgentString(ServletHolderUtil.getRequest().getHeader("User-Agent"));
@@ -81,8 +77,7 @@ public class BaseLoginUser implements UserDetails {
     }
 
     /**
-     * 账户是否未过期,过期无法验证
-     * 未实现此功能
+     * 账户是否未过期,过期无法验证 未实现此功能
      */
     @JsonIgnore
     @Override
@@ -91,8 +86,7 @@ public class BaseLoginUser implements UserDetails {
     }
 
     /**
-     * 指定用户是否解锁,锁定的用户无法进行身份验证
-     * 未实现此功能
+     * 指定用户是否解锁,锁定的用户无法进行身份验证 未实现此功能
      */
     @JsonIgnore
     @Override
@@ -101,8 +95,7 @@ public class BaseLoginUser implements UserDetails {
     }
 
     /**
-     * 指示是否已过期的用户的凭据(密码),过期的凭据防止认证
-     * 未实现此功能
+     * 指示是否已过期的用户的凭据(密码),过期的凭据防止认证 未实现此功能
      */
     @JsonIgnore
     @Override
@@ -111,8 +104,7 @@ public class BaseLoginUser implements UserDetails {
     }
 
     /**
-     * 是否可用 ,禁用的用户不能身份验证
-     * 未实现此功能
+     * 是否可用 ,禁用的用户不能身份验证 未实现此功能
      */
     @Override
     public boolean isEnabled() {

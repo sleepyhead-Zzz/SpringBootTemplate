@@ -6,6 +6,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 
 /**
  * 系统内代表是与否的枚举
+ *
  * @author valarchie
  */
 @Dictionary(name = "common.yesOrNo")

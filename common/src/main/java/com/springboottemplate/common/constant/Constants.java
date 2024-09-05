@@ -7,6 +7,7 @@ package com.springboottemplate.common.constant;
  * @author valarchie
  */
 public class Constants {
+
     private Constants() {
     }
 
@@ -80,7 +81,6 @@ public class Constants {
         public static final String UPLOAD_PATH = "upload";
 
     }
-
 
 
 }

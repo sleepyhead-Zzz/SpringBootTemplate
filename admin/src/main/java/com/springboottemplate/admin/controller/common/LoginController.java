@@ -1,6 +1,5 @@
 package com.springboottemplate.admin.controller.common;
 
-import cn.hutool.core.util.StrUtil;
 import com.springboottemplate.admin.customize.service.login.LoginService;
 import com.springboottemplate.admin.customize.service.login.command.LoginCommand;
 import com.springboottemplate.common.core.dto.ResponseDTO;
@@ -11,7 +10,6 @@ import com.springboottemplate.infrastructure.user.AuthenticationUtils;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

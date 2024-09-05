@@ -6,6 +6,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 
 /**
  * 对应sys_notice的 status字段
+ *
  * @author valarchie
  */
 @Dictionary(name = "sysNotice.status")

@@ -21,13 +21,13 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 public class ThreadPoolManager {
 
     private static final ThreadPoolExecutor THREAD_EXECUTOR = new ThreadPoolExecutor(
-            ThreadConfig.CORE_POOL_SIZE, ThreadConfig.MAX_POOL_SIZE,
-            ThreadConfig.KEEP_ALIVE_SECONDS, TimeUnit.SECONDS,
-            new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
+        ThreadConfig.CORE_POOL_SIZE, ThreadConfig.MAX_POOL_SIZE,
+        ThreadConfig.KEEP_ALIVE_SECONDS, TimeUnit.SECONDS,
+        new SynchronousQueue<>(), new ThreadPoolExecutor.CallerRunsPolicy());
     private static final ScheduledExecutorService SCHEDULED_EXECUTOR = new ScheduledThreadPoolExecutor(
-            ThreadConfig.CORE_POOL_SIZE,
-            new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
-            new ThreadPoolExecutor.CallerRunsPolicy()) {
+        ThreadConfig.CORE_POOL_SIZE,
+        new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build(),
+        new ThreadPoolExecutor.CallerRunsPolicy()) {
         @Override
         protected void afterExecute(Runnable r, Throwable t) {
             if (t == null && r instanceof Future<?>) {

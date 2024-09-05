@@ -2,6 +2,7 @@ package com.springboottemplate.common.enums.dictionary;
 
 /**
  * Css 样式
+ *
  * @author valarchie
  */
 public class CssTag {

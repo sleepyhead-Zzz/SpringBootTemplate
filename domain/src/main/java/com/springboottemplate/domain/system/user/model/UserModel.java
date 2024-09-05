@@ -1,10 +1,8 @@
 package com.springboottemplate.domain.system.user.model;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.domain.system.user.db.SysUserService;
-import java.util.Objects;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -16,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UserModel extends SysUserEntity {
+
     private SysUserService userService;
 
     public UserModel(SysUserEntity entity, SysUserService userService) {
@@ -25,6 +24,7 @@ public class UserModel extends SysUserEntity {
             BeanUtil.copyProperties(entity, this);
         }
     }
+
     public UserModel(SysUserService userService) {
         this.userService = userService;
 

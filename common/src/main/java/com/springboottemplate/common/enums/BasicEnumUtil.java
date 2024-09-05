@@ -1,7 +1,6 @@
 package com.springboottemplate.common.enums;
 
 import cn.hutool.core.convert.Convert;
-
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
 import java.util.Objects;

@@ -6,6 +6,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 
 /**
  * 对应sys_operation_log的status字段
+ *
  * @author valarchie
  */
 @Dictionary(name = "sysOperationLog.status")

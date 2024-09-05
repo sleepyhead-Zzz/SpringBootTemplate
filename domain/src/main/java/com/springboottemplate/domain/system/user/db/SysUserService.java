@@ -11,8 +11,10 @@ import org.springframework.context.annotation.Primary;
  */
 @Primary
 public interface SysUserService extends IService<SysUserEntity> {
+
     /**
      * 通过用户名查询用户
+     *
      * @param userName 用户名
      * @return 用户对象信息
      */

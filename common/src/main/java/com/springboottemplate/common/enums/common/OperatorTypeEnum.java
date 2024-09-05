@@ -3,8 +3,10 @@ package com.springboottemplate.common.enums.common;
 
 import com.springboottemplate.common.enums.BasicEnum;
 import com.springboottemplate.common.enums.dictionary.Dictionary;
+
 /**
  * 操作者类型
+ *
  * @author valarchie
  */
 @Dictionary(name = "sysOperationLog.operatorType")

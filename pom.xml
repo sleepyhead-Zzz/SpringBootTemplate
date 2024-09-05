@@ -145,7 +145,6 @@
       </dependency>
 
 
-
       <dependency>
         <groupId>com.springboottemplate</groupId>
         <artifactId>admin</artifactId>
@@ -161,8 +160,6 @@
         <artifactId>infrastructure</artifactId>
         <version>${project.version}</version>
       </dependency>
-
-
 
 
       <dependency>

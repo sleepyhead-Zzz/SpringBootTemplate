@@ -9,20 +9,18 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * token过滤器 验证token有效性
- * 继承OncePerRequestFilter类的话  可以确保只执行filter一次， 避免执行多次
+ * token过滤器 验证token有效性 继承OncePerRequestFilter类的话  可以确保只执行filter一次， 避免执行多次
+ *
  * @author valarchie
  */
 @Component
@@ -33,7 +31,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     private final TokenService tokenService;
 
     @Override
-    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain chain)
+    protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
+        @NotNull FilterChain chain)
         throws ServletException, IOException {
         SystemLoginUser loginUser = tokenService.getLoginUser(request);
         if (loginUser != null && AuthenticationUtils.getAuthentication() == null) {

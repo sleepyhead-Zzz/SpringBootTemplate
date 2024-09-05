@@ -4,7 +4,6 @@ package com.springboottemplate.common.enums.common;
 import com.springboottemplate.common.enums.BasicEnum;
 
 /**
- *
  * @author valarchie
  */
 @Deprecated
@@ -13,9 +12,9 @@ public enum MenuComponentEnum implements BasicEnum<Integer> {
     /**
      * 菜单组件类型
      */
-    LAYOUT(1,"Layout"),
-    PARENT_VIEW(2,"ParentView"),
-    INNER_LINK(3,"InnerLink");
+    LAYOUT(1, "Layout"),
+    PARENT_VIEW(2, "ParentView"),
+    INNER_LINK(3, "InnerLink");
 
     private final int value;
     private final String description;

@@ -1,7 +1,6 @@
 package com.springboottemplate.infrastructure.user;
 
 
-
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
 import com.springboottemplate.infrastructure.user.app.AppLoginUser;
@@ -17,7 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 public class AuthenticationUtils {
 
-    private AuthenticationUtils() {}
+    private AuthenticationUtils() {
+    }
 
     /**
      * 用户ID

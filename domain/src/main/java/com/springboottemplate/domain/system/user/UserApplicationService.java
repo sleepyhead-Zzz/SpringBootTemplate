@@ -1,20 +1,13 @@
 package com.springboottemplate.domain.system.user;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.springboottemplate.common.core.page.PageDTO;
 import com.springboottemplate.domain.common.cache.CacheCenter;
 import com.springboottemplate.domain.common.dto.CurrentLoginUserDTO;
-import com.springboottemplate.domain.system.user.db.SearchUserDO;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.domain.system.user.db.SysUserService;
 import com.springboottemplate.domain.system.user.dto.UserDTO;
 import com.springboottemplate.domain.system.user.dto.UserProfileDTO;
 import com.springboottemplate.domain.system.user.model.UserModelFactory;
-import com.springboottemplate.domain.system.user.query.SearchUserQuery;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +22,6 @@ public class UserApplicationService {
 
 
     private final UserModelFactory userModelFactory;
-
 
 //    public PageDTO<UserDTO> getUserList(SearchUserQuery<SearchUserDO> query) {
 //        Page<SearchUserDO> userPage = userService.getUserList(query);
@@ -59,7 +51,6 @@ public class UserApplicationService {
 
         return permissionDTO;
     }
-
 
 
 }

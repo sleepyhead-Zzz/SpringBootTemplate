@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  * 当出现复用Query的情况，我们需要把泛型加到类本身，通过传入类型 来进行复用
+ *
  * @author valarchie
  */
 @EqualsAndHashCode(callSuper = true)

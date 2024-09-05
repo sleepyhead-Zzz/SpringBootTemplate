@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -59,9 +58,8 @@ public class ServletHolderUtil {
     }
 
     /**
-     * 获取仅含有项目根路径的url
-     * 比如 localhost:8080/agileboot/user/list
-     * 返回 localhost:8080/agileboot
+     * 获取仅含有项目根路径的url 比如 localhost:8080/agileboot/user/list 返回 localhost:8080/agileboot
+     *
      * @return localhost:8080/agileboot
      */
     public static String getContextUrl() {
@@ -71,7 +69,6 @@ public class ServletHolderUtil {
         String strip = StrUtil.strip(url, null, request.getRequestURI());
         return strip + contextPath;
     }
-
 
 
 }

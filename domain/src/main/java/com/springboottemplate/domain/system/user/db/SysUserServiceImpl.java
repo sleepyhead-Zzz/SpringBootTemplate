@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements SysUserService {
+
     @Override
     public SysUserEntity getUserByUserName(String userName) {
         QueryWrapper<SysUserEntity> queryWrapper = new QueryWrapper<>();

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 用户模型工厂
+ *
  * @author valarchie
  */
 @Component
