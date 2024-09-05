@@ -40,4 +40,7 @@ public class RoleInfo {
     private Set<String> menuPermissions;
     private Set<Long> menuIds;
 
+    public RoleInfo(Long roleId) {
+        this.roleId = roleId;
+    }
 }

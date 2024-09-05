@@ -3,12 +3,14 @@ package com.springboottemplate.infrastructure.user.web;
 
 import com.springboottemplate.infrastructure.user.base.BaseLoginUser;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
  * 登录用户身份权限
  * @author valarchie
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class SystemLoginUser extends BaseLoginUser {
@@ -27,13 +29,12 @@ public class SystemLoginUser extends BaseLoginUser {
     private Long autoRefreshCacheTime;
 
 
-    public SystemLoginUser(Long userId, Boolean isAdmin, String username, String password, RoleInfo roleInfo,
+    public SystemLoginUser(Long userId, Boolean isAdmin, String username, String password,
         Long deptId) {
         this.userId = userId;
         this.isAdmin = isAdmin;
         this.username = username;
         this.password = password;
-        this.roleInfo = roleInfo;
         this.deptId = deptId;
     }
 
@@ -41,13 +42,6 @@ public class SystemLoginUser extends BaseLoginUser {
         return roleInfo;
     }
 
-    public Long getRoleId() {
-        return getRoleInfo().getRoleId();
-    }
-
-    public Long getDeptId() {
-        return deptId;
-    }
 
 
 }

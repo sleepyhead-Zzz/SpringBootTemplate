@@ -12,6 +12,10 @@ import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +23,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -55,15 +60,44 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
 
+    @Bean
+    public AuthenticationManager authenticationManager(
+        UserDetailsService userDetailsService,
+        BCryptPasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+        ProviderManager providerManager = new ProviderManager(authenticationProvider);
+        providerManager.setEraseCredentialsAfterAuthentication(false);
+
+        return providerManager;
+    }
+    /**
+     * 强散列哈希加密实现
+     */
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     /**
      * 登录异常处理类 用户未登陆的话  在这个Bean中处理
      */
     @Bean
     public AuthenticationEntryPoint unauthorizedHandler() {
         return (request, response, exception) -> {
-            ResponseDTO<Object> responseDTO = ResponseDTO.fail(
-                new ApiException(Client.COMMON_NO_AUTHORIZATION, request.getRequestURI())
-            );
+            ApiException apiException;
+
+            // 检查 exception 的 cause 是否为 ApiException
+            if (exception.getCause() instanceof ApiException) {
+                apiException = (ApiException) exception.getCause();
+            } else {
+                // 使用默认的 ApiException 处理未知异常
+                apiException = new ApiException(Client.COMMON_NO_AUTHORIZATION, request.getRequestURI());
+            }
+
+            ResponseDTO<Object> responseDTO = ResponseDTO.fail(apiException);
             ServletHolderUtil.renderString(response, JSONUtil.toJsonStr(responseDTO));
         };
     }
@@ -105,7 +139,7 @@ public class SecurityConfig {
             .authorizeRequests((authorizeRequests) ->
                 // 这里过滤一些 不需要token的接口地址
                 authorizeRequests
-                    .requestMatchers("/api/v1/test/getTestInfo").permitAll()
+                    .requestMatchers("/login").permitAll()
                     .requestMatchers("/v3/**", "/profile/**", "/swagger-ui.html",
                         "/swagger-resources/**",
                         "/v2/api-docs",
