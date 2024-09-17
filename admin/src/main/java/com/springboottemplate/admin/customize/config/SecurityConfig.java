@@ -25,7 +25,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
@@ -36,11 +35,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  * 主要配置登录流程逻辑涉及以下几个类
  *
  * @author valarchie
- * @see UserDetailsServiceImpl#loadUserByUsername  用于登录流程通过用户名加载用户
  * @see this#unauthorizedHandler()  用于用户未授权或登录失败处理
  * @see this#logOutSuccessHandler 用于退出登录成功后的逻辑
  * @see JwtAuthenticationTokenFilter#doFilter token的校验和刷新
- * @see LoginService#login 登录逻辑
  */
 @Configuration
 @EnableWebSecurity
@@ -103,24 +100,6 @@ public class SecurityConfig {
         };
     }
 
-    @Bean
-    public AccessDeniedHandler unDeniedHandler() {
-        return (request, response, exception) -> {
-            ApiException apiException;
-
-            // 检查 exception 的 cause 是否为 ApiException
-            if (exception.getCause() instanceof ApiException) {
-                apiException = (ApiException) exception.getCause();
-            } else {
-                // 使用默认的 ApiException 处理未知异常
-                apiException = new ApiException(Client.COMMON_NO_AUTHORIZATION, request.getRequestURI());
-            }
-
-            ResponseDTO<Object> responseDTO = ResponseDTO.fail(apiException);
-            ServletHolderUtil.renderString(response, JSONUtil.toJsonStr(responseDTO));
-        };
-    }
-
 
     /**
      * 退出成功处理类 返回成功 在SecurityConfig类当中 定义了/logout 路径对应处理逻辑
@@ -152,8 +131,7 @@ public class SecurityConfig {
             // 配置认证失败处理类
 
             .exceptionHandling((exceptionHandling) ->
-                exceptionHandling.authenticationEntryPoint(unauthorizedHandler())
-                    .accessDeniedHandler(unDeniedHandler()))
+                exceptionHandling.authenticationEntryPoint(unauthorizedHandler()))
             // 基于token，所以不需要session
             .sessionManagement(
                 (sessionManagement) -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -161,7 +139,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((authorizeRequests) ->
                 // 这里过滤一些 不需要token的接口地址
                 authorizeRequests
-                    .requestMatchers("/login", "/register", "/error").permitAll()
+                    .requestMatchers("/login", "/register", "/noerror").permitAll()
                     .requestMatchers("/v3/**", "/profile/**", "/swagger-ui.html",
                         "/swagger-resources/**",
                         "/doc.html", "/webjars/**", "/swagger-ui/**", "/favicon.ico",

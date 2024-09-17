@@ -16,6 +16,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecureDigestAlgorithm;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -84,7 +85,7 @@ public class TokenService {
                 String uuid = (String) claims.get(Token.LOGIN_USER_KEY);
 
                 return redisCache.loginUserCache.getObjectOnlyInCacheById(uuid);
-            } catch (MalformedJwtException | UnsupportedJwtException |
+            } catch (SignatureException | MalformedJwtException | UnsupportedJwtException |
                      IllegalArgumentException jwtException) {
                 log.error("parse token failed.", jwtException);
                 throw new ApiException(jwtException, Client.INVALID_TOKEN);
