@@ -34,6 +34,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NotNull HttpServletRequest request, @NotNull HttpServletResponse response,
         @NotNull FilterChain chain)
         throws ServletException, IOException {
+
         SystemLoginUser loginUser = tokenService.getLoginUser(request);
         if (loginUser != null && AuthenticationUtils.getAuthentication() == null) {
             tokenService.refreshToken(loginUser);
@@ -42,6 +43,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
             log.debug("request process in jwt token filter. get login user id: {}", loginUser.getUserId());
         }
+
         chain.doFilter(request, response);
     }
 

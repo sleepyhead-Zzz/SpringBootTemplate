@@ -6,18 +6,17 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.springboottemplate.common.constant.Constants.Token;
 import com.springboottemplate.common.exception.ApiException;
-import com.springboottemplate.common.exception.error.ErrorCode;
+import com.springboottemplate.common.exception.error.ErrorCode.Client;
 import com.springboottemplate.domain.common.cache.RedisCache;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.Jwts.SIG;
 import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SecureDigestAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.crypto.SecretKey;
@@ -37,21 +36,30 @@ import org.springframework.stereotype.Component;
 @Data
 @RequiredArgsConstructor
 public class TokenService {
-
     /**
      * 自定义令牌标识
      */
     @Value("${token.header}")
     private String header;
-
     /**
      * 令牌秘钥
      */
     @Value("${token.secret}")
-    private String secret = "1231233sasdadsdasasdsadasd12123312312dsadasdsadsadsadsadasdsasdadsadsahz121132123";
-    private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    private static String SECRET = "1231233sasdadsdasasdsadasd12123312312dsadasdsadsadsadsadasdsasdadsadsahz121132123";
+    /**
+     * 加密算法
+     */
+    private final static SecureDigestAlgorithm<SecretKey, SecretKey> ALGORITHM = SIG.HS256;
 
-    public SecretKey KEY = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    public static final SecretKey KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
+    /**
+     * jwt签发者
+     */
+    private final static String JWT_ISS = "Sleepyhead";
+    /**
+     * jwt主题
+     */
+    private final static String SUBJECT = "Peripherals";
     /**
      * 自动刷新token的时间，当过期时间不足autoRefreshTime的值的时候，会触发刷新用户登录缓存的时间 比如这个值是20,   用户是8点登录的， 8点半缓存会过期， 当过8.10分的时候，就少于20分钟了，便触发
      * 刷新登录用户的缓存时间
@@ -76,13 +84,13 @@ public class TokenService {
                 String uuid = (String) claims.get(Token.LOGIN_USER_KEY);
 
                 return redisCache.loginUserCache.getObjectOnlyInCacheById(uuid);
-            } catch (SignatureException | MalformedJwtException | UnsupportedJwtException |
+            } catch (MalformedJwtException | UnsupportedJwtException |
                      IllegalArgumentException jwtException) {
                 log.error("parse token failed.", jwtException);
-                throw new ApiException(jwtException, ErrorCode.Client.INVALID_TOKEN);
+                throw new ApiException(jwtException, Client.INVALID_TOKEN);
             } catch (Exception e) {
                 log.error("fail to get cached user from redis", e);
-                throw new ApiException(e, ErrorCode.Client.TOKEN_PROCESS_FAILED, e.getMessage());
+                throw new ApiException(e, Client.TOKEN_PROCESS_FAILED, e.getMessage());
             }
 
         }
@@ -98,7 +106,7 @@ public class TokenService {
     public String createTokenAndPutUserInCache(SystemLoginUser loginUser) {
         loginUser.setCachedKey(IdUtil.fastUUID());
 
-//        redisCache.loginUserCache.set(loginUser.getCachedKey(), loginUser);
+        redisCache.loginUserCache.set(loginUser.getCachedKey(), loginUser);
 
         return generateToken(MapUtil.of(Token.LOGIN_USER_KEY, loginUser.getCachedKey()));
     }
@@ -126,8 +134,18 @@ public class TokenService {
      */
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
-            .setClaims(claims)
-            .signWith(SECRET_KEY).compact();
+            .header()
+            .add("typ", "JWT")
+            .add("alg", "HS256")
+            .and()
+            .claims(claims)
+            // 主题
+            .subject(SUBJECT)
+            // 签发者
+            .issuer(JWT_ISS)
+            // 签名
+            .signWith(KEY, ALGORITHM)
+            .compact();
     }
 
     /**

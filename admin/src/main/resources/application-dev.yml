@@ -40,3 +40,8 @@ logging:
     path: ./logs/springboottemplate-dev
   level:
     org.springframework: DEBUG
+
+knife4j:
+  enable: false
+  setting:
+    language: zh_cn

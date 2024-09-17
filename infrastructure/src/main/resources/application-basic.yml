@@ -1,8 +1,21 @@
+spring:
+  # 资源信息
+  messages:
+    # 国际化资源文件路径
+    basename: i18n/messages
+    # 有些版本的 IDEA  会自动设置properties的编码为IOS-8859-1 请在IDEA配置里设置成UTF8
+    encoding: UTF-8
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: false
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd HH:mm:ss
+
+
 token:
   header: Authorization
   autoRefreshTime: 20
-  secret: "sdhfkjs123132123312312312231123231321hBN6rr32df38"
-
 
 mybatis-plus:
   configuration:

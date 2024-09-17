@@ -57,6 +57,7 @@ public class UserApplicationService {
 
     public void addUser(AddUserCommand command) {
         UserModel model = userModelFactory.create();
+        command.setStatus(1);
         model.loadAddUserCommand(command);
 
         model.checkUsernameIsUnique();

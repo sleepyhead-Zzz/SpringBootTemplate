@@ -58,9 +58,7 @@ public class LoginController {
     @GetMapping("/getLoginUserInfo")
     public ResponseDTO<CurrentLoginUserDTO> getLoginUserInfo() {
         SystemLoginUser loginUser = AuthenticationUtils.getSystemLoginUser();
-
         CurrentLoginUserDTO currentUserDTO = userApplicationService.getLoginUserInfo(loginUser);
-
         return ResponseDTO.ok(currentUserDTO);
     }
 
