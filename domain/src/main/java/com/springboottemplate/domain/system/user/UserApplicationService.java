@@ -2,10 +2,12 @@ package com.springboottemplate.domain.system.user;
 
 import com.springboottemplate.domain.common.cache.CacheCenter;
 import com.springboottemplate.domain.common.dto.CurrentLoginUserDTO;
+import com.springboottemplate.domain.system.user.command.AddUserCommand;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.domain.system.user.db.SysUserService;
 import com.springboottemplate.domain.system.user.dto.UserDTO;
 import com.springboottemplate.domain.system.user.dto.UserProfileDTO;
+import com.springboottemplate.domain.system.user.model.UserModel;
 import com.springboottemplate.domain.system.user.model.UserModelFactory;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import lombok.RequiredArgsConstructor;
@@ -46,11 +48,24 @@ public class UserApplicationService {
         CurrentLoginUserDTO permissionDTO = new CurrentLoginUserDTO();
 
         permissionDTO.setUserInfo(new UserDTO(CacheCenter.userCache.getObjectById(loginUser.getUserId())));
-        permissionDTO.setRoleKey(loginUser.getRoleInfo().getRoleKey());
-        permissionDTO.setPermissions(loginUser.getRoleInfo().getMenuPermissions());
+//        permissionDTO.setRoleKey(loginUser.getRoleInfo().getRoleKey());
+//        permissionDTO.setPermissions(loginUser.getRoleInfo().getMenuPermissions());
 
         return permissionDTO;
     }
 
+
+    public void addUser(AddUserCommand command) {
+        UserModel model = userModelFactory.create();
+        model.loadAddUserCommand(command);
+
+        model.checkUsernameIsUnique();
+        model.checkPhoneNumberIsUnique();
+        model.checkEmailIsUnique();
+//        model.checkFieldRelatedEntityExist();
+        model.resetPassword(command.getPassword());
+
+        model.insert();
+    }
 
 }

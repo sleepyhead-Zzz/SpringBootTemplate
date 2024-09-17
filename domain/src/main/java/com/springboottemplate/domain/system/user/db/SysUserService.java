@@ -20,4 +20,30 @@ public interface SysUserService extends IService<SysUserEntity> {
      */
     SysUserEntity getUserByUserName(String userName);
 
+    /**
+     * 检测用户名是否
+     *
+     * @param userName 用户名
+     * @return 校验结果
+     */
+    boolean isUserNameDuplicated(String userName);
+
+    /**
+     * 检测号码是否唯一
+     *
+     * @param phone 电话号码
+     * @param userId 用户id
+     * @return 校验结果
+     */
+    boolean isPhoneDuplicated(String phone, Long userId);
+
+    /**
+     * 检测邮箱是否唯一
+     *
+     * @param email 邮箱
+     * @param userId 用户id
+     * @return 校验结果
+     */
+    boolean isEmailDuplicated(String email, Long userId);
+
 }

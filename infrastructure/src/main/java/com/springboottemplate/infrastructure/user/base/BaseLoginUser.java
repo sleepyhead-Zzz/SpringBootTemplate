@@ -1,6 +1,10 @@
 package com.springboottemplate.infrastructure.user.base;
 
+import cn.hutool.extra.servlet.JakartaServletUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.springboottemplate.common.utils.ServletHolderUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,14 +53,14 @@ public class BaseLoginUser implements UserDetails {
      * 设置用户代理信息
      */
     public void fillLoginInfo() {
-//        UserAgent userAgent = UserAgent.parseUserAgentString(ServletHolderUtil.getRequest().getHeader("User-Agent"));
-//        String ip = ServletUtil.getClientIP(ServletHolderUtil.getRequest());
-//
-//        this.getLoginInfo().setIpAddress(ip);
-//        this.getLoginInfo().setLocation(IpRegionUtil.getBriefLocationByIp(ip));
-//        this.getLoginInfo().setBrowser(userAgent.getBrowser().getName());
-//        this.getLoginInfo().setOperationSystem(userAgent.getOperatingSystem().getName());
-//        this.getLoginInfo().setLoginTime(System.currentTimeMillis());
+        UserAgent userAgent = UserAgentUtil.parse(ServletHolderUtil.getRequest().getHeader("User-Agent"));
+        String ip = JakartaServletUtil.getClientIP(ServletHolderUtil.getRequest());
+
+        this.getLoginInfo().setIpAddress(ip);
+        this.getLoginInfo().setLocation(ip);
+        this.getLoginInfo().setBrowser(userAgent.getBrowser().getName());
+        this.getLoginInfo().setOperationSystem(userAgent.getOs().getName());
+        this.getLoginInfo().setLoginTime(System.currentTimeMillis());
     }
 
     public void grantAppPermission(String appName) {

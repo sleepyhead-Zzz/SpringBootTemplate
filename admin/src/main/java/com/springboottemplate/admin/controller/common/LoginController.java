@@ -6,11 +6,13 @@ import com.springboottemplate.common.core.dto.ResponseDTO;
 import com.springboottemplate.domain.common.dto.CurrentLoginUserDTO;
 import com.springboottemplate.domain.common.dto.TokenDTO;
 import com.springboottemplate.domain.system.user.UserApplicationService;
+import com.springboottemplate.domain.system.user.command.AddUserCommand;
 import com.springboottemplate.infrastructure.user.AuthenticationUtils;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,5 +64,21 @@ public class LoginController {
         return ResponseDTO.ok(currentUserDTO);
     }
 
+    /**
+     * 新增用户
+     */
+    @Operation(summary = "新增用户")
+    @PostMapping
+    public ResponseDTO<Void> add(@Validated @RequestBody AddUserCommand command) {
+        userApplicationService.addUser(command);
+        return ResponseDTO.ok();
+    }
+
+    @Operation(summary = "注册接口")
+    @PostMapping("/register")
+    public ResponseDTO<Void> register(@RequestBody AddUserCommand command) {
+        userApplicationService.addUser(command);
+        return ResponseDTO.ok();
+    }
 
 }

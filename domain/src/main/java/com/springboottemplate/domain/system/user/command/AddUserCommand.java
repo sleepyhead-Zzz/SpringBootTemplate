@@ -29,6 +29,7 @@ public class AddUserCommand {
     private Long roleId;
 
     private Long postId;
+
     private String remark;
 
 

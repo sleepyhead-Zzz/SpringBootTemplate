@@ -7,7 +7,7 @@ import cn.hutool.core.util.StrUtil;
 import com.springboottemplate.common.constant.Constants.Token;
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
-import com.springboottemplate.domain.common.cache.RedisCacheService;
+import com.springboottemplate.domain.common.cache.RedisCache;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -59,7 +59,7 @@ public class TokenService {
     @Value("${token.autoRefreshTime}")
     private long autoRefreshTime;
 
-    private final RedisCacheService redisCache;
+    private final RedisCache redisCache;
 
     /**
      * 获取用户身份信息

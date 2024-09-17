@@ -7,7 +7,7 @@ import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
 import com.springboottemplate.common.exception.error.ErrorCode.Business;
 import com.springboottemplate.common.utils.ServletHolderUtil;
-import com.springboottemplate.domain.common.cache.RedisCacheService;
+import com.springboottemplate.domain.common.cache.RedisCache;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +31,7 @@ public class LoginService {
 
     private final TokenService tokenService;
 
-    private final RedisCacheService redisCache;
+    private final RedisCache redisCache;
 
     private final AuthenticationManager authenticationManager;
 
@@ -50,7 +50,6 @@ public class LoginService {
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginCommand.getUsername(), loginCommand.getPassword()));
         } catch (BadCredentialsException e) {
-
             throw new ApiException(e, ErrorCode.Business.LOGIN_WRONG_USER_PASSWORD);
         } catch (Exception e) {
             throw new ApiException(e, Business.LOGIN_ERROR, e.getMessage());

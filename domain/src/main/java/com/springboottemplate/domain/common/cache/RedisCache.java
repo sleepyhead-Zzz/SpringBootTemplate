@@ -17,11 +17,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class RedisCacheService {
+public class RedisCache {
 
     private final RedisUtil redisUtil;
 
     public RedisCacheTemplate<SysUserEntity> userCache;
+
     public RedisCacheTemplate<SystemLoginUser> loginUserCache;
 
 

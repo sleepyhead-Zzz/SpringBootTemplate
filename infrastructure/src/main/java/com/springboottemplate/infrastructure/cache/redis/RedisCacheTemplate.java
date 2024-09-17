@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * 缓存接口实现类 三级缓存
@@ -37,8 +38,9 @@ public class RedisCacheTemplate<T> {
             // 所有segment的初始总容量大小
             .initialCapacity(128)
             .build(new CacheLoader<String, Optional<T>>() {
+                @NotNull
                 @Override
-                public Optional<T> load(String cachedKey) {
+                public Optional<T> load(@NotNull String cachedKey) {
                     T cacheObject = redisUtil.getCacheObject(cachedKey);
                     log.debug("find the redis cache of key: {} is {}", cachedKey, cacheObject);
                     return Optional.ofNullable(cacheObject);
@@ -58,7 +60,7 @@ public class RedisCacheTemplate<T> {
             Optional<T> optional = guavaCache.get(cachedKey);
 //            log.debug("find the guava cache of key: {}", cachedKey);
 
-            if (!optional.isPresent()) {
+            if (optional.isEmpty()) {
                 T objectFromDb = getObjectFromDb(id);
                 set(id, objectFromDb);
                 return objectFromDb;

@@ -19,6 +19,28 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         return this.getOne(queryWrapper);
     }
 
+    @Override
+    public boolean isUserNameDuplicated(String username) {
+        QueryWrapper<SysUserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return this.baseMapper.exists(queryWrapper);
+    }
+
+    @Override
+    public boolean isPhoneDuplicated(String phone, Long userId) {
+        QueryWrapper<SysUserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ne(userId != null, "user_id", userId)
+            .eq("phone_number", phone);
+        return baseMapper.exists(queryWrapper);
+    }
+
+    @Override
+    public boolean isEmailDuplicated(String email, Long userId) {
+        QueryWrapper<SysUserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ne(userId != null, "user_id", userId)
+            .eq("email", email);
+        return baseMapper.exists(queryWrapper);
+    }
 }
 
 

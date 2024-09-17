@@ -6,7 +6,7 @@ import com.springboottemplate.common.core.dto.ResponseDTO;
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode.Client;
 import com.springboottemplate.common.utils.ServletHolderUtil;
-import com.springboottemplate.domain.common.cache.RedisCacheService;
+import com.springboottemplate.domain.common.cache.RedisCache;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
@@ -49,7 +49,7 @@ public class SecurityConfig {
 
     private final TokenService tokenService;
 
-    private final RedisCacheService redisCache;
+    private final RedisCache redisCache;
 
     /**
      * token认证过滤器
@@ -139,7 +139,7 @@ public class SecurityConfig {
             .authorizeRequests((authorizeRequests) ->
                 // 这里过滤一些 不需要token的接口地址
                 authorizeRequests
-                    .requestMatchers("/login").permitAll()
+                    .requestMatchers("/login", "/register").permitAll()
                     .requestMatchers("/v3/**", "/profile/**", "/swagger-ui.html",
                         "/swagger-resources/**",
                         "/v2/api-docs",
@@ -151,7 +151,8 @@ public class SecurityConfig {
                         "/test/**",
                         "/swagger-resources", "/swagger-resources/configuration/security",
                         "/swagger-ui.html", "/webjars/**").permitAll()
-                    .requestMatchers("/api/v1/user/login", "/api/v1/user/getImageCode").permitAll()
+                    .requestMatchers("/api/v1/user/login", "/api/v1/user/getImageCode", "/api/v1/user/register")
+                    .permitAll()
                     .anyRequest().authenticated()
             )
             .logout(logout -> logout.logoutUrl("/logout").logoutSuccessHandler(logOutSuccessHandler()))

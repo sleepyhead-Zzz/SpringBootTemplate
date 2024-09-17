@@ -18,7 +18,7 @@ public class CacheCenter {
 
     @PostConstruct
     public void init() {
-        RedisCacheService redisCache = SpringUtil.getBean(RedisCacheService.class);
+        RedisCache redisCache = SpringUtil.getBean(RedisCache.class);
         userCache = redisCache.userCache;
     }
 }

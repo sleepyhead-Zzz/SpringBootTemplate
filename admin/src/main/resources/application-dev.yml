@@ -35,3 +35,8 @@ minio:
   secretKey: 12345678
   bucketName: aaa
 
+logging:
+  file:
+    path: ./logs/springboottemplate-dev
+  level:
+    org.springframework: DEBUG
