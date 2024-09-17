@@ -61,6 +61,11 @@
       </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-aop</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-security</artifactId>
         <version>${spring.boot.version}</version>
       </dependency>
@@ -154,6 +159,13 @@
         <version>${commons-lang3.version}</version>
       </dependency>
 
+      <!--      有漏洞-->
+      <dependency>
+        <groupId>eu.bitwalker</groupId>
+        <artifactId>UserAgentUtils</artifactId>
+        <version>1.21</version>
+      </dependency>
+
 
       <dependency>
         <groupId>com.springboottemplate</groupId>
@@ -170,8 +182,6 @@
         <artifactId>infrastructure</artifactId>
         <version>${project.version}</version>
       </dependency>
-
-
       <dependency>
         <groupId>com.springboottemplate</groupId>
         <artifactId>common</artifactId>
