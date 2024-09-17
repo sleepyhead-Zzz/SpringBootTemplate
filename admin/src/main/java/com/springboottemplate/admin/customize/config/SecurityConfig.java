@@ -139,7 +139,7 @@ public class SecurityConfig {
             .authorizeHttpRequests((authorizeRequests) ->
                 // 这里过滤一些 不需要token的接口地址
                 authorizeRequests
-                    .requestMatchers("/login", "/register", "/noerror").permitAll()
+                    .requestMatchers("/login", "/register", "/error").permitAll()
                     .requestMatchers("/v3/**", "/profile/**", "/swagger-ui.html",
                         "/swagger-resources/**",
                         "/doc.html", "/webjars/**", "/swagger-ui/**", "/favicon.ico",
