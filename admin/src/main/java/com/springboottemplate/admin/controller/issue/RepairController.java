@@ -64,7 +64,6 @@ public class RepairController {
      * 修改报修
      */
     @Operation(summary = "修改报修")
-
     @PutMapping("/repair/{repairId}")
     public ResponseDTO<Void> edit(@PathVariable("repairId") Long repairId,
         @RequestBody UpdateRepairCommand updateCommand) {
