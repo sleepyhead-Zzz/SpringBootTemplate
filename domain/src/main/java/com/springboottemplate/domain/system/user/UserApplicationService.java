@@ -63,7 +63,7 @@ public class UserApplicationService {
         model.checkUsernameIsUnique();
         model.checkPhoneNumberIsUnique();
         model.checkEmailIsUnique();
-//        model.checkFieldRelatedEntityExist();
+        model.checkFieldRelatedEntityExist();
         model.resetPassword(command.getPassword());
 
         model.insert();

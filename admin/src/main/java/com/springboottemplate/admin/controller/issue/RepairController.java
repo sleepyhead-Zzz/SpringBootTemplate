@@ -1,5 +1,6 @@
 package com.springboottemplate.admin.controller.issue;
 
+import com.springboottemplate.common.core.base.BaseController;
 import com.springboottemplate.common.core.dto.ResponseDTO;
 import com.springboottemplate.domain.issue.repair.RepairApplicationService;
 import com.springboottemplate.domain.issue.repair.command.AddRepairCommand;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "报修API", description = "报修相关接口")
 @RestController
 @RequiredArgsConstructor
-public class RepairController {
+public class RepairController extends BaseController {
 
     private final RepairApplicationService repairApplicationService;
 

@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
+import com.springboottemplate.domain.system.dept.model.DeptModelFactory;
 import com.springboottemplate.domain.system.user.command.AddUserCommand;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.domain.system.user.db.SysUserService;
@@ -22,16 +23,19 @@ public class UserModel extends SysUserEntity {
 
     private SysUserService userService;
 
-    public UserModel(SysUserEntity entity, SysUserService userService) {
-        this(userService);
+    private DeptModelFactory deptModelFactory;
+
+    public UserModel(SysUserEntity entity, SysUserService userService, DeptModelFactory deptModelFactory) {
+        this(userService, deptModelFactory);
 
         if (entity != null) {
             BeanUtil.copyProperties(entity, this);
         }
     }
 
-    public UserModel(SysUserService userService) {
+    public UserModel(SysUserService userService, DeptModelFactory deptModelFactory) {
         this.userService = userService;
+        this.deptModelFactory = deptModelFactory;
 
     }
 
@@ -64,5 +68,10 @@ public class UserModel extends SysUserEntity {
         setPassword(AuthenticationUtils.encryptPassword(newPassword));
     }
 
+    public void checkFieldRelatedEntityExist() {
 
+        if (getDeptId() != null) {
+            deptModelFactory.loadById(getDeptId());
+        }
+    }
 }
