@@ -9,8 +9,8 @@ import com.springboottemplate.common.exception.error.ErrorCode.Business;
 import com.springboottemplate.common.exception.error.ErrorCode.Client;
 import com.springboottemplate.common.exception.error.ErrorCode.Internal;
 import jakarta.servlet.http.HttpServletRequest;
-import java.nio.file.AccessDeniedException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,15 +25,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionInterceptor {
-
     /**
      * 权限校验异常
      */
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseDTO<?> handleAccessDeniedException(AccessDeniedException e, HttpServletRequest request) {
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseDTO<?> handleAccessDeniedException(AuthorizationDeniedException e, HttpServletRequest request) {
         log.error("请求地址'{}',权限校验失败'{}'", request.getRequestURI(), e.getMessage());
         return ResponseDTO.fail(new ApiException(Business.PERMISSION_NOT_ALLOWED_TO_OPERATE));
     }
+
 
     /**
      * 请求方式不支持

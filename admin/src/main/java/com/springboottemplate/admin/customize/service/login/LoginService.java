@@ -2,13 +2,16 @@ package com.springboottemplate.admin.customize.service.login;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
+import com.springboottemplate.admin.customize.async.AsyncTaskFactory;
 import com.springboottemplate.admin.customize.service.login.command.LoginCommand;
+import com.springboottemplate.common.enums.common.LoginStatusEnum;
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
 import com.springboottemplate.common.exception.error.ErrorCode.Business;
 import com.springboottemplate.common.utils.ServletHolderUtil;
 import com.springboottemplate.domain.common.cache.RedisCache;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
+import com.springboottemplate.infrastructure.thread.ThreadPoolManager;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -70,7 +73,11 @@ public class LoginService {
      */
     public void recordLoginInfo(SystemLoginUser loginUser) {
 
+        ThreadPoolManager.execute(AsyncTaskFactory.loginInfoTask(loginUser.getUsername(), LoginStatusEnum.LOGIN_SUCCESS,
+            LoginStatusEnum.LOGIN_SUCCESS.description()));
+
         SysUserEntity entity = redisCache.userCache.getObjectById(loginUser.getUserId());
+
         entity.setLoginIp(JakartaServletUtil.getClientIP(ServletHolderUtil.getRequest()));
         entity.setLoginDate(DateUtil.date());
         entity.updateById();

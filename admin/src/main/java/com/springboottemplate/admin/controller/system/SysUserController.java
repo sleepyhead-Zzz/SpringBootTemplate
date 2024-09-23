@@ -1,7 +1,5 @@
 package com.springboottemplate.admin.controller.system;
 
-import cn.hutool.core.collection.ListUtil;
-
 import com.springboottemplate.admin.customize.aop.accessLog.AccessLog;
 import com.springboottemplate.common.core.base.BaseController;
 import com.springboottemplate.common.core.dto.ResponseDTO;
@@ -10,10 +8,10 @@ import com.springboottemplate.common.enums.common.BusinessTypeEnum;
 import com.springboottemplate.domain.common.command.BulkOperationCommand;
 import com.springboottemplate.domain.system.user.UserApplicationService;
 import com.springboottemplate.domain.system.user.command.AddUserCommand;
-import com.springboottemplate.domain.system.user.command.UpdateUserCommand;
-import com.springboottemplate.domain.system.user.db.SearchUserDO;
 import com.springboottemplate.domain.system.user.command.ChangeStatusCommand;
 import com.springboottemplate.domain.system.user.command.ResetPasswordCommand;
+import com.springboottemplate.domain.system.user.command.UpdateUserCommand;
+import com.springboottemplate.domain.system.user.db.SearchUserDO;
 import com.springboottemplate.domain.system.user.dto.UserDTO;
 import com.springboottemplate.domain.system.user.dto.UserDetailDTO;
 import com.springboottemplate.domain.system.user.query.SearchUserQuery;
@@ -22,7 +20,6 @@ import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -34,7 +31,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 用户信息
@@ -53,7 +49,7 @@ public class SysUserController extends BaseController {
      * 获取用户列表
      */
     @Operation(summary = "用户列表")
-    @PreAuthorize("@permission.has('system:user:list') AND @dataScope.checkDeptId(#query.deptId)")
+    @PreAuthorize("@permission.has('system:user:list') ")
     @GetMapping
     public ResponseDTO<PageDTO<UserDTO>> userList(SearchUserQuery<SearchUserDO> query) {
         PageDTO<UserDTO> page = userApplicationService.getUserList(query);

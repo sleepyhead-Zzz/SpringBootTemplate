@@ -4,6 +4,7 @@ package com.springboottemplate.infrastructure.user.web;
 import com.springboottemplate.infrastructure.user.base.BaseLoginUser;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -20,8 +21,10 @@ public class SystemLoginUser extends BaseLoginUser {
 
     private boolean isAdmin;
 
+    @Getter
     private Long deptId;
 
+    @Getter
     private RoleInfo roleInfo;
 
     /**
@@ -30,17 +33,18 @@ public class SystemLoginUser extends BaseLoginUser {
     private Long autoRefreshCacheTime;
 
 
-    public SystemLoginUser(Long userId, Boolean isAdmin, String username, String password,
+    public SystemLoginUser(Long userId, Boolean isAdmin, String username, String password, RoleInfo roleInfo,
         Long deptId) {
         this.userId = userId;
         this.isAdmin = isAdmin;
         this.username = username;
         this.password = password;
+        this.roleInfo = roleInfo;
         this.deptId = deptId;
     }
 
-    public RoleInfo getRoleInfo() {
-        return roleInfo;
+    public Long getRoleId() {
+        return getRoleInfo().getRoleId();
     }
 
 

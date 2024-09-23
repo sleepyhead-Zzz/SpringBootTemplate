@@ -1,5 +1,6 @@
 package com.springboottemplate.infrastructure.user.web;
 
+import cn.hutool.core.collection.CollUtil;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ public class RoleInfo {
     public static final String ADMIN_ROLE_KEY = "admin";
     public static final String ALL_PERMISSIONS = "*:*:*";
 
-//    public static final Set<String> ADMIN_PERMISSIONS = SetUtils.hashSet(ALL_PERMISSIONS);
+    public static final Set<String> ADMIN_PERMISSIONS = CollUtil.newHashSet(ALL_PERMISSIONS);
 
 
     public RoleInfo(Long roleId, String roleKey, DataScopeEnum dataScope, Set<Long> deptIdSet,
@@ -27,8 +28,8 @@ public class RoleInfo {
         this.roleKey = roleKey;
         this.dataScope = dataScope;
         this.deptIdSet = deptIdSet;
-//        this.menuPermissions = menuPermissions != null ? menuPermissions : SetUtils.emptySet();
-//        this.menuIds = menuIds != null ? menuIds : SetUtils.emptySet();
+        this.menuPermissions = menuPermissions != null ? menuPermissions : CollUtil.newHashSet();
+        this.menuIds = menuIds != null ? menuIds : CollUtil.newHashSet();
     }
 
 
@@ -40,7 +41,4 @@ public class RoleInfo {
     private Set<String> menuPermissions;
     private Set<Long> menuIds;
 
-    public RoleInfo(Long roleId) {
-        this.roleId = roleId;
-    }
 }

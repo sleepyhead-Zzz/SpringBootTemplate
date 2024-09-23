@@ -1,5 +1,6 @@
 package com.springboottemplate.domain.issue.repair.db;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.springboottemplate.common.core.base.BaseEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Schema(description = "报修表")
 public class RepairEntity extends BaseEntity<RepairEntity> {
 
-
+    @TableField
     @Schema(description = "报修ID")
     private Long repairId;
 
