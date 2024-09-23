@@ -1,23 +1,26 @@
 package com.springboottemplate.domain.system.user.db;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.springboottemplate.common.core.page.AbstractPageQuery;
+import com.springboottemplate.domain.system.post.db.SysPostEntity;
+import com.springboottemplate.domain.system.role.db.SysRoleEntity;
+import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 
 /**
- * @author sleepyhead
- * @description 针对表【sys_user】的数据库操作Service实现
- * @createDate 2024-09-02 12:26:06
+ * <p>
+ * 用户信息表 服务实现类
+ * </p>
+ *
+ * @author valarchie
+ * @since 2022-06-16
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity> implements SysUserService {
 
-    @Override
-    public SysUserEntity getUserByUserName(String userName) {
-        QueryWrapper<SysUserEntity> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("username", userName);
-        return this.getOne(queryWrapper);
-    }
 
     @Override
     public boolean isUserNameDuplicated(String username) {
@@ -25,6 +28,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         queryWrapper.eq("username", username);
         return this.baseMapper.exists(queryWrapper);
     }
+
 
     @Override
     public boolean isPhoneDuplicated(String phone, Long userId) {
@@ -34,6 +38,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
         return baseMapper.exists(queryWrapper);
     }
 
+
     @Override
     public boolean isEmailDuplicated(String email, Long userId) {
         QueryWrapper<SysUserEntity> queryWrapper = new QueryWrapper<>();
@@ -41,8 +46,45 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUserEntity
             .eq("email", email);
         return baseMapper.exists(queryWrapper);
     }
+
+
+    @Override
+    public SysRoleEntity getRoleOfUser(Long userId) {
+        List<SysRoleEntity> list = baseMapper.getRolesByUserId(userId);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+
+    @Override
+    public SysPostEntity getPostOfUser(Long userId) {
+        List<SysPostEntity> list = baseMapper.getPostsByUserId(userId);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+
+    @Override
+    public Set<String> getMenuPermissionsForUser(Long userId) {
+        return baseMapper.getMenuPermsByUserId(userId);
+    }
+
+
+    @Override
+    public SysUserEntity getUserByUserName(String userName) {
+        QueryWrapper<SysUserEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", userName);
+        return this.getOne(queryWrapper);
+    }
+
+
+    @Override
+    public Page<SysUserEntity> getUserListByRole(AbstractPageQuery<SysUserEntity> query) {
+        return baseMapper.getUserListByRole(query.toPage(), query.toQueryWrapper());
+    }
+
+
+    @Override
+    public Page<SearchUserDO> getUserList(AbstractPageQuery<SearchUserDO> query) {
+        return baseMapper.getUserList(query.toPage(), query.toQueryWrapper());
+    }
+
 }
-
-
-
-

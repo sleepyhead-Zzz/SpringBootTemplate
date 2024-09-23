@@ -4,11 +4,19 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
+import com.springboottemplate.common.exception.error.ErrorCode.Business;
 import com.springboottemplate.domain.system.dept.model.DeptModelFactory;
+import com.springboottemplate.domain.system.post.model.PostModelFactory;
+import com.springboottemplate.domain.system.role.model.RoleModelFactory;
 import com.springboottemplate.domain.system.user.command.AddUserCommand;
+import com.springboottemplate.domain.system.user.command.UpdateProfileCommand;
+import com.springboottemplate.domain.system.user.command.UpdateUserCommand;
+import com.springboottemplate.domain.system.user.command.UpdateUserPasswordCommand;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.domain.system.user.db.SysUserService;
 import com.springboottemplate.infrastructure.user.AuthenticationUtils;
+import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
+import java.util.Objects;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -23,20 +31,27 @@ public class UserModel extends SysUserEntity {
 
     private SysUserService userService;
 
+    private PostModelFactory postModelFactory;
+
     private DeptModelFactory deptModelFactory;
 
-    public UserModel(SysUserEntity entity, SysUserService userService, DeptModelFactory deptModelFactory) {
-        this(userService, deptModelFactory);
+    private RoleModelFactory roleModelFactory;
+
+    public UserModel(SysUserEntity entity, SysUserService userService, PostModelFactory postModelFactory,
+        DeptModelFactory deptModelFactory, RoleModelFactory roleModelFactory) {
+        this(userService, postModelFactory, deptModelFactory, roleModelFactory);
 
         if (entity != null) {
             BeanUtil.copyProperties(entity, this);
         }
     }
 
-    public UserModel(SysUserService userService, DeptModelFactory deptModelFactory) {
+    public UserModel(SysUserService userService, PostModelFactory postModelFactory,
+        DeptModelFactory deptModelFactory, RoleModelFactory roleModelFactory) {
         this.userService = userService;
+        this.postModelFactory = postModelFactory;
         this.deptModelFactory = deptModelFactory;
-
+        this.roleModelFactory = roleModelFactory;
     }
 
     public void loadAddUserCommand(AddUserCommand command) {
@@ -44,6 +59,23 @@ public class UserModel extends SysUserEntity {
             BeanUtil.copyProperties(command, this, "userId");
         }
     }
+
+
+    public void loadUpdateUserCommand(UpdateUserCommand command) {
+        if (command != null) {
+            loadAddUserCommand(command);
+        }
+    }
+
+    public void loadUpdateProfileCommand(UpdateProfileCommand command) {
+        if (command != null) {
+            this.setSex(command.getSex());
+            this.setNickname(command.getNickName());
+            this.setPhoneNumber(command.getPhoneNumber());
+            this.setEmail(command.getEmail());
+        }
+    }
+
 
     public void checkUsernameIsUnique() {
         if (userService.isUserNameDuplicated(getUsername())) {
@@ -58,20 +90,58 @@ public class UserModel extends SysUserEntity {
         }
     }
 
+    public void checkFieldRelatedEntityExist() {
+
+        if (getPostId() != null) {
+            postModelFactory.loadById(getPostId());
+        }
+
+        if (getDeptId() != null) {
+            deptModelFactory.loadById(getDeptId());
+        }
+
+        if (getRoleId() != null) {
+            roleModelFactory.loadById(getRoleId());
+        }
+
+    }
+
+
     public void checkEmailIsUnique() {
         if (StrUtil.isNotEmpty(getEmail()) && userService.isEmailDuplicated(getEmail(), getUserId())) {
             throw new ApiException(ErrorCode.Business.USER_EMAIL_IS_NOT_UNIQUE);
         }
     }
 
+    public void checkCanBeDelete(SystemLoginUser loginUser) {
+        if (Objects.equals(getUserId(), loginUser.getUserId())
+            || this.getIsAdmin()) {
+            throw new ApiException(ErrorCode.Business.USER_CURRENT_USER_CAN_NOT_BE_DELETE);
+        }
+    }
+
+
+    public void modifyPassword(UpdateUserPasswordCommand command) {
+        if (!AuthenticationUtils.matchesPassword(command.getOldPassword(), getPassword())) {
+            throw new ApiException(ErrorCode.Business.USER_PASSWORD_IS_NOT_CORRECT);
+        }
+
+        if (AuthenticationUtils.matchesPassword(command.getNewPassword(), getPassword())) {
+            throw new ApiException(ErrorCode.Business.USER_NEW_PASSWORD_IS_THE_SAME_AS_OLD);
+        }
+        setPassword(AuthenticationUtils.encryptPassword(command.getNewPassword()));
+    }
+
     public void resetPassword(String newPassword) {
         setPassword(AuthenticationUtils.encryptPassword(newPassword));
     }
 
-    public void checkFieldRelatedEntityExist() {
-
-        if (getDeptId() != null) {
-            deptModelFactory.loadById(getDeptId());
+    @Override
+    public boolean updateById() {
+        if (this.getIsAdmin()) {
+            throw new ApiException(Business.USER_ADMIN_CAN_NOT_BE_MODIFY);
         }
+
+        return super.updateById();
     }
 }

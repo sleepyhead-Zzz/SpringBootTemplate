@@ -5,12 +5,15 @@ import com.springboottemplate.admin.customize.service.login.command.LoginCommand
 import com.springboottemplate.common.core.dto.ResponseDTO;
 import com.springboottemplate.domain.common.dto.CurrentLoginUserDTO;
 import com.springboottemplate.domain.common.dto.TokenDTO;
+import com.springboottemplate.domain.system.menu.MenuApplicationService;
+import com.springboottemplate.domain.system.menu.dto.RouterDTO;
 import com.springboottemplate.domain.system.user.UserApplicationService;
 import com.springboottemplate.domain.system.user.command.AddUserCommand;
 import com.springboottemplate.infrastructure.user.AuthenticationUtils;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +35,8 @@ public class LoginController {
 
     private final UserApplicationService userApplicationService;
 
+    private final MenuApplicationService menuApplicationService;
+
     /**
      * 登录方法
      *
@@ -50,6 +55,20 @@ public class LoginController {
     }
 
     /**
+     * 获取路由信息
+     * TODO 如果要在前端开启路由缓存的话 需要在ServerConfig.json 中  设置CachingAsyncRoutes=true  避免一直重复请求路由接口
+     *
+     * @return 路由信息
+     */
+    @Operation(summary = "获取用户对应的菜单路由", description = "用于动态生成路由")
+    @GetMapping("/getRouters")
+    public ResponseDTO<List<RouterDTO>> getRouters() {
+        SystemLoginUser loginUser = AuthenticationUtils.getSystemLoginUser();
+        List<RouterDTO> routerTree = menuApplicationService.getRouterTree(loginUser);
+        return ResponseDTO.ok(routerTree);
+    }
+
+    /**
      * 获取用户信息
      *
      * @return 用户信息
@@ -62,15 +81,6 @@ public class LoginController {
         return ResponseDTO.ok(currentUserDTO);
     }
 
-    /**
-     * 新增用户
-     */
-    @Operation(summary = "新增用户")
-    @PostMapping
-    public ResponseDTO<Void> add(@Validated @RequestBody AddUserCommand command) {
-        userApplicationService.addUser(command);
-        return ResponseDTO.ok();
-    }
 
     @Operation(summary = "注册接口")
     @PostMapping("/register")

@@ -1,24 +1,42 @@
 package com.springboottemplate.domain.system.user.db;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import com.springboottemplate.common.core.page.AbstractPageQuery;
+import com.springboottemplate.domain.system.post.db.SysPostEntity;
+import com.springboottemplate.domain.system.role.db.SysRoleEntity;
+import java.util.Set;
 import org.springframework.context.annotation.Primary;
 
 /**
- * @author sleepyhead
- * @description 针对表【sys_user】的数据库操作Service
- * @createDate 2024-09-02 12:26:06
+ * <p>
+ * 用户信息表 服务类
+ * </p>
+ *
+ * @author valarchie
+ * @since 2022-06-16
  */
 @Primary
 public interface SysUserService extends IService<SysUserEntity> {
 
     /**
-     * 通过用户名查询用户
+     * 检测号码是否唯一
      *
-     * @param userName 用户名
-     * @return 用户对象信息
+     * @param phone  电话号码
+     * @param userId 用户id
+     * @return 校验结果
      */
-    SysUserEntity getUserByUserName(String userName);
+    boolean isPhoneDuplicated(String phone, Long userId);
+
+    /**
+     * 检测邮箱是否唯一
+     * @param email 邮箱
+     * @param userId 用户id
+     * @return 校验结果
+     */
+    boolean isEmailDuplicated(String email, Long userId);
 
     /**
      * 检测用户名是否
@@ -29,21 +47,54 @@ public interface SysUserService extends IService<SysUserEntity> {
     boolean isUserNameDuplicated(String userName);
 
     /**
-     * 检测号码是否唯一
+     * 获取用户的角色
      *
-     * @param phone 电话号码
      * @param userId 用户id
-     * @return 校验结果
+     * @return 用户角色
      */
-    boolean isPhoneDuplicated(String phone, Long userId);
+    SysRoleEntity getRoleOfUser(Long userId);
 
     /**
-     * 检测邮箱是否唯一
+     * 获取用户的岗位
      *
-     * @param email 邮箱
      * @param userId 用户id
-     * @return 校验结果
+     * @return 用户岗位
      */
-    boolean isEmailDuplicated(String email, Long userId);
+    SysPostEntity getPostOfUser(Long userId);
+
+    /**
+     * 获取用户的权限列表
+     *
+     * @param userId 用户id
+     * @return 用户菜单权限列表
+     */
+    Set<String> getMenuPermissionsForUser(Long userId);
+
+
+    /**
+     * 通过用户名查询用户
+     *
+     * @param userName 用户名
+     * @return 用户对象信息
+     */
+    SysUserEntity getUserByUserName(String userName);
+
+
+    /**
+     * 根据条件分页查询未分配用户角色列表
+     *
+     * @param query 查询参数
+     * @return 用户信息集合信息
+     */
+    Page<SysUserEntity> getUserListByRole(AbstractPageQuery<SysUserEntity> query);
+
+    /**
+     * 根据条件分页查询用户列表
+     *
+     * @param query 查询参数
+     * @return 用户信息集合信息
+     */
+    Page<SearchUserDO> getUserList(AbstractPageQuery<SearchUserDO> query);
+
 
 }

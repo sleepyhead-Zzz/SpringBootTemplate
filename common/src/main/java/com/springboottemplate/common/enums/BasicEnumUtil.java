@@ -15,28 +15,21 @@ public class BasicEnumUtil {
 
     public static final String UNKNOWN = "未知";
 
-    public static <E extends Enum<E>> E fromValueSafely(Class<E> enumClass, Object value) {
+    public static <E extends Enum<E> & BasicEnum<?>> E fromValueSafely(Class<E> enumClass, Object value) {
         E target = null;
 
         for (E enumConstant : enumClass.getEnumConstants()) {
-            BasicEnum<?> basicEnum = (BasicEnum<?>) enumConstant;
-            if (Objects.equals(basicEnum.getValue(), value)) {
-                target = (E) basicEnum;
+            if (Objects.equals(enumConstant.getValue(), value)) {
+                target = enumConstant;
+                break; // 找到后可以直接退出循环
             }
         }
 
         return target;
     }
 
-    public static <E extends Enum<E>> E fromValue(Class<E> enumClass, Object value) {
-        E target = null;
-
-        for (E enumConstant : enumClass.getEnumConstants()) {
-            BasicEnum basicEnum = (BasicEnum) enumConstant;
-            if (Objects.equals(basicEnum.getValue(), value)) {
-                target = (E) basicEnum;
-            }
-        }
+    public static <E extends Enum<E> & BasicEnum<?>> E fromValue(Class<E> enumClass, Object value) {
+        E target = fromValueSafely(enumClass, value);
 
         if (target == null) {
             throw new ApiException(ErrorCode.Internal.GET_ENUM_FAILED, enumClass.getSimpleName());
@@ -45,17 +38,16 @@ public class BasicEnumUtil {
         return target;
     }
 
-    public static <E extends Enum<E>> String getDescriptionByBool(Class<E> enumClass, Boolean bool) {
+    public static <E extends Enum<E> & BasicEnum<?>> String getDescriptionByBool(Class<E> enumClass, Boolean bool) {
         Integer value = Convert.toInt(bool, 0);
         return getDescriptionByValue(enumClass, value);
     }
 
-    public static <E extends Enum<E>> String getDescriptionByValue(Class<E> enumClass, Object value) {
+    public static <E extends Enum<E> & BasicEnum<?>> String getDescriptionByValue(Class<E> enumClass, Object value) {
         E basicEnum = fromValueSafely(enumClass, value);
         if (basicEnum != null) {
-            return ((BasicEnum<?>) basicEnum).description();
+            return basicEnum.description();
         }
         return UNKNOWN;
     }
-
 }

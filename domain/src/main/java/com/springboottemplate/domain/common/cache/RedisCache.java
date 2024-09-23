@@ -1,6 +1,10 @@
 package com.springboottemplate.domain.common.cache;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.springboottemplate.domain.system.post.db.SysPostEntity;
+import com.springboottemplate.domain.system.post.db.SysPostService;
+import com.springboottemplate.domain.system.role.db.SysRoleEntity;
+import com.springboottemplate.domain.system.role.db.SysRoleService;
 import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.domain.system.user.db.SysUserService;
 import com.springboottemplate.infrastructure.cache.RedisUtil;
@@ -25,6 +29,9 @@ public class RedisCache {
 
     public RedisCacheTemplate<SystemLoginUser> loginUserCache;
 
+    public RedisCacheTemplate<SysRoleEntity> roleCache;
+
+    public RedisCacheTemplate<SysPostEntity> postCache;
 
     @PostConstruct
     public void init() {
@@ -36,6 +43,22 @@ public class RedisCache {
                 SysUserService userService = SpringUtil.getBean(SysUserService.class);
                 return userService.getById((Serializable) id);
             }
+        };
+        roleCache = new RedisCacheTemplate<SysRoleEntity>(redisUtil, CacheKeyEnum.ROLE_ENTITY_KEY) {
+            @Override
+            public SysRoleEntity getObjectFromDb(Object id) {
+                SysRoleService roleService = SpringUtil.getBean(SysRoleService.class);
+                return roleService.getById((Serializable) id);
+            }
+        };
+
+        postCache = new RedisCacheTemplate<SysPostEntity>(redisUtil, CacheKeyEnum.POST_ENTITY_KEY) {
+            @Override
+            public SysPostEntity getObjectFromDb(Object id) {
+                SysPostService postService = SpringUtil.getBean(SysPostService.class);
+                return postService.getById((Serializable) id);
+            }
+
         };
     }
 }
