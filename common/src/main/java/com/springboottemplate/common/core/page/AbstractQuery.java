@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.springboottemplate.common.time.DatePickUtil;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import lombok.Data;
 
@@ -16,15 +18,20 @@ import lombok.Data;
 @Data
 public abstract class AbstractQuery<T> {
 
+    @Parameter(description = "排序字段", schema = @Schema(type = "string"))
     protected String orderColumn;
 
+    @Parameter(description = "排序方向", schema = @Schema(type = "string"))
     protected String orderDirection;
 
+    @Parameter(description = "时间范围字段名", schema = @Schema(type = "string"))
     protected String timeRangeColumn;
 
+    @Parameter(description = "开始时间", schema = @Schema(type = "date"))
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
     private Date beginTime;
 
+    @Parameter(description = "结束时间", schema = @Schema(type = "date"))
     @JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
     private Date endTime;
 

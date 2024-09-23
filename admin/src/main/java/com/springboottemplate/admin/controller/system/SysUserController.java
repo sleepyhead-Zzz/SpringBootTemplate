@@ -18,6 +18,9 @@ import com.springboottemplate.domain.system.user.query.SearchUserQuery;
 import com.springboottemplate.infrastructure.user.AuthenticationUtils;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +54,20 @@ public class SysUserController extends BaseController {
     @Operation(summary = "用户列表")
     @PreAuthorize("@permission.has('system:user:list') ")
     @GetMapping
+    @Parameters({
+        @Parameter(name = "userId", description = "用户ID", schema = @Schema(type = "integer")),
+        @Parameter(name = "username", description = "用户名", schema = @Schema(type = "string")),
+        @Parameter(name = "status", description = "用户状态", schema = @Schema(type = "integer")),
+        @Parameter(name = "phoneNumber", description = "手机号", schema = @Schema(type = "string")),
+        @Parameter(name = "deptId", description = "部门ID", schema = @Schema(type = "integer")),
+        @Parameter(name = "pageNum", description = "页码", schema = @Schema(type = "integer", defaultValue = "1")),
+        @Parameter(name = "pageSize", description = "每页条数", schema = @Schema(type = "integer", defaultValue = "10")),
+        @Parameter(name = "orderColumn", description = "排序字段", schema = @Schema(type = "string")),
+        @Parameter(name = "orderDirection", description = "排序方向", schema = @Schema(type = "string")),
+        @Parameter(name = "timeRangeColumn", description = "时间范围字段名", schema = @Schema(type = "string")),
+        @Parameter(name = "beginTime", description = "开始时间", schema = @Schema(type = "date")),
+        @Parameter(name = "endTime", description = "结束时间", schema = @Schema(type = "date"))
+    })
     public ResponseDTO<PageDTO<UserDTO>> userList(SearchUserQuery<SearchUserDO> query) {
         PageDTO<UserDTO> page = userApplicationService.getUserList(query);
         return ResponseDTO.ok(page);

@@ -3,6 +3,8 @@ package com.springboottemplate.domain.system.user.query;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.springboottemplate.common.core.page.AbstractPageQuery;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -15,10 +17,19 @@ import lombok.EqualsAndHashCode;
 @Data
 public class SearchUserQuery<T> extends AbstractPageQuery<T> {
 
+    @Parameter(description = "用户ID", schema = @Schema(type = "integer"))
     protected Long userId;
+
+    @Parameter(description = "用户名", schema = @Schema(type = "string"))
     protected String username;
+
+    @Parameter(description = "用户状态", schema = @Schema(type = "integer"))
     protected Integer status;
+
+    @Parameter(description = "手机号", schema = @Schema(type = "string"))
     protected String phoneNumber;
+
+    @Parameter(description = "部门ID", schema = @Schema(type = "integer"))
     protected Long deptId;
 
     @Override
