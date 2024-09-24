@@ -1,7 +1,6 @@
 package com.springboottemplate.domain.system.post.dto;
 
 import cn.hutool.core.bean.BeanUtil;
-
 import com.springboottemplate.common.enums.BasicEnumUtil;
 import com.springboottemplate.common.enums.common.StatusEnum;
 import com.springboottemplate.domain.system.post.db.SysPostEntity;
@@ -26,26 +25,26 @@ public class PostDTO {
         }
     }
 
-    @Schema(name = "岗位ID")
+    @Schema(description = "岗位ID")
     private Long postId;
 
 
-    @Schema(name = "岗位编码")
+    @Schema(description = "岗位编码")
     private String postCode;
 
-    @Schema(name = "岗位名称")
+    @Schema(description = "岗位名称")
     private String postName;
 
 
-    @Schema(name = "岗位排序")
+    @Schema(description = "岗位排序")
     private Integer postSort;
 
-    @Schema(name = "备注")
+    @Schema(description = "备注")
     private String remark;
 
     private Integer status;
 
-    @Schema(name = "状态")
+    @Schema(description = "状态")
     private String statusStr;
 
     private Date createTime;

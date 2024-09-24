@@ -20,7 +20,7 @@ public class RepairDTO {
     }
 
 
-    @Schema(name = "报修ID", description = "报修ID")
+    @Schema(description = "报修ID")
     private Long repairId;
 
     @Schema(description = "报修类型")

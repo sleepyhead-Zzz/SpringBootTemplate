@@ -1,13 +1,12 @@
 package com.springboottemplate.domain.system.user.dto;
 
 import cn.hutool.core.bean.BeanUtil;
-
 import com.springboottemplate.domain.common.cache.CacheCenter;
 import com.springboottemplate.domain.system.dept.db.SysDeptEntity;
 import com.springboottemplate.domain.system.post.db.SysPostEntity;
 import com.springboottemplate.domain.system.role.db.SysRoleEntity;
-import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import com.springboottemplate.domain.system.user.db.SearchUserDO;
+import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import lombok.Data;
@@ -15,7 +14,7 @@ import lombok.Data;
 /**
  * @author valarchie
  */
-@Schema(name = "用户列表")
+@Schema(description = "用户列表")
 @Data
 public class UserDTO {
 
@@ -58,76 +57,76 @@ public class UserDTO {
     }
 
 
-    @Schema(name = "用户ID")
+    @Schema(description = "用户ID")
     private Long userId;
 
-    @Schema(name = "职位ID")
+    @Schema(description = "职位ID")
     private Long postId;
 
-    @Schema(name = "职位名称")
+    @Schema(description = "职位名称")
     private String postName;
 
-    @Schema(name = "角色ID")
+    @Schema(description = "角色ID")
     private Long roleId;
 
-    @Schema(name = "角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
 
-    @Schema(name = "部门ID")
+    @Schema(description = "部门ID")
     private Long deptId;
 
-    @Schema(name = "部门名称")
+    @Schema(description = "部门名称")
     private String deptName;
 
-    @Schema(name = "用户名")
+    @Schema(description = "用户名")
     private String username;
 
-    @Schema(name = "用户昵称")
+    @Schema(description = "用户昵称")
     private String nickname;
 
-    @Schema(name = "用户类型")
+    @Schema(description = "用户类型")
     private Integer userType;
 
-    @Schema(name = "邮件")
+    @Schema(description = "邮件")
     private String email;
 
-    @Schema(name = "号码")
+    @Schema(description = "号码")
     private String phoneNumber;
 
-    @Schema(name = "性别")
+    @Schema(description = "性别")
     private Integer sex;
 
-    @Schema(name = "用户头像")
+    @Schema(description = "用户头像")
     private String avatar;
 
-    @Schema(name = "状态")
+    @Schema(description = "状态")
     private Integer status;
 
-    @Schema(name = "IP")
+    @Schema(description = "IP")
     private String loginIp;
 
-    @Schema(name = "登录时间")
+    @Schema(description = "登录时间")
     private Date loginDate;
 
-    @Schema(name = "创建者ID")
+    @Schema(description = "创建者ID")
     private Long creatorId;
 
-    @Schema(name = "创建者")
+    @Schema(description = "创建者")
     private String creatorName;
 
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
 
-    @Schema(name = "修改者ID")
+    @Schema(description = "修改者ID")
     private Long updaterId;
 
-    @Schema(name = "修改者")
+    @Schema(description = "修改者")
     private String updaterName;
 
-    @Schema(name = "修改时间")
+    @Schema(description = "修改时间")
     private Date updateTime;
 
-    @Schema(name = "备注")
+    @Schema(description = "备注")
     private String remark;
 
 }

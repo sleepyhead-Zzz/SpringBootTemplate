@@ -11,7 +11,7 @@ import lombok.Data;
  * @author valarchie
  */
 @Data
-@Schema(name = "角色列表")
+@Schema(description = "角色列表")
 public class RoleDTO {
 
     public RoleDTO(SysRoleEntity entity) {
@@ -27,21 +27,21 @@ public class RoleDTO {
         }
     }
 
-    @Schema(name = "角色ID")
+    @Schema(description = "角色ID")
     private Long roleId;
-    @Schema(name = "角色名称")
+    @Schema(description = "角色名称")
     private String roleName;
-    @Schema(name = "角色标识")
+    @Schema(description = "角色标识")
     private String roleKey;
-    @Schema(name = "角色排序")
+    @Schema(description = "角色排序")
     private Integer roleSort;
-    @Schema(name = "角色状态")
+    @Schema(description = "角色状态")
     private Integer status;
-    @Schema(name = "备注")
+    @Schema(description = "备注")
     private String remark;
-    @Schema(name = "创建时间")
+    @Schema(description = "创建时间")
     private Date createTime;
-    @Schema(name = "数据范围")
+    @Schema(description = "数据范围")
     private Integer dataScope;
 
     private List<Long> selectedMenuList;
