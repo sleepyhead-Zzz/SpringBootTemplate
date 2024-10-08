@@ -37,6 +37,7 @@ import org.springframework.stereotype.Component;
 @Data
 @RequiredArgsConstructor
 public class TokenService {
+
     /**
      * 自定义令牌标识
      */
@@ -84,7 +85,11 @@ public class TokenService {
                 // 解析对应的权限以及用户信息
                 String uuid = (String) claims.get(Token.LOGIN_USER_KEY);
 
-                return redisCache.loginUserCache.getObjectOnlyInCacheById(uuid);
+                SystemLoginUser objectOnlyInCacheById = redisCache.loginUserCache.getObjectOnlyInCacheById(uuid);
+                if (objectOnlyInCacheById == null) {
+                    throw new ApiException(Client.INVALID_TOKEN);
+                }
+                return objectOnlyInCacheById;
             } catch (SignatureException | MalformedJwtException | UnsupportedJwtException |
                      IllegalArgumentException jwtException) {
                 log.error("parse token failed.", jwtException);
