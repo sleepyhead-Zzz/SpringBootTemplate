@@ -1,8 +1,6 @@
-version: '3.8'
-
 services:
   mysql:
-    image: hub.rat.dev/library/mysql:8.2.0
+    image: mysql:8.2.0
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
@@ -14,7 +12,7 @@ services:
       - springboottemplate-network
 
   minio:
-    image: minio/minio
+    image: minio/minio:latest
     ports:
       - "9000:9000"
       - "9001:9001"
