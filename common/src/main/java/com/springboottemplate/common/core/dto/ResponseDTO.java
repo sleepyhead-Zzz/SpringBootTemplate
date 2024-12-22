@@ -18,7 +18,7 @@ public class ResponseDTO<T> {
 
     private Integer code;
 
-    private String msg;
+    private String message;
 
     @JsonInclude
     private T data;

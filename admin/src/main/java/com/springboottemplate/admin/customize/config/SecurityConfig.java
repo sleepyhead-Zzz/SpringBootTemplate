@@ -1,12 +1,15 @@
 package com.springboottemplate.admin.customize.config;
 
 import cn.hutool.json.JSONUtil;
+import com.springboottemplate.admin.customize.async.AsyncTaskFactory;
 import com.springboottemplate.admin.customize.service.login.TokenService;
 import com.springboottemplate.common.core.dto.ResponseDTO;
+import com.springboottemplate.common.enums.common.LoginStatusEnum;
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode.Client;
 import com.springboottemplate.common.utils.ServletHolderUtil;
 import com.springboottemplate.domain.common.cache.RedisCache;
+import com.springboottemplate.infrastructure.thread.ThreadPoolManager;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
@@ -113,8 +116,8 @@ public class SecurityConfig {
                 // 删除用户缓存记录
                 redisCache.loginUserCache.delete(loginUser.getCachedKey());
                 // 记录用户退出日志
-//                ThreadPoolManager.execute(AsyncTaskFactory.loginInfoTask(
-//                    userName, LoginStatusEnum.LOGOUT, LoginStatusEnum.LOGOUT.description()));
+                ThreadPoolManager.execute(AsyncTaskFactory.loginInfoTask(
+                    userName, LoginStatusEnum.LOGOUT, LoginStatusEnum.LOGOUT.description()));
             }
             ServletHolderUtil.renderString(response, JSONUtil.toJsonStr(ResponseDTO.ok()));
         };

@@ -187,11 +187,15 @@ public class TokenService {
      * @return token
      */
     private String getTokenFromRequest(HttpServletRequest request) {
-        String token = request.getHeader(header);
-        if (StrUtil.isNotEmpty(token) && token.startsWith(Token.PREFIX)) {
-            token = StrUtil.stripIgnoreCase(token, Token.PREFIX, null);
+        String authorizationHeader = request.getHeader(header);
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            if (StrUtil.isNotEmpty(token) && token.startsWith(Token.PREFIX)) {
+                token = StrUtil.stripIgnoreCase(token, Token.PREFIX, null);
+            }
+            return token;
         }
-        return token;
+        return null;
     }
 
 }
