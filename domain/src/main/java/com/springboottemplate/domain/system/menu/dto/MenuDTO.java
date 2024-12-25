@@ -1,9 +1,6 @@
 package com.springboottemplate.domain.system.menu.dto;
 
 import cn.hutool.core.util.StrUtil;
-import com.springboottemplate.common.enums.BasicEnumUtil;
-import com.springboottemplate.common.enums.common.MenuTypeEnum;
-import com.springboottemplate.common.enums.common.StatusEnum;
 import com.springboottemplate.common.utils.jackson.JacksonUtil;
 import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
 import java.util.Date;
@@ -19,57 +16,43 @@ public class MenuDTO {
 
     public MenuDTO(SysMenuEntity entity) {
         if (entity != null) {
-            this.id = entity.getMenuId();
+            this.id = entity.getId();
             this.parentId = entity.getParentId();
-            this.menuName = entity.getMenuName();
-            this.routerName = entity.getRouterName();
+            this.name = entity.getName();
+            this.menuType = entity.getMenuType();
+            this.component = entity.getComponent();
             this.path = entity.getPath();
-            this.status = entity.getStatus();
-            this.isButton = entity.getIsButton();
-            this.statusStr = BasicEnumUtil.getDescriptionByValue(StatusEnum.class, entity.getStatus());
+            this.redirect = entity.getRedirect();
+            this.createTime = entity.getCreateTime();
 
-            if (!entity.getIsButton()) {
-                this.menuType = entity.getMenuType();
-                this.menuTypeStr = BasicEnumUtil.getDescriptionByValue(MenuTypeEnum.class, entity.getMenuType());
-            } else {
-                this.menuType = 0;
-            }
-
-            if (StrUtil.isNotEmpty(entity.getMetaInfo()) && JacksonUtil.isJson(entity.getMetaInfo())) {
-                MetaDTO meta = JacksonUtil.from(entity.getMetaInfo(), MetaDTO.class);
-                this.rank = meta.getRank();
+            if (StrUtil.isNotEmpty(entity.getMeta()) && JacksonUtil.isJson(entity.getMeta())) {
+                RouterMeta meta = JacksonUtil.from(entity.getMeta(), RouterMeta.class);
+                this.order = meta.getOrder();
                 this.icon = meta.getIcon();
             }
-            this.createTime = entity.getCreateTime();
         }
+
     }
 
-    // 设置成id和parentId 便于前端处理树级结构
     private Long id;
 
     private Long parentId;
 
-    private String menuName;
-
-    private String routerName;
-
-    private String path;
-
-    private Integer rank;
+    private String name;
 
     private Integer menuType;
 
-    private String menuTypeStr;
+    private String component;
 
-    private Boolean isButton;
+    private String path;
 
-    private Integer status;
+    private String redirect;
 
-    private String statusStr;
-
-    private Date createTime;
+    private Integer order;
 
     private String icon;
 
+    private String remark;
 
+    private Date createTime;
 }

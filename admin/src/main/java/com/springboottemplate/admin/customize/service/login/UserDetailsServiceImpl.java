@@ -82,10 +82,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (isAdmin) {
             LambdaQueryWrapper<SysMenuEntity> menuQuery = Wrappers.lambdaQuery();
-            menuQuery.select(SysMenuEntity::getMenuId);
+            menuQuery.select(SysMenuEntity::getId);
             List<SysMenuEntity> allMenus = menuService.list(menuQuery);
 
-            Set<Long> allMenuIds = allMenus.stream().map(SysMenuEntity::getMenuId).collect(Collectors.toSet());
+            Set<Long> allMenuIds = allMenus.stream().map(SysMenuEntity::getId).collect(Collectors.toSet());
 
             return new RoleInfo(RoleInfo.ADMIN_ROLE_ID, RoleInfo.ADMIN_ROLE_KEY, DataScopeEnum.ALL,
                 CollUtil.newHashSet(),
@@ -101,7 +101,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<SysMenuEntity> menuList = roleService.getMenuListByRoleId(roleId);
 
-        Set<Long> menuIds = menuList.stream().map(SysMenuEntity::getMenuId).collect(Collectors.toSet());
+        Set<Long> menuIds = menuList.stream().map(SysMenuEntity::getId).collect(Collectors.toSet());
         Set<String> permissions = menuList.stream().map(SysMenuEntity::getPermission).collect(Collectors.toSet());
 
         DataScopeEnum dataScopeEnum = BasicEnumUtil.fromValue(DataScopeEnum.class, roleEntity.getDataScope());

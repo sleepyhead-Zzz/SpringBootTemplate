@@ -1,7 +1,7 @@
 package com.springboottemplate.domain.system.menu.command;
 
 
-import com.springboottemplate.domain.system.menu.dto.MetaDTO;
+import com.springboottemplate.domain.system.menu.dto.RouterMeta;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -32,6 +32,6 @@ public class AddMenuCommand {
     @Size(max = 100, message = "权限标识长度不能超过100个字符")
     private String permission;
 
-    private MetaDTO meta;
+    private RouterMeta meta;
 
 }

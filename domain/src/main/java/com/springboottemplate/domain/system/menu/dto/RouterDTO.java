@@ -1,10 +1,9 @@
 package com.springboottemplate.domain.system.menu.dto;
 
-import com.springboottemplate.common.utils.jackson.JacksonUtil;
-import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.google.common.collect.Lists;
+import com.springboottemplate.common.utils.jackson.JacksonUtil;
+import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,24 +20,20 @@ public class RouterDTO {
 
     public RouterDTO(SysMenuEntity entity) {
         if (entity != null) {
-            this.name = entity.getRouterName();
+            this.name = entity.getName();
             this.path = entity.getPath();
-            // 暂时不需要component
-//            this.component = entity.getComponent();
-//            this.rank = entity.getRank();
-//            this.redirect = entity.getRedirect();
-            if (JacksonUtil.isJson(entity.getMetaInfo())) {
-                this.meta = JacksonUtil.from(entity.getMetaInfo(), MetaDTO.class);
+            this.component = entity.getComponent();
+            this.redirect = entity.getRedirect();
+            if (JacksonUtil.isJson(entity.getMeta())) {
+                this.meta = JacksonUtil.from(entity.getMeta(), RouterMeta.class);
             } else {
-                this.meta = new MetaDTO();
+                this.meta = new RouterMeta();
             }
-            this.meta.setAuths(Lists.newArrayList(entity.getPermission()));
         }
     }
 
     /**
      * 路由名字  根据前端的要求   必须唯一 并按照前端项目的推荐  这个Name最好和组件的Name一样  使用菜单表中的router_name
-     * TODO 这里后端需要加校验
      */
     private String name;
 
@@ -58,15 +53,9 @@ public class RouterDTO {
     private String component;
 
     /**
-     * 一级菜单排序值（排序仅支持一级菜单）
-     */
-    private Integer rank;
-
-
-    /**
      * 其他元素
      */
-    private MetaDTO meta;
+    private RouterMeta meta;
 
     /**
      * 子路由

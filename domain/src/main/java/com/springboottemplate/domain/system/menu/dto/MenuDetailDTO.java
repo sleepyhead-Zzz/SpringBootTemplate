@@ -18,13 +18,13 @@ public class MenuDetailDTO extends MenuDTO {
         if (entity == null) {
             return;
         }
-        if (StrUtil.isNotEmpty(entity.getMetaInfo()) && JacksonUtil.isJson(entity.getMetaInfo())) {
-            this.meta = JacksonUtil.from(entity.getMetaInfo(), MetaDTO.class);
+        if (StrUtil.isNotEmpty(entity.getMeta()) && JacksonUtil.isJson(entity.getMeta())) {
+            this.meta = JacksonUtil.from(entity.getMeta(), RouterMeta.class);
         }
         this.permission = entity.getPermission();
     }
 
     private String permission;
-    private MetaDTO meta;
+    private RouterMeta meta;
 
 }

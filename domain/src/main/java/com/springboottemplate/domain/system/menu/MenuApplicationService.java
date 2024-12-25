@@ -4,8 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
-
-import com.springboottemplate.common.enums.common.StatusEnum;
 import com.springboottemplate.domain.system.menu.command.AddMenuCommand;
 import com.springboottemplate.domain.system.menu.command.UpdateMenuCommand;
 import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
@@ -41,7 +39,7 @@ public class MenuApplicationService {
     public List<MenuDTO> getMenuList(MenuQuery query) {
         List<SysMenuEntity> list = menuService.list(query.toQueryWrapper());
         return list.stream().map(MenuDTO::new)
-            .sorted(Comparator.comparing(MenuDTO::getRank, Comparator.nullsLast(Integer::compareTo)))
+            .sorted(Comparator.comparing(MenuDTO::getOrder, Comparator.nullsLast(Integer::compareTo)))
             .collect(Collectors.toList());
     }
 
@@ -108,9 +106,9 @@ public class MenuApplicationService {
         config.setIdKey("menuId");
         return TreeUtil.build(menus, 0L, config, (menu, tree) -> {
             // 也可以使用 tree.setId(dept.getId());等一些默认值
-            tree.setId(menu.getMenuId());
+            tree.setId(menu.getId());
             tree.setParentId(menu.getParentId());
-            tree.putExtra("label", menu.getMenuName());
+            tree.putExtra("label", menu.getName());
         });
     }
 
@@ -125,8 +123,8 @@ public class MenuApplicationService {
 
         // 传给前端的路由排除掉按钮和停用的菜单
         List<SysMenuEntity> noButtonMenus = allMenus.stream()
-            .filter(menu -> !menu.getIsButton())
-            .filter(menu -> StatusEnum.ENABLE.getValue().equals(menu.getStatus()))
+            .filter(menu -> (menu.getMenuType() != 2))
+//            .filter(menu -> StatusEnum.ENABLE.getValue().equals(menu.getStatus()))
             .collect(Collectors.toList());
 
         TreeNodeConfig config = new TreeNodeConfig();
@@ -135,7 +133,7 @@ public class MenuApplicationService {
 
         return TreeUtil.build(noButtonMenus, 0L, config, (menu, tree) -> {
             // 也可以使用 tree.setId(dept.getId());等一些默认值
-            tree.setId(menu.getMenuId());
+            tree.setId(menu.getId());
             tree.setParentId(menu.getParentId());
             // TODO 可以取meta中的rank来排序
 //            tree.setWeight(menu.getRank());

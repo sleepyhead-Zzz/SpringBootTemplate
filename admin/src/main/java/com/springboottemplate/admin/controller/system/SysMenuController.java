@@ -2,7 +2,6 @@ package com.springboottemplate.admin.controller.system;
 
 import cn.hutool.core.lang.tree.Tree;
 import com.springboottemplate.admin.customize.aop.accessLog.AccessLog;
-import com.springboottemplate.common.core.base.BaseController;
 import com.springboottemplate.common.core.dto.ResponseDTO;
 import com.springboottemplate.common.enums.common.BusinessTypeEnum;
 import com.springboottemplate.domain.system.menu.MenuApplicationService;
@@ -15,11 +14,10 @@ import com.springboottemplate.infrastructure.user.AuthenticationUtils;
 import com.springboottemplate.infrastructure.user.web.SystemLoginUser;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,17 +29,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * 菜单信息
- *
- * @author valarchie
- */
-@Tag(name = "菜单API", description = "菜单相关的增删查改")
+@Tag(name = "v2菜单API", description = "v2菜单相关的增删查改")
 @RestController
-@RequestMapping("/system/menus")
+@RequestMapping("/system/v2/menus")
 @Validated
 @RequiredArgsConstructor
-public class SysMenuController extends BaseController {
+public class SysMenuController {
 
     private final MenuApplicationService menuApplicationService;
 
@@ -114,5 +107,4 @@ public class SysMenuController extends BaseController {
         menuApplicationService.remove(menuId);
         return ResponseDTO.ok();
     }
-
 }
