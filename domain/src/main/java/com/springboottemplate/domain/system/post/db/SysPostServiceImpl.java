@@ -1,9 +1,9 @@
 package com.springboottemplate.domain.system.post.db;
 
-import com.springboottemplate.domain.system.user.db.SysUserEntity;
-import com.springboottemplate.domain.system.user.db.SysUserMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.springboottemplate.domain.system.user.db.SysUserEntity;
+import com.springboottemplate.domain.system.user.db.SysUserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

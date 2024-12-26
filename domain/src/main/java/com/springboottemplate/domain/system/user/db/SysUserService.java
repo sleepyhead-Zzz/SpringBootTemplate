@@ -3,7 +3,6 @@ package com.springboottemplate.domain.system.user.db;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-
 import com.springboottemplate.common.core.page.AbstractPageQuery;
 import com.springboottemplate.domain.system.post.db.SysPostEntity;
 import com.springboottemplate.domain.system.role.db.SysRoleEntity;
@@ -24,7 +23,7 @@ public interface SysUserService extends IService<SysUserEntity> {
     /**
      * 检测号码是否唯一
      *
-     * @param phone  电话号码
+     * @param phone 电话号码
      * @param userId 用户id
      * @return 校验结果
      */
@@ -32,6 +31,7 @@ public interface SysUserService extends IService<SysUserEntity> {
 
     /**
      * 检测邮箱是否唯一
+     *
      * @param email 邮箱
      * @param userId 用户id
      * @return 校验结果

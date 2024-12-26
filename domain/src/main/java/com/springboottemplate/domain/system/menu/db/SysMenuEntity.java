@@ -19,7 +19,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("menu")
+@TableName("sys_menu")
 @Schema(description = "菜单权限表")
 public class SysMenuEntity extends BaseEntity<SysMenuEntity> {
 
@@ -27,12 +27,13 @@ public class SysMenuEntity extends BaseEntity<SysMenuEntity> {
 
     @Schema(description = "菜单ID")
     @TableId(value = "menu_id", type = IdType.AUTO)
-    private Long id;
+    private Long menu_id;
 
     private Long parentId;
 
     private String name;
 
+    @Schema(description = "菜单的类型(1为页面 2为目录 3为iFrame 4为外部网站 5为按钮)")
     private Integer menuType;
 
     private String component;
@@ -47,10 +48,11 @@ public class SysMenuEntity extends BaseEntity<SysMenuEntity> {
 
     private String remark;
 
+    private Integer status;
 
     @Override
     public Serializable pkVal() {
-        return this.id;
+        return this.menu_id;
     }
 
 }

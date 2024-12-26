@@ -1,7 +1,7 @@
 package com.springboottemplate.domain.system.role.db;
 
-import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
 import java.util.List;
 import org.springframework.context.annotation.Primary;
 

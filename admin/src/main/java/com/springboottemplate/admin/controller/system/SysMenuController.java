@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
+import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,9 +30,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "v2菜单API", description = "v2菜单相关的增删查改")
+@Tag(name = "菜单API", description = "菜单相关的增删查改")
 @RestController
-@RequestMapping("/system/v2/menus")
+@RequestMapping("/system/menus")
 @Validated
 @RequiredArgsConstructor
 public class SysMenuController {
@@ -68,6 +69,10 @@ public class SysMenuController {
     public ResponseDTO<List<Tree<Long>>> dropdownList() {
         SystemLoginUser loginUser = AuthenticationUtils.getSystemLoginUser();
         List<Tree<Long>> dropdownList = menuApplicationService.getDropdownList(loginUser);
+        // 如果 dropdownList 为 null，则返回一个空列表
+        if (dropdownList == null) {
+            return ResponseDTO.ok(Collections.emptyList());
+        }
         return ResponseDTO.ok(dropdownList);
     }
 

@@ -106,7 +106,7 @@ public class MenuApplicationService {
         config.setIdKey("menuId");
         return TreeUtil.build(menus, 0L, config, (menu, tree) -> {
             // 也可以使用 tree.setId(dept.getId());等一些默认值
-            tree.setId(menu.getId());
+            tree.setId(menu.getMenu_id());
             tree.setParentId(menu.getParentId());
             tree.putExtra("label", menu.getName());
         });
@@ -133,7 +133,7 @@ public class MenuApplicationService {
 
         return TreeUtil.build(noButtonMenus, 0L, config, (menu, tree) -> {
             // 也可以使用 tree.setId(dept.getId());等一些默认值
-            tree.setId(menu.getId());
+            tree.setId(menu.getMenu_id());
             tree.setParentId(menu.getParentId());
             // TODO 可以取meta中的rank来排序
 //            tree.setWeight(menu.getRank());

@@ -1,7 +1,7 @@
 package com.springboottemplate.domain.system.role.db;
 
-import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
 import java.util.List;
 import org.apache.ibatis.annotations.Select;
 

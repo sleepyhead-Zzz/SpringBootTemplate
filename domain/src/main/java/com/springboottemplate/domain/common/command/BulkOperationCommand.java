@@ -1,7 +1,6 @@
 package com.springboottemplate.domain.common.command;
 
 import cn.hutool.core.collection.CollUtil;
-
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
 import java.util.HashSet;

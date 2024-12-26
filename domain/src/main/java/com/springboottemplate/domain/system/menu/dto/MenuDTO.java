@@ -16,7 +16,7 @@ public class MenuDTO {
 
     public MenuDTO(SysMenuEntity entity) {
         if (entity != null) {
-            this.id = entity.getId();
+            this.id = entity.getMenu_id();
             this.parentId = entity.getParentId();
             this.name = entity.getName();
             this.menuType = entity.getMenuType();
@@ -31,7 +31,6 @@ public class MenuDTO {
                 this.icon = meta.getIcon();
             }
         }
-
     }
 
     private Long id;
@@ -55,4 +54,6 @@ public class MenuDTO {
     private String remark;
 
     private Date createTime;
+
+    private Integer status;
 }

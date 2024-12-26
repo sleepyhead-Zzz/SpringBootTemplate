@@ -34,7 +34,7 @@ public class MenuModel extends SysMenuEntity {
     public void loadAddCommand(AddMenuCommand command) {
         if (command != null) {
             BeanUtil.copyProperties(command, this, "menuId");
-
+            this.setName(command.getMenuName());
             String metaInfo = JacksonUtil.to(command.getMeta());
             this.setMeta(metaInfo);
         }
@@ -51,7 +51,7 @@ public class MenuModel extends SysMenuEntity {
 
 
     public void checkMenuNameUnique() {
-        if (menuService.isMenuNameDuplicated(getName(), getId(), getParentId())) {
+        if (menuService.isMenuNameDuplicated(getName(), getMenu_id(), getParentId())) {
             throw new ApiException(Business.MENU_NAME_IS_NOT_UNIQUE);
         }
     }
@@ -92,21 +92,21 @@ public class MenuModel extends SysMenuEntity {
 
 
     public void checkParentIdConflict() {
-        if (getId().equals(getParentId())) {
+        if (getMenu_id().equals(getParentId())) {
             throw new ApiException(Business.MENU_PARENT_ID_NOT_ALLOW_SELF);
         }
     }
 
 
     public void checkHasChildMenus() {
-        if (menuService.hasChildrenMenu(getId())) {
+        if (menuService.hasChildrenMenu(getMenu_id())) {
             throw new ApiException(Business.MENU_EXIST_CHILD_MENU_NOT_ALLOW_DELETE);
         }
     }
 
 
     public void checkMenuAlreadyAssignToRole() {
-        if (menuService.isMenuAssignToRoles(getId())) {
+        if (menuService.isMenuAssignToRoles(getMenu_id())) {
             throw new ApiException(Business.MENU_ALREADY_ASSIGN_TO_ROLE_NOT_ALLOW_DELETE);
         }
     }

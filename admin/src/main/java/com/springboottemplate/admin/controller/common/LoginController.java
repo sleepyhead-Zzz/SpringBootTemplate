@@ -53,23 +53,9 @@ public class LoginController {
         return ResponseDTO.ok(new TokenDTO(token, currentUserDTO));
     }
 
-//    /**
-//     * 获取路由信息
-//     * TODO 如果要在前端开启路由缓存的话 需要在ServerConfig.json 中  设置CachingAsyncRoutes=true  避免一直重复请求路由接口
-//     *
-//     * @return 路由信息
-//     */
-//    @Operation(summary = "获取用户对应的菜单路由", description = "用于动态生成路由")
-//    @GetMapping("/getRouters")
-//    public ResponseDTO<List<RouterDTO>> getRouters() {
-//        SystemLoginUser loginUser = AuthenticationUtils.getSystemLoginUser();
-//        List<RouterDTO> routerTree = menuApplicationService.getRouterTree(loginUser);
-//        return ResponseDTO.ok(routerTree);
-//    }
-
-    @Operation(summary = "V2获取用户对应的菜单路由", description = "V2用于动态生成路由")
-    @GetMapping("/v2/getRouters")
-    public ResponseDTO<List<RouterDTO>> getV2Routers() {
+    @Operation(summary = "获取用户对应的菜单路由", description = "用于动态生成路由")
+    @GetMapping("/getRouters")
+    public ResponseDTO<List<RouterDTO>> getRouters() {
         SystemLoginUser loginUser = AuthenticationUtils.getSystemLoginUser();
         List<RouterDTO> routerTree = menuApplicationService.getRouterTree(loginUser);
         return ResponseDTO.ok(routerTree);

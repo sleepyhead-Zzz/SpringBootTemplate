@@ -1,21 +1,20 @@
 package com.springboottemplate.domain.system.log;
 
-import com.springboottemplate.domain.common.command.BulkOperationCommand;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.springboottemplate.common.core.page.PageDTO;
-import com.springboottemplate.domain.system.log.dto.OperationLogDTO;
+import com.springboottemplate.domain.common.command.BulkOperationCommand;
 import com.springboottemplate.domain.system.log.db.SysLoginInfoEntity;
 import com.springboottemplate.domain.system.log.db.SysLoginInfoService;
+import com.springboottemplate.domain.system.log.db.SysOperationLogEntity;
 import com.springboottemplate.domain.system.log.db.SysOperationLogService;
 import com.springboottemplate.domain.system.log.dto.LoginLogDTO;
+import com.springboottemplate.domain.system.log.dto.OperationLogDTO;
 import com.springboottemplate.domain.system.log.query.LoginLogQuery;
-import com.springboottemplate.domain.system.log.db.SysOperationLogEntity;
+import com.springboottemplate.domain.system.log.query.OperationLogQuery;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
-import com.springboottemplate.domain.system.log.query.OperationLogQuery;
 import org.springframework.stereotype.Service;
 
 /**

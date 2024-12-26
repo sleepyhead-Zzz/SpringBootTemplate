@@ -1,7 +1,6 @@
 package com.springboottemplate.domain.system.post.query;
 
 import cn.hutool.core.util.StrUtil;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.springboottemplate.common.core.page.AbstractPageQuery;
 import com.springboottemplate.domain.system.post.db.SysPostEntity;

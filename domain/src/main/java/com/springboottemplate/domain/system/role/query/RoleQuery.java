@@ -1,9 +1,9 @@
 package com.springboottemplate.domain.system.role.query;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.springboottemplate.common.core.page.AbstractPageQuery;
 import com.springboottemplate.domain.system.role.db.SysRoleEntity;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

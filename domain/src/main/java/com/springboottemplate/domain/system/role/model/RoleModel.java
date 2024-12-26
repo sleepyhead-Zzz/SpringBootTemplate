@@ -2,6 +2,7 @@ package com.springboottemplate.domain.system.role.model;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.springboottemplate.common.enums.common.StatusEnum;
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
@@ -12,7 +13,6 @@ import com.springboottemplate.domain.system.role.db.SysRoleEntity;
 import com.springboottemplate.domain.system.role.db.SysRoleMenuEntity;
 import com.springboottemplate.domain.system.role.db.SysRoleMenuService;
 import com.springboottemplate.domain.system.role.db.SysRoleService;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

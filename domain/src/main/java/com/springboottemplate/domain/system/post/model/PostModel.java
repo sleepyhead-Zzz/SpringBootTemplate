@@ -1,7 +1,6 @@
 package com.springboottemplate.domain.system.post.model;
 
 import cn.hutool.core.bean.BeanUtil;
-
 import com.springboottemplate.common.exception.ApiException;
 import com.springboottemplate.common.exception.error.ErrorCode;
 import com.springboottemplate.domain.system.post.command.AddPostCommand;
