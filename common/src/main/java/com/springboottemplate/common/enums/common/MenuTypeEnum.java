@@ -14,8 +14,8 @@ public enum MenuTypeEnum implements BasicEnum<Integer> {
     MENU(1, "页面"),
     CATALOG(2, "目录"),
     IFRAME(3, "内嵌Iframe"),
-    OUTSIDE_LINK_REDIRECT(4, "外链跳转");
-
+    OUTSIDE_LINK_REDIRECT(4, "外链跳转"),
+    Button(5, "按钮");
     private final int value;
     private final String description;
 
