@@ -16,7 +16,7 @@ public class MenuDTO {
 
     public MenuDTO(SysMenuEntity entity) {
         if (entity != null) {
-            this.id = entity.getMenu_id();
+            this.id = entity.getMenuId();
             this.parentId = entity.getParentId();
             this.name = entity.getName();
             this.menuType = entity.getMenuType();
@@ -24,7 +24,7 @@ public class MenuDTO {
             this.path = entity.getPath();
             this.redirect = entity.getRedirect();
             this.createTime = entity.getCreateTime();
-
+            this.status = entity.getStatus();
             if (StrUtil.isNotEmpty(entity.getMeta()) && JacksonUtil.isJson(entity.getMeta())) {
                 RouterMeta meta = JacksonUtil.from(entity.getMeta(), RouterMeta.class);
                 this.order = meta.getOrder();
@@ -55,5 +55,5 @@ public class MenuDTO {
 
     private Date createTime;
 
-    private Integer status;
+    private Boolean status;
 }

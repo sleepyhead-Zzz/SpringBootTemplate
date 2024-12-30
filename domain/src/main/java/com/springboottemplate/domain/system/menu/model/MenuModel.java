@@ -51,7 +51,7 @@ public class MenuModel extends SysMenuEntity {
 
 
     public void checkMenuNameUnique() {
-        if (menuService.isMenuNameDuplicated(getName(), getMenu_id(), getParentId())) {
+        if (menuService.isMenuNameDuplicated(getName(), getMenuId(), getParentId())) {
             throw new ApiException(Business.MENU_NAME_IS_NOT_UNIQUE);
         }
     }
@@ -92,21 +92,21 @@ public class MenuModel extends SysMenuEntity {
 
 
     public void checkParentIdConflict() {
-        if (getMenu_id().equals(getParentId())) {
+        if (getMenuId().equals(getParentId())) {
             throw new ApiException(Business.MENU_PARENT_ID_NOT_ALLOW_SELF);
         }
     }
 
 
     public void checkHasChildMenus() {
-        if (menuService.hasChildrenMenu(getMenu_id())) {
+        if (menuService.hasChildrenMenu(getMenuId())) {
             throw new ApiException(Business.MENU_EXIST_CHILD_MENU_NOT_ALLOW_DELETE);
         }
     }
 
 
     public void checkMenuAlreadyAssignToRole() {
-        if (menuService.isMenuAssignToRoles(getMenu_id())) {
+        if (menuService.isMenuAssignToRoles(getMenuId())) {
             throw new ApiException(Business.MENU_ALREADY_ASSIGN_TO_ROLE_NOT_ALLOW_DELETE);
         }
     }

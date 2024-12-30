@@ -106,9 +106,9 @@ public class MenuApplicationService {
         config.setIdKey("menuId");
         return TreeUtil.build(menus, 0L, config, (menu, tree) -> {
             // 也可以使用 tree.setId(dept.getId());等一些默认值
-            tree.setId(menu.getMenu_id());
+            tree.setId(menu.getMenuId());
             tree.setParentId(menu.getParentId());
-            tree.putExtra("label", menu.getName());
+            tree.putExtra("label", menu.getRemark());
         });
     }
 
@@ -123,8 +123,8 @@ public class MenuApplicationService {
 
         // 传给前端的路由排除掉按钮和停用的菜单
         List<SysMenuEntity> noButtonMenus = allMenus.stream()
-            .filter(menu -> (menu.getMenuType() != 2))
-//            .filter(menu -> StatusEnum.ENABLE.getValue().equals(menu.getStatus()))
+            .filter(menu -> (menu.getMenuType() != 5))
+            .filter(menu -> false)
             .collect(Collectors.toList());
 
         TreeNodeConfig config = new TreeNodeConfig();
@@ -133,7 +133,7 @@ public class MenuApplicationService {
 
         return TreeUtil.build(noButtonMenus, 0L, config, (menu, tree) -> {
             // 也可以使用 tree.setId(dept.getId());等一些默认值
-            tree.setId(menu.getMenu_id());
+            tree.setId(menu.getMenuId());
             tree.setParentId(menu.getParentId());
             // TODO 可以取meta中的rank来排序
 //            tree.setWeight(menu.getRank());

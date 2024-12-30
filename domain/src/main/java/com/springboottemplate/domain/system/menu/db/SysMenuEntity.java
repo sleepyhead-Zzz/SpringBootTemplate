@@ -27,7 +27,7 @@ public class SysMenuEntity extends BaseEntity<SysMenuEntity> {
 
     @Schema(description = "菜单ID")
     @TableId(value = "menu_id", type = IdType.AUTO)
-    private Long menu_id;
+    private Long menuId;
 
     private Long parentId;
 
@@ -48,11 +48,11 @@ public class SysMenuEntity extends BaseEntity<SysMenuEntity> {
 
     private String remark;
 
-    private Integer status;
+    private Boolean status;
 
     @Override
     public Serializable pkVal() {
-        return this.menu_id;
+        return this.menuId;
     }
 
 }

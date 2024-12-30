@@ -18,6 +18,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -70,11 +71,9 @@ public class SysMenuController {
         SystemLoginUser loginUser = AuthenticationUtils.getSystemLoginUser();
         List<Tree<Long>> dropdownList = menuApplicationService.getDropdownList(loginUser);
         // 如果 dropdownList 为 null，则返回一个空列表
-        if (dropdownList == null) {
-            return ResponseDTO.ok(Collections.emptyList());
-        }
-        return ResponseDTO.ok(dropdownList);
+        return ResponseDTO.ok(Objects.requireNonNullElse(dropdownList, Collections.emptyList()));
     }
+
 
     /**
      * 新增菜单 需支持一级菜单以及 多级菜单 子菜单为一个 或者 多个的情况 隐藏菜单不显示  以及rank排序 内链 和 外链

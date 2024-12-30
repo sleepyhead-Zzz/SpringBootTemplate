@@ -37,7 +37,7 @@ public class AddMenuCommand {
 
     private String remark;
 
-    private Integer status;
+    private Boolean status;
 
 
 }
