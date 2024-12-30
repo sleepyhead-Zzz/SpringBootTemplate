@@ -25,10 +25,12 @@ public class MenuDTO {
             this.redirect = entity.getRedirect();
             this.createTime = entity.getCreateTime();
             this.status = entity.getStatus();
+            this.remark = entity.getRemark();
             if (StrUtil.isNotEmpty(entity.getMeta()) && JacksonUtil.isJson(entity.getMeta())) {
                 RouterMeta meta = JacksonUtil.from(entity.getMeta(), RouterMeta.class);
                 this.order = meta.getOrder();
                 this.icon = meta.getIcon();
+
             }
         }
     }

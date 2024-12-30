@@ -22,9 +22,15 @@ public class MenuDetailDTO extends MenuDTO {
             this.meta = JacksonUtil.from(entity.getMeta(), RouterMeta.class);
         }
         this.permission = entity.getPermission();
+        this.order = meta.getOrder();
+        this.keepAlive = meta.getKeepAlive();
+        this.title = meta.getTitle();
     }
 
+    private Integer order;
+    private Boolean keepAlive;
     private String permission;
     private RouterMeta meta;
+    private String title;
 
 }

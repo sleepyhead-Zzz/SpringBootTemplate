@@ -123,8 +123,9 @@ public class MenuApplicationService {
 
         // 传给前端的路由排除掉按钮和停用的菜单
         List<SysMenuEntity> noButtonMenus = allMenus.stream()
-            .filter(menu -> (menu.getMenuType() != 5))
-            .filter(menu -> false)
+            .filter(menu -> menu.getMenuType() != 5)
+            .filter(SysMenuEntity::getStatus) // 只保留 status 为 true 的菜单
+
             .collect(Collectors.toList());
 
         TreeNodeConfig config = new TreeNodeConfig();
