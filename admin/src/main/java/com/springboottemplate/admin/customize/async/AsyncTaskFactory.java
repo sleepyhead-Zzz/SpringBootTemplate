@@ -3,7 +3,6 @@ package com.springboottemplate.admin.customize.async;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
 import cn.hutool.extra.spring.SpringUtil;
-
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.springboottemplate.common.enums.common.LoginStatusEnum;
@@ -12,7 +11,6 @@ import com.springboottemplate.domain.system.log.db.SysLoginInfoEntity;
 import com.springboottemplate.domain.system.log.db.SysLoginInfoService;
 import com.springboottemplate.domain.system.log.db.SysOperationLogEntity;
 import com.springboottemplate.domain.system.log.db.SysOperationLogService;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**

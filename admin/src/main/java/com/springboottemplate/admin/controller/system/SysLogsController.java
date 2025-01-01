@@ -1,13 +1,12 @@
 package com.springboottemplate.admin.controller.system;
 
 
-import jakarta.servlet.http.HttpServletResponse;
-import com.springboottemplate.domain.common.command.BulkOperationCommand;
 import com.springboottemplate.admin.customize.aop.accessLog.AccessLog;
 import com.springboottemplate.common.core.base.BaseController;
 import com.springboottemplate.common.core.dto.ResponseDTO;
 import com.springboottemplate.common.core.page.PageDTO;
 import com.springboottemplate.common.enums.common.BusinessTypeEnum;
+import com.springboottemplate.domain.common.command.BulkOperationCommand;
 import com.springboottemplate.domain.system.log.LogApplicationService;
 import com.springboottemplate.domain.system.log.dto.LoginLogDTO;
 import com.springboottemplate.domain.system.log.dto.OperationLogDTO;
@@ -16,10 +15,9 @@ import com.springboottemplate.domain.system.log.query.OperationLogQuery;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotEmpty;
-import java.util.List;
-
-import lombok.RequiredArgsConstructor;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
