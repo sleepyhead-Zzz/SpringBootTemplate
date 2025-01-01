@@ -1,5 +1,6 @@
 package com.springboottemplate.domain.system.user.db;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,7 +13,10 @@ import lombok.EqualsAndHashCode;
 @Data
 public class SearchUserDO extends SysUserEntity {
 
+    @Schema(description = "部门名称")
     private String deptName;
+
+    @Schema(description = "部门领导")
     private String deptLeader;
 
 }
