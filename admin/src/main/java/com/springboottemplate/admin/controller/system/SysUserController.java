@@ -117,7 +117,9 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@permission.has('system:user:edit') AND @dataScope.checkUserId(#command.userId)")
     @AccessLog(title = "用户管理", businessType = BusinessTypeEnum.MODIFY)
     @PutMapping("/{userId}")
-    public ResponseDTO<Void> edit(@Validated @RequestBody UpdateUserCommand command) {
+    public ResponseDTO<Void> edit(@PathVariable("userId") Long userId,
+        @Validated @RequestBody UpdateUserCommand command) {
+        command.setUserId(userId);
         userApplicationService.updateUser(command);
         return ResponseDTO.ok();
     }
