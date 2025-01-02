@@ -1,6 +1,7 @@
 package com.springboottemplate.domain.system.dept;
 
 import cn.hutool.core.lang.tree.Tree;
+import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
 import com.springboottemplate.domain.system.dept.command.AddDeptCommand;
 import com.springboottemplate.domain.system.dept.command.UpdateDeptCommand;
@@ -41,9 +42,10 @@ public class DeptApplicationService {
     }
 
     public List<Tree<Long>> getDeptTree() {
+        TreeNodeConfig config = new TreeNodeConfig();
         List<SysDeptEntity> list = deptService.list();
-
-        return TreeUtil.build(list, 0L, (dept, tree) -> {
+        config.setIdKey("deptId");
+        return TreeUtil.build(list, 0L, config,(dept, tree) -> {
             tree.setId(dept.getDeptId());
             tree.setParentId(dept.getParentId());
             tree.putExtra("label", dept.getDeptName());

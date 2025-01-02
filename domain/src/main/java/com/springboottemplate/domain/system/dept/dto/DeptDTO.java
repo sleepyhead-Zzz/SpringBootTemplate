@@ -15,7 +15,7 @@ public class DeptDTO {
 
     public DeptDTO(SysDeptEntity entity) {
         if (entity != null) {
-            this.id = entity.getDeptId();
+            this.deptId = entity.getDeptId();
             this.parentId = entity.getParentId();
             this.deptName = entity.getDeptName();
             this.orderNum = entity.getOrderNum();
@@ -29,7 +29,7 @@ public class DeptDTO {
     }
 
 
-    private Long id;
+    private Long deptId;
 
     private Long parentId;
 
