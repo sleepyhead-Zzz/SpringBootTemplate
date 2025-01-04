@@ -50,8 +50,8 @@ public class SysPostController extends BaseController {
      */
     @Operation(summary = "职位列表")
     @PreAuthorize("@permission.has('system:post:list')")
-    @GetMapping("/list")
-    public ResponseDTO<PageDTO<PostDTO>> list(PostQuery query) {
+    @PostMapping("/list")
+    public ResponseDTO<PageDTO<PostDTO>> list(@RequestBody PostQuery query) {
         PageDTO<PostDTO> pageDTO = postApplicationService.getPostList(query);
         return ResponseDTO.ok(pageDTO);
     }
@@ -102,8 +102,9 @@ public class SysPostController extends BaseController {
     @Operation(summary = "修改职位")
     @PreAuthorize("@permission.has('system:post:edit')")
     @AccessLog(title = "岗位管理", businessType = BusinessTypeEnum.MODIFY)
-    @PutMapping
-    public ResponseDTO<Void> edit(@RequestBody UpdatePostCommand updateCommand) {
+    @PutMapping("{postId}")
+    public ResponseDTO<Void> edit(@PathVariable Long postId, @RequestBody UpdatePostCommand updateCommand) {
+        updateCommand.setPostId(postId);
         postApplicationService.updatePost(updateCommand);
         return ResponseDTO.ok();
     }

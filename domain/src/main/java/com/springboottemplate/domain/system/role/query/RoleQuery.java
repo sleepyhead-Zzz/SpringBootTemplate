@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.springboottemplate.common.core.page.AbstractPageQuery;
 import com.springboottemplate.domain.system.role.db.SysRoleEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,10 +15,13 @@ import lombok.EqualsAndHashCode;
 @Data
 public class RoleQuery extends AbstractPageQuery<SysRoleEntity> {
 
+    @Schema(description = "角色名称")
     private String roleName;
 
+    @Schema(description = "角色权限字符串")
     private String roleKey;
 
+    @Schema(description = "角色状态")
     private String status;
 
 
