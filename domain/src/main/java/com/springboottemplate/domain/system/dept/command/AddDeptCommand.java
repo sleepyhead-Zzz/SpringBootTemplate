@@ -32,17 +32,19 @@ public class AddDeptCommand {
      * 显示顺序
      */
     @NotNull(message = "显示顺序不能为空")
+    @PositiveOrZero(message = "显示顺序必须是一个正整数")
     private Integer orderNum;
 
     /**
      * 负责人
      */
+    @Size(max = 30, message = "领导名称长度不能超过30个字符")
     private String leaderName;
 
     /**
      * 联系电话
      */
-    @Size(max = 11, message = "联系电话长度不能超过11个字符")
+    @Size(max = 13, message = "联系电话长度不能超过13个字符")
     private String phone;
 
     /**
@@ -52,7 +54,7 @@ public class AddDeptCommand {
     @Size(max = 50, message = "邮箱长度不能超过50个字符")
     private String email;
 
-
+    @PositiveOrZero(message = "状态必须是一个正整数")
     private Integer status;
 
 
