@@ -6,7 +6,7 @@ import com.springboottemplate.common.enums.BasicEnum;
 /**
  * Http Method
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 public enum RequestMethodEnum implements BasicEnum<Integer> {
 

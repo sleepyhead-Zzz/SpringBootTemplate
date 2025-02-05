@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 /**
  * 数据权限校验服务
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Service("dataScope")
 @RequiredArgsConstructor

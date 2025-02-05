@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author valarchie 供 DataPermissionChecker使用的 数据条件
+ * @author Sleepyhead 供 DataPermissionChecker使用的 数据条件
  */
 @Data
 @Builder

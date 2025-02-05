@@ -6,7 +6,7 @@ import com.springboottemplate.common.enums.BasicEnum;
 /**
  * 对应sys_role表的data_scope字段
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 public enum DataScopeEnum implements BasicEnum<Integer> {
 

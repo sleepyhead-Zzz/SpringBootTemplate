@@ -1,7 +1,7 @@
 package com.springboottemplate.common.exception.error;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 public interface ErrorCodeInterface {
 

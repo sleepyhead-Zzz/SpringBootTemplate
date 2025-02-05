@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 全局异常处理器
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @RestControllerAdvice
 @Slf4j

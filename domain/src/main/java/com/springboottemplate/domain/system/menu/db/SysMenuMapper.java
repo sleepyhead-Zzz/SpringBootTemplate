@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
  * 菜单权限表 Mapper 接口
  * </p>
  *
- * @author valarchie
+ * @author Sleepyhead
  * @since 2022-06-16
  */
 public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {

@@ -6,7 +6,7 @@ import com.springboottemplate.common.exception.error.ErrorCode;
 import java.util.Objects;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 public class BasicEnumUtil {
 

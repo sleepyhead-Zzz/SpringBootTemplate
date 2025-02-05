@@ -4,7 +4,7 @@ package com.springboottemplate.common.enums.common;
 import com.springboottemplate.common.enums.BasicEnum;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Deprecated
 public enum MenuComponentEnum implements BasicEnum<Integer> {

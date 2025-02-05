@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 /**
  * Entity基类
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

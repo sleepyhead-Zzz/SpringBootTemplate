@@ -1,7 +1,7 @@
 package com.springboottemplate.common.enums;
 
 /**
- * @author valarchie 普通的枚举 接口
+ * @author Sleepyhead 普通的枚举 接口
  */
 public interface BasicEnum<T> {
 

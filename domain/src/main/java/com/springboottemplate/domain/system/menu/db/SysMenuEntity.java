@@ -14,7 +14,7 @@ import lombok.Setter;
  * 菜单权限表
  * </p>
  *
- * @author valarchie
+ * @author Sleepyhead
  * @since 2023-07-21
  */
 @Getter

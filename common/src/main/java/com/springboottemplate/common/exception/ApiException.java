@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 统一异常类
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @EqualsAndHashCode(callSuper = true)
 @Slf4j

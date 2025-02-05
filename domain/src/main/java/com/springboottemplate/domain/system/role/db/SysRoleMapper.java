@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
  * 角色信息表 Mapper 接口
  * </p>
  *
- * @author valarchie
+ * @author Sleepyhead
  * @since 2022-06-16
  */
 public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {

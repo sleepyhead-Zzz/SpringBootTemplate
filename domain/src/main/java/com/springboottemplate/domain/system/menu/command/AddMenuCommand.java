@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class AddMenuCommand {

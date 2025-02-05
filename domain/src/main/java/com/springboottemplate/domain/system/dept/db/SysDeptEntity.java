@@ -16,7 +16,7 @@ import lombok.Setter;
  * 部门表
  * </p>
  *
- * @author valarchie
+ * @author Sleepyhead
  * @since 2022-10-02
  */
 @Getter

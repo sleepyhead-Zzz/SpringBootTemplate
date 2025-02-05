@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 部门表 Mapper 接口
  * </p>
  *
- * @author valarchie
+ * @author Sleepyhead
  * @since 2022-06-16
  */
 public interface SysDeptMapper extends BaseMapper<SysDeptEntity> {

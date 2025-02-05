@@ -7,7 +7,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 /**
  * 对应sys_menu表的is_visible字段
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Deprecated
 @Dictionary(name = "sysMenu.isVisible")

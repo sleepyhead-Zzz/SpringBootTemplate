@@ -15,7 +15,7 @@ import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 /**
  * 异步任务管理器
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Slf4j
 public class ThreadPoolManager {

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Configuration
 public class JacksonConfig implements Jackson2ObjectMapperBuilderCustomizer {

@@ -1,7 +1,7 @@
 package com.springboottemplate.common.utils.jackson;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 public class JacksonException extends RuntimeException {
 

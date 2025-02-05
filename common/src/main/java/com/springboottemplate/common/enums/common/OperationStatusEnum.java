@@ -7,7 +7,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 /**
  * 对应sys_operation_log的status字段
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Dictionary(name = "sysOperationLog.status")
 public enum OperationStatusEnum implements DictionaryEnum<Integer> {

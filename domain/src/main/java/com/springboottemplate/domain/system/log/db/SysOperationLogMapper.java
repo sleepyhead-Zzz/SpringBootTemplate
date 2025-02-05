@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 操作日志记录 Mapper 接口
  * </p>
  *
- * @author valarchie
+ * @author Sleepyhead
  * @since 2022-06-08
  */
 public interface SysOperationLogMapper extends BaseMapper<SysOperationLogEntity> {

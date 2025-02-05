@@ -10,7 +10,7 @@ import com.springboottemplate.domain.system.post.db.SysPostService;
 import lombok.NoArgsConstructor;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @NoArgsConstructor
 public class PostModel extends SysPostEntity {

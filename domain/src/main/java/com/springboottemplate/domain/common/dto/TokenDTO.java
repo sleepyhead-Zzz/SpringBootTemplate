@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 @AllArgsConstructor

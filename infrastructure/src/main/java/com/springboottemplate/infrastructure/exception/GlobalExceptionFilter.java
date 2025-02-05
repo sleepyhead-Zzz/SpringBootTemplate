@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 异常过滤器，因为配置的全局异常捕获器只能捕获MVC框架的异常 不能捕获filter的异常
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Slf4j
 @WebFilter(filterName = "ExceptionFilter", urlPatterns = "/*")

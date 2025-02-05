@@ -7,7 +7,7 @@ import com.springboottemplate.domain.system.user.db.SysUserEntity;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class UserProfileDTO {

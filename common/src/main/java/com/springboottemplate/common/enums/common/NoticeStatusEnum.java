@@ -7,7 +7,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 /**
  * 对应sys_notice的 status字段
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Dictionary(name = "sysNotice.status")
 public enum NoticeStatusEnum implements DictionaryEnum<Integer> {

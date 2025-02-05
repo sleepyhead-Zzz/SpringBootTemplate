@@ -22,52 +22,52 @@ create table if not exists sys_dept
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (1, 0, '0', 'AgileBoot科技', 0, null, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+VALUES (1, 0, '0', 'AgileBoot科技', 0, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         null, '2022-05-21 08:30:54', null, null, 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (2, 1, '0,1', '深圳总公司', 1, null, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+VALUES (2, 1, '0,1', '深圳总公司', 1, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         null, '2022-05-21 08:30:54', null, null, 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (3, 1, '0,1', '长沙分公司', 2, null, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+VALUES (3, 1, '0,1', '长沙分公司', 2, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         null, '2022-05-21 08:30:54', null, null, 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (4, 2, '0,1,2', '研发部门', 1, null, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+VALUES (4, 2, '0,1,2', '研发部门', 1, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         null, '2022-05-21 08:30:54', null, null, 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (5, 2, '0,1,2', '市场部门', 2, null, 'valarchie', '15888888888', 'valarchie@163.com', 0,
+VALUES (5, 2, '0,1,2', '市场部门', 2, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 0,
         null, '2022-05-21 08:30:54', 1, '2023-07-20 22:46:41', 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (6, 2, '0,1,2', '测试部门', 3, null, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+VALUES (6, 2, '0,1,2', '测试部门', 3, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         null, '2022-05-21 08:30:54', null, null, 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (7, 2, '0,1,2', '财务部门', 4, null, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+VALUES (7, 2, '0,1,2', '财务部门', 4, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         null, '2022-05-21 08:30:54', null, null, 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (8, 2, '0,1,2', '运维部门', 5, null, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+VALUES (8, 2, '0,1,2', '运维部门', 5, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         null, '2022-05-21 08:30:54', null, null, 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (9, 3, '0,1,3', '市场部!', 1, null, 'valarchie!!', '15888188888', 'valarc1hie@163.com', 0,
+VALUES (9, 3, '0,1,3', '市场部!', 1, null, 'Sleepyhead!!', '15888188888', 'valarc1hie@163.com', 0,
         null, '2022-05-21 08:30:54', 1, '2023-07-20 22:33:31', 0);
 INSERT INTO sys_dept (dept_id, parent_id, ancestors, dept_name, order_num, leader_id, leader_name,
                       phone, email, status, creator_id, create_time, updater_id, update_time,
                       deleted)
-VALUES (10, 3, '0,1,3', '财务部门', 2, null, 'valarchie', '15888888888', 'valarchie@163.com', 0,
+VALUES (10, 3, '0,1,3', '财务部门', 2, null, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 0,
         null, '2022-05-21 08:30:54', null, null, 0);
 
 create table if not exists sys_login_info
@@ -443,7 +443,7 @@ VALUES (62, '单条强退', 0, ' ', 13, '', 1, 'monitor:online:forceLogout', '{"
 INSERT INTO sys_menu (menu_id, menu_name, menu_type, router_name, parent_id, path, is_button,
                       permission, meta_info, status, remark, creator_id, create_time, updater_id,
                       update_time, deleted)
-VALUES (63, 'AgileBoot Github地址', 4, 'https://github.com/valarchie/AgileBoot-Back-End', 0,
+VALUES (63, 'AgileBoot Github地址', 4, 'https://github.com/Sleepyhead/AgileBoot-Back-End', 0,
         '/external', 0, '',
         '{"title":"AgileBoot Github地址","icon":"fa-solid:external-link-alt","showParent":true,"rank":9}',
         1, 'Agileboot github地址', 0, '2022-05-21 08:30:54', 1, '2023-08-14 23:12:13', 0);

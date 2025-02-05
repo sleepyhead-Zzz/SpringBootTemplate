@@ -3,7 +3,7 @@ package com.springboottemplate.infrastructure.user.base;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class LoginInfo {

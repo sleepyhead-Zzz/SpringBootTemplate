@@ -3,7 +3,7 @@ package com.springboottemplate.admin.customize.service.login.dto;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class CaptchaDTO {

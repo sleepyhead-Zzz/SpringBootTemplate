@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 用户信息
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Tag(name = "用户API", description = "用户相关的增删查改")
 @RestController

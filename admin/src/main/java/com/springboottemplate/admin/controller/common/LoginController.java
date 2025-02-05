@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 首页
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Tag(name = "登录API", description = "登录相关接口")
 @RestController

@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * 缓存接口实现类  二级缓存
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Slf4j
 public abstract class AbstractGuavaCacheTemplate<T> {

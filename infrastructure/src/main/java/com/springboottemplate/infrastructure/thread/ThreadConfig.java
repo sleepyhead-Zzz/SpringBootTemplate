@@ -1,7 +1,7 @@
 package com.springboottemplate.infrastructure.thread;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 public class ThreadConfig {
 

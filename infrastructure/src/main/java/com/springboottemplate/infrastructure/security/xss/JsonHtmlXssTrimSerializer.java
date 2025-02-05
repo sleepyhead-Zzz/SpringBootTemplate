@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * 直接将html标签去掉
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 public class JsonHtmlXssTrimSerializer extends JsonDeserializer<String> {
 

@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 用户登录对象
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class LoginCommand {

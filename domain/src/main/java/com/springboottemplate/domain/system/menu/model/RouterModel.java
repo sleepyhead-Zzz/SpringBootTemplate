@@ -3,7 +3,7 @@ package com.springboottemplate.domain.system.menu.model;
 import com.springboottemplate.domain.system.menu.db.SysMenuEntity;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 public class RouterModel extends SysMenuEntity {
 

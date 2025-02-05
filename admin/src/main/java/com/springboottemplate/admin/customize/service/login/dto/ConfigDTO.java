@@ -7,7 +7,7 @@ import java.util.Map;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class ConfigDTO {

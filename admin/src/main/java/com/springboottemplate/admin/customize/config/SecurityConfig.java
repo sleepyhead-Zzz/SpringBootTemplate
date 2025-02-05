@@ -37,7 +37,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 /**
  * 主要配置登录流程逻辑涉及以下几个类
  *
- * @author valarchie
+ * @author Sleepyhead
  * @see this#unauthorizedHandler()  用于用户未授权或登录失败处理
  * @see this#logOutSuccessHandler 用于退出登录成功后的逻辑
  * @see JwtAuthenticationTokenFilter#doFilter token的校验和刷新

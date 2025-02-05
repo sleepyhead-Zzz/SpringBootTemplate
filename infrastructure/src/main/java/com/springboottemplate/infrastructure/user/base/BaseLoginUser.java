@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * 登录用户身份权限
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 @NoArgsConstructor

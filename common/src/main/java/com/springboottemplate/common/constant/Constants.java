@@ -4,7 +4,7 @@ package com.springboottemplate.common.constant;
 /**
  * 通用常量信息
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 public class Constants {
 

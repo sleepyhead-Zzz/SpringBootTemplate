@@ -3,7 +3,7 @@ package com.springboottemplate.common.enums.dictionary;
 /**
  * Css 样式
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 public class CssTag {
 

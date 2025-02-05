@@ -9,7 +9,7 @@ import java.util.Set;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class BulkOperationCommand<T> {

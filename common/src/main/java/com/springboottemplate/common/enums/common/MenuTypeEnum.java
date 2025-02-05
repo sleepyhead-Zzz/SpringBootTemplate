@@ -4,7 +4,7 @@ package com.springboottemplate.common.enums.common;
 import com.springboottemplate.common.enums.BasicEnum;
 
 /**
- * @author valarchie 对应 sys_menu表的menu_type字段
+ * @author Sleepyhead 对应 sys_menu表的menu_type字段
  */
 public enum MenuTypeEnum implements BasicEnum<Integer> {
 

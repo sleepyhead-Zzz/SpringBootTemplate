@@ -30,7 +30,7 @@ import org.springframework.stereotype.Component;
 /**
  * token验证处理
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Component
 @Slf4j

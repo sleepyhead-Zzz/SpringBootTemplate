@@ -7,7 +7,7 @@ import lombok.Data;
 /**
  * 数据权限测试接口
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public abstract class AbstractDataPermissionChecker {

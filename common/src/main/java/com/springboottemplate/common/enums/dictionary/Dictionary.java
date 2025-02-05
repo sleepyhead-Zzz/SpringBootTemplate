@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * 字典类型注解
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

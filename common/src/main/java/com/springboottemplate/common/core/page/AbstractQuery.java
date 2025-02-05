@@ -13,7 +13,7 @@ import lombok.Data;
 /**
  * 如果是简单的排序 和 时间范围筛选  可以使用内置的这几个字段
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public abstract class AbstractQuery<T> {

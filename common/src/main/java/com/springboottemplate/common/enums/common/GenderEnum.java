@@ -8,7 +8,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 /**
  * 对应sys_user的sex字段
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Dictionary(name = "sysUser.sex")
 public enum GenderEnum implements DictionaryEnum<Integer> {

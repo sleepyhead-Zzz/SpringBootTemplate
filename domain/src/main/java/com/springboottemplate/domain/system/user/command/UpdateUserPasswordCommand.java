@@ -3,7 +3,7 @@ package com.springboottemplate.domain.system.user.command;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class UpdateUserPasswordCommand {

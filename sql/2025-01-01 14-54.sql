@@ -87,25 +87,25 @@ LOCK
 TABLES `sys_dept` WRITE;
 /*!40000 ALTER TABLE `sys_dept` DISABLE KEYS */;
 INSERT INTO `sys_dept`
-VALUES (1, 0, '0', 'AgileBoot科技', 0, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+VALUES (1, 0, '0', 'AgileBoot科技', 0, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         NULL, '2022-05-21 08:30:54', NULL, NULL, 0),
-       (2, 1, '0,1', '深圳总公司', 1, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+       (2, 1, '0,1', '深圳总公司', 1, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         NULL, '2022-05-21 08:30:54', NULL, NULL, 0),
-       (3, 1, '0,1', '长沙分公司', 2, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+       (3, 1, '0,1', '长沙分公司', 2, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         NULL, '2022-05-21 08:30:54', NULL, NULL, 0),
-       (4, 2, '0,1,2', '研发部门', 1, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+       (4, 2, '0,1,2', '研发部门', 1, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         NULL, '2022-05-21 08:30:54', NULL, NULL, 0),
-       (5, 2, '0,1,2', '市场部门', 2, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 0,
+       (5, 2, '0,1,2', '市场部门', 2, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 0,
         NULL, '2022-05-21 08:30:54', 1, '2023-07-20 22:46:41', 0),
-       (6, 2, '0,1,2', '测试部门', 3, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+       (6, 2, '0,1,2', '测试部门', 3, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         NULL, '2022-05-21 08:30:54', NULL, NULL, 0),
-       (7, 2, '0,1,2', '财务部门', 4, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+       (7, 2, '0,1,2', '财务部门', 4, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         NULL, '2022-05-21 08:30:54', NULL, NULL, 0),
-       (8, 2, '0,1,2', '运维部门', 5, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 1,
+       (8, 2, '0,1,2', '运维部门', 5, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 1,
         NULL, '2022-05-21 08:30:54', NULL, NULL, 0),
-       (9, 3, '0,1,3', '市场部!', 1, NULL, 'valarchie!!', '15888188888', 'valarc1hie@163.com', 0,
+       (9, 3, '0,1,3', '市场部!', 1, NULL, 'Sleepyhead!!', '15888188888', 'valarc1hie@163.com', 0,
         NULL, '2022-05-21 08:30:54', 1, '2023-07-20 22:33:31', 0),
-       (10, 3, '0,1,3', '财务部门', 2, NULL, 'valarchie', '15888888888', 'valarchie@163.com', 0,
+       (10, 3, '0,1,3', '财务部门', 2, NULL, 'Sleepyhead', '15888888888', 'Sleepyhead@163.com', 0,
         NULL, '2022-05-21 08:30:54', NULL, NULL, 0);
 /*!40000 ALTER TABLE `sys_dept` ENABLE KEYS */;
 UNLOCK

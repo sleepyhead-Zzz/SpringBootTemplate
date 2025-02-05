@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 系统访问记录
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Tag(name = "日志API", description = "日志相关API")
 @RestController

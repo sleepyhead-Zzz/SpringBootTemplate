@@ -7,7 +7,7 @@ import com.springboottemplate.common.enums.dictionary.Dictionary;
 /**
  * 操作者类型
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 @Dictionary(name = "sysOperationLog.operatorType")
 public enum OperatorTypeEnum implements BasicEnum<Integer> {

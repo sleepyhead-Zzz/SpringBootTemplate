@@ -6,7 +6,7 @@ import com.springboottemplate.common.enums.BasicEnum;
 /**
  * 系统配置
  *
- * @author valarchie 对应 sys_config表的config_key字段
+ * @author Sleepyhead 对应 sys_config表的config_key字段
  */
 public enum ConfigKeyEnum implements BasicEnum<String> {
 

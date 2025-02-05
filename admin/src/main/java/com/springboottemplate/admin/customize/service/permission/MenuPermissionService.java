@@ -9,7 +9,7 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Service("permission")
 public class MenuPermissionService {

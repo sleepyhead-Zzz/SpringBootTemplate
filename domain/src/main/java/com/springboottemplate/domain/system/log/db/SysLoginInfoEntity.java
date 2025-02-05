@@ -17,7 +17,7 @@ import lombok.Setter;
  * 系统访问记录
  * </p>
  *
- * @author valarchie
+ * @author Sleepyhead
  * @since 2022-10-02
  */
 @Getter

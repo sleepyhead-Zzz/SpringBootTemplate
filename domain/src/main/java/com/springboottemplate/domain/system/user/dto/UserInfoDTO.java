@@ -5,7 +5,7 @@ import com.springboottemplate.domain.system.role.dto.RoleDTO;
 import lombok.Data;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @Data
 public class UserInfoDTO {

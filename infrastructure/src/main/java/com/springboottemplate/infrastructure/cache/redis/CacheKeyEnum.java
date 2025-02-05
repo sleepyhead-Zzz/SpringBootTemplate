@@ -3,7 +3,7 @@ package com.springboottemplate.infrastructure.cache.redis;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 public enum CacheKeyEnum {
 

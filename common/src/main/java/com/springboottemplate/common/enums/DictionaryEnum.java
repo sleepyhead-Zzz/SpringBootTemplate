@@ -3,7 +3,7 @@ package com.springboottemplate.common.enums;
 /**
  * 字典类型 接口
  *
- * @author valarchie
+ * @author Sleepyhead
  */
 public interface DictionaryEnum<T> extends BasicEnum<T> {
 

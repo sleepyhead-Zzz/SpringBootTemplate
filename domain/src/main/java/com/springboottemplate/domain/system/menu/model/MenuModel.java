@@ -13,7 +13,7 @@ import java.util.Objects;
 import lombok.NoArgsConstructor;
 
 /**
- * @author valarchie
+ * @author Sleepyhead
  */
 @NoArgsConstructor
 public class MenuModel extends SysMenuEntity {
