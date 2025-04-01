@@ -51,7 +51,7 @@ public class UserApplicationService {
     private final UserModelFactory userModelFactory;
 
 
-    public PageDTO<UserDTO> getUserList(SearchUserQuery<SearchUserDO> query) {
+    public PageDTO<UserDTO> page(SearchUserQuery<SearchUserDO> query) {
         Page<SearchUserDO> userPage = userService.getUserList(query);
         List<UserDTO> userDTOList = userPage.getRecords().stream().map(UserDTO::new).collect(Collectors.toList());
         return new PageDTO<>(userDTOList, userPage.getTotal());

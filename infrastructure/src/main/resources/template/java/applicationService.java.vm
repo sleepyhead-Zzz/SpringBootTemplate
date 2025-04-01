@@ -1,0 +1,84 @@
+package ${applicationPackage};
+
+import ${dtoPackage}.${tableName}DTO;
+import ${dtoPackage}.${tableName}VO;
+import ${queryDtoPackage}.${tableName}Query;
+import ${queryDtoPackage}.${tableName}PageQuery;
+import com.springboottemplate.common.core.page.PageDTO;
+import com.springboottemplate.domain.common.command.BulkOperationCommand;
+
+import ${package.Service}.${tableName}Service;
+import ${modelPackage}.${tableName}ModelFactory;
+import ${modelPackage}.${tableName}Model;
+import ${package.Entity}.${tableName}Entity;
+import ${commandPackage}.${addCommandClass};
+import ${commandPackage}.${updateCommandClass};
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import java.util.List;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class ${tableName}ApplicationService {
+
+    private final ${tableName}Service ${tablename}Service;
+    private final ${tableName}ModelFactory ${tablename}ModelFactory;
+
+    public List<${tableName}DTO> list(${tableName}Query query) {
+        List<${entity}> list = ${tablename}Service.list(query.toQueryWrapper());
+        return list.stream().map(${tableName}DTO::new).collect(Collectors.toList());
+    }
+
+    public PageDTO<${tableName}DTO> page(${tableName}PageQuery query) {
+        Page<${entity}> page = ${tablename}Service.page(query.toPage(), query.toQueryWrapper());
+        List<${tableName}DTO> records = page.getRecords().stream().map(${tableName}DTO::new)
+            .collect(Collectors.toList());
+        return new PageDTO<>(records, page.getTotal());
+    }
+
+
+    public ${tableName}DTO getInfo(Long id) {
+        ${entity} byId = ${tablename}Service.getById(id);
+        return new ${tableName}DTO(byId);
+    }
+
+    public void add(${addCommandClass} addCommand) {
+            ${tableName}Model ${tablename}Model = ${tablename}ModelFactory.create();
+            ${tablename}Model.loadAddCommand(addCommand);
+
+            ${tablename}Model.insert();
+    }
+
+    public void update(${updateCommandClass} updateCommand) {
+            ${tableName}Model ${tablename}Model = ${tablename}ModelFactory.loadById(
+            updateCommand.get${tableName}Id());
+            ${tablename}Model.loadUpdateCommand(updateCommand);
+
+            ${tablename}Model.updateById();
+    }
+
+    public void remove(Long ${tablename}Id) {
+            ${tableName}Model ${tablename}Model = ${tablename}ModelFactory.loadById(
+                    ${tablename}Id);
+
+            ${tablename}Model.deleteById();
+    }
+
+    public void delete${tableName}s(BulkOperationCommand<Long> deleteCommand) {
+            ${tablename}Service.removeBatchByIds(deleteCommand.getIds());
+    }
+
+    public List<${tableName}VO> getDropdownList() {
+        List<${tableName}Entity> ${tablename}Entities = ${tablename}Service.list();
+
+        return ${tablename}Entities.stream().map(${tablename}Entity -> {
+                ${tableName}VO ${tablename}VO = new ${tableName}VO(${tablename}Entity);
+                ${tablename}VO.set${tableName}Id(${tablename}Entity.get${tableName}Id());
+                ${tablename}VO.set${tableName}Name(${tablename}Entity.get${tableName}Name());
+            return ${tablename}VO;
+        }).collect(Collectors.toList());
+    }
+
+}

@@ -1,0 +1,22 @@
+package ${commandPackage};
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import lombok.EqualsAndHashCode;
+
+import java.util.Date;
+
+/**
+ * $!{table.comment}
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class Update${tableName}Command extends Add${tableName}Command {
+
+    private Long ${tablename}Id;
+
+}

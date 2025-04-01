@@ -18,10 +18,12 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,9 +44,9 @@ public class SysLogsController extends BaseController {
 
     @Operation(summary = "登录日志列表")
     @PreAuthorize("@permission.has('monitor:logininfor:list')")
-    @GetMapping("/loginLogs")
-    public ResponseDTO<PageDTO<LoginLogDTO>> loginInfoList(LoginLogQuery query) {
-        PageDTO<LoginLogDTO> pageDTO = logApplicationService.getLoginInfoList(query);
+    @GetMapping("/page")
+    public ResponseDTO<PageDTO<LoginLogDTO>> getPagedLoginInfo(@ParameterObject @ModelAttribute LoginLogQuery query) {
+        PageDTO<LoginLogDTO> pageDTO = logApplicationService.page(query);
         return ResponseDTO.ok(pageDTO);
     }
 

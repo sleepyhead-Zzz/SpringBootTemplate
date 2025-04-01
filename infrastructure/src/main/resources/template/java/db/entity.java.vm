@@ -1,0 +1,57 @@
+package ${package.Entity};
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+    #if($isExtendsFromBaseEntity)
+    import com.springboottemplate.common.core.base.BaseEntity;
+    #end
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.io.Serializable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import java.util.Date;
+
+/**
+ * ${table.comment}
+ *
+ * @TableName ${tablename}
+ */
+    #if($isExtendsFromBaseEntity)
+        @EqualsAndHashCode(callSuper = true)
+        @TableName(value = "${table.name}")
+        @Data
+        @Schema(description = "${table.comment}")
+        public class ${tableName}Entity extends BaseEntity<${tableName}Entity> {
+    #else
+    @TableName(value = "${tablename}")
+    @Data
+    @Schema(description = "${table.comment}")
+    public class ${tableName}Entity {
+    #end
+
+    #set($ignoreFields = ${entityIgnoreFields})
+    #set($primaryKey = "")
+    #foreach($field in ${table.fields})
+        #set($flag = "0")
+        #foreach($ignoreField in $ignoreFields.split(","))
+            #if($ignoreField == $field.propertyName)
+                #set($flag = "1")
+                #break
+            #end
+        #end
+
+        #if($flag == "0")
+            @TableField
+            @Schema(description = "$!{field.comment}")
+            private ${field.propertyType} ${field.propertyName};
+            #if($field.keyFlag)
+                #set($primaryKey = $field.propertyName)
+            #end
+        #end
+    #end
+
+    @Override
+    public Serializable pkVal() {
+        return this.${primaryKey};
+    }
+}

@@ -13,10 +13,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -29,11 +31,11 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author Sleepyhead
  */
-@RestController
-@RequestMapping("/system")
-@Validated
-@RequiredArgsConstructor
 @Tag(name = "部门API", description = "部门相关的增删查改")
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/system/dept")
+@Validated
 public class SysDeptController extends BaseController {
 
     private final DeptApplicationService deptApplicationService;
@@ -42,9 +44,8 @@ public class SysDeptController extends BaseController {
      * 获取部门列表
      */
     @Operation(summary = "部门列表")
-
-    @GetMapping("/depts")
-    public ResponseDTO<List<DeptDTO>> list(DeptQuery query) {
+    @GetMapping("/list")
+    public ResponseDTO<List<DeptDTO>> listDept(@ParameterObject @ModelAttribute DeptQuery query) {
         List<DeptDTO> deptList = deptApplicationService.getDeptList(query);
         return ResponseDTO.ok(deptList);
     }
@@ -54,8 +55,8 @@ public class SysDeptController extends BaseController {
      */
     @Operation(summary = "部门详情")
 
-    @GetMapping(value = "/dept/{deptId}")
-    public ResponseDTO<DeptDTO> getInfo(@PathVariable Long deptId) {
+    @GetMapping(value = "/{deptId}")
+    public ResponseDTO<DeptDTO> getDeptInfo(@PathVariable Long deptId) {
         DeptDTO dept = deptApplicationService.getDeptInfo(deptId);
         return ResponseDTO.ok(dept);
     }
@@ -64,8 +65,8 @@ public class SysDeptController extends BaseController {
      * 获取部门下拉树列表
      */
     @Operation(summary = "获取部门树级结构")
-    @GetMapping("/depts/dropdown")
-    public ResponseDTO<List<Tree<Long>>> dropdownList() {
+    @GetMapping("/dropdown")
+    public ResponseDTO<List<Tree<Long>>> dropdownDeptList() {
         List<Tree<Long>> deptTree = deptApplicationService.getDeptTree();
         return ResponseDTO.ok(deptTree);
     }
@@ -74,8 +75,8 @@ public class SysDeptController extends BaseController {
      * 新增部门
      */
     @Operation(summary = "新增部门")
-    @PostMapping("/dept")
-    public ResponseDTO<Void> add(@Validated @RequestBody AddDeptCommand addCommand) {
+    @PostMapping("/")
+    public ResponseDTO<Void> addDept(@Validated @RequestBody AddDeptCommand addCommand) {
         deptApplicationService.addDept(addCommand);
         return ResponseDTO.ok();
     }
@@ -85,8 +86,8 @@ public class SysDeptController extends BaseController {
      */
     @Operation(summary = "修改部门")
     @PreAuthorize("@permission.has('system:dept:edit') AND @dataScope.checkDeptId(#updateCommand.deptId)")
-    @PutMapping("/dept/{deptId}")
-    public ResponseDTO<Void> edit(@PathVariable("deptId") Long deptId,
+    @PutMapping("/{deptId}")
+    public ResponseDTO<Void> editDept(@PathVariable("deptId") Long deptId,
         @Validated @RequestBody UpdateDeptCommand updateCommand) {
         updateCommand.setDeptId(deptId);
         deptApplicationService.updateDept(updateCommand);
@@ -98,8 +99,8 @@ public class SysDeptController extends BaseController {
      */
     @Operation(summary = "删除部门")
     @PreAuthorize("@permission.has('system:dept:remove') AND @dataScope.checkDeptId(#deptId)")
-    @DeleteMapping("/dept/{deptId}")
-    public ResponseDTO<Void> remove(@PathVariable @NotNull Long deptId) {
+    @DeleteMapping("/{deptId}")
+    public ResponseDTO<Void> removeDept(@PathVariable @NotNull Long deptId) {
         deptApplicationService.removeDept(deptId);
         return ResponseDTO.ok();
     }

@@ -1,0 +1,55 @@
+package ${modelPackage};
+
+import cn.hutool.core.bean.BeanUtil;
+
+import ${commandPackage}.Add${tableName}Command;
+import ${commandPackage}.Update${tableName}Command;
+import ${package.Entity}.${tableName}Entity;
+import ${package.Service}.${tableName}Service;
+
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.Data;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+public class ${tableName}Model extends ${tableName}Entity {
+
+    private ${tableName}Service ${tablename}Service;
+
+    public ${tableName}Model(${tableName}Service ${tablename}Service) {
+        this.${tablename}Service = ${tablename}Service;
+    }
+
+    public ${tableName}Model(${tableName}Entity entity, ${tableName}Service ${tablename}Service) {
+        if (entity != null) {
+            BeanUtil.copyProperties(entity, this);
+        }
+        this.${tablename}Service = ${tablename}Service;
+    }
+
+    public void loadAddCommand(Add${tableName}Command command) {
+        #set($ignoreFields = ${entityIgnoreFields})
+        #foreach($field in ${table.fields})
+            #set($flag = "0")  #* 默认字段不被忽略 *#
+
+            #foreach($ignoreField in $ignoreFields.split(","))
+                #if($ignoreField == $field.propertyName)  #* 如果字段在忽略列表中，标记为1 *#
+                    #set($flag = "1")
+                    #break
+                #end
+            #end
+
+            #if($flag == "0")  #* 如果字段没有被忽略，才生成 *#
+                this.set${field.propertyName.substring(0, 1).toUpperCase()}${field.propertyName.substring(1)}(
+                    command.get${field.propertyName.substring(0, 1).toUpperCase()}${field.propertyName.substring(1)}());
+            #end
+        #end
+    }
+
+
+    public void loadUpdateCommand(Update${tableName}Command updateCommand) {
+        loadAddCommand(updateCommand);
+    }
+}

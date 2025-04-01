@@ -1,0 +1,30 @@
+package ${modelPackage};
+
+import com.springboottemplate.common.exception.ApiException;
+import com.springboottemplate.common.exception.error.ErrorCode;
+
+import ${package.Entity}.${tableName}Entity;
+import ${package.Service}.${tableName}Service;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class ${tableName}ModelFactory {
+
+    private final ${tableName}Service ${tablename}Service;
+
+    public ${tableName}Model loadById(Long ${tablename}Id) {
+            ${tableName}Entity byId = ${tablename}Service.getById(${tablename}Id);
+        if (byId == null) {
+            throw new ApiException(ErrorCode.Business.COMMON_OBJECT_NOT_FOUND, ${tablename}Id,
+                "${tableName}");
+        }
+        return new ${tableName}Model(byId, ${tablename}Service);
+    }
+
+    public ${tableName}Model create() {
+        return new ${tableName}Model(${tablename}Service);
+    }
+
+}

@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Tag(name = "用户API", description = "用户相关的增删查改")
 @RestController
-@RequestMapping("/system/users")
+@RequestMapping("/system/user")
 @RequiredArgsConstructor
 public class SysUserController extends BaseController {
 
@@ -50,9 +50,9 @@ public class SysUserController extends BaseController {
      */
     @Operation(summary = "用户列表")
     @PreAuthorize("@permission.has('system:user:list') ")
-    @PostMapping("query")
-    public ResponseDTO<PageDTO<UserDTO>> userList(@RequestBody SearchUserQuery<SearchUserDO> query) {
-        PageDTO<UserDTO> page = userApplicationService.getUserList(query);
+    @PostMapping("page")
+    public ResponseDTO<PageDTO<UserDTO>> getPagedUser(@RequestBody SearchUserQuery<SearchUserDO> query) {
+        PageDTO<UserDTO> page = userApplicationService.page(query);
         return ResponseDTO.ok(page);
     }
 
@@ -105,7 +105,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@permission.has('system:user:add') AND @dataScope.checkDeptId(#command.deptId)")
     @AccessLog(title = "用户管理", businessType = BusinessTypeEnum.ADD)
     @PostMapping
-    public ResponseDTO<Void> add(@Validated @RequestBody AddUserCommand command) {
+    public ResponseDTO<Void> addUser(@Validated @RequestBody AddUserCommand command) {
         userApplicationService.addUser(command);
         return ResponseDTO.ok();
     }
@@ -117,7 +117,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@permission.has('system:user:edit') AND @dataScope.checkUserId(#command.userId)")
     @AccessLog(title = "用户管理", businessType = BusinessTypeEnum.MODIFY)
     @PutMapping("/{userId}")
-    public ResponseDTO<Void> edit(@PathVariable("userId") Long userId,
+    public ResponseDTO<Void> editUser(@PathVariable("userId") Long userId,
         @Validated @RequestBody UpdateUserCommand command) {
         command.setUserId(userId);
         userApplicationService.updateUser(command);
@@ -131,7 +131,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@permission.has('system:user:remove') AND @dataScope.checkUserIds(#userIds)")
     @AccessLog(title = "用户管理", businessType = BusinessTypeEnum.DELETE)
     @DeleteMapping("/{userIds}")
-    public ResponseDTO<Void> remove(@PathVariable List<Long> userIds) {
+    public ResponseDTO<Void> removeUser(@PathVariable List<Long> userIds) {
         BulkOperationCommand<Long> bulkDeleteCommand = new BulkOperationCommand<>(userIds);
         SystemLoginUser loginUser = AuthenticationUtils.getSystemLoginUser();
         userApplicationService.deleteUsers(loginUser, bulkDeleteCommand);
@@ -158,7 +158,7 @@ public class SysUserController extends BaseController {
     @PreAuthorize("@permission.has('system:user:edit') AND @dataScope.checkUserId(#command.userId)")
     @AccessLog(title = "用户管理", businessType = BusinessTypeEnum.MODIFY)
     @PutMapping("/{userId}/status")
-    public ResponseDTO<Void> changeStatus(@PathVariable Long userId, @RequestBody ChangeStatusCommand command) {
+    public ResponseDTO<Void> changeUserStatus(@PathVariable Long userId, @RequestBody ChangeStatusCommand command) {
         command.setUserId(userId);
         userApplicationService.changeUserStatus(command);
         return ResponseDTO.ok();

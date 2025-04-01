@@ -1,203 +1,425 @@
 package com.springboottemplate.infrastructure.mybatisplus;
 
+import static ch.qos.logback.core.util.StringUtil.capitalizeFirstLetter;
+
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig.Builder;
-import com.baomidou.mybatisplus.generator.config.OutputFile;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.builder.Entity;
+import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 import com.baomidou.mybatisplus.generator.fill.Column;
 import com.baomidou.mybatisplus.generator.fill.Property;
-import com.baomidou.mybatisplus.generator.keywords.MySqlKeyWordsHandler;
 import com.springboottemplate.common.core.base.BaseController;
-import com.springboottemplate.common.core.base.BaseEntity;
-import java.util.Collections;
-import lombok.Data;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-@Data
-@lombok.Builder
+/**
+ * @author: Sleepyhead
+ * @date: 2023-09-12 周二
+ * @Version: 1.0
+ * @Description:
+ */
+@SuppressWarnings("all")
 public class CodeGenerator {
 
-    // 定义代码生成器所需的基本配置信息
-    private String author;
-    private String module;
-    private String tableName;
-    private String databaseUrl;
-    private String username;
-    private String password;
-    private String parentPackage;
-    private Boolean isExtendsFromBaseEntity;
+    /**
+     * 指定具体项目模块
+     */
+    public static String MOUDLE_NAME = "domain";
+    public static String AUTHOR_NAME = "Sleepyhead";
+    /**
+     * 数据源信息
+     */
+    public static String URL = "jdbc:mysql://localhost:3306/springboottemplate?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8";
+    public static String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
+    public static String USERNAME = "root";
+    public static String PASSWORD = "DpVq8mVGCmykwYvVVfWGTSWx";
+
+    /**
+     * 需要生成的表名前缀,若为空，则默认是需要生成的表名是 TABLE_SUFFIX
+     */
+    public static String TABLE_PREFIX = "inspection_";
+    /**
+     * 表前缀,生成实体类时，会自动去除表前缀，如：table: tb_task, class: Task
+     */
+    public static String TABLE_PREFIX_ENTITY = "";
+    /**
+     * 需要生成的表名后缀，多个用逗号隔开
+     */
+//    public static String TABLE_SUFFIX = "menu,role,user_role,role_menu";
+    public static String TABLE_SUFFIX = "plan";
+
+    /**
+     * 包设置
+     */
+    public static String PARENT_PACKAGE = "com.springboottemplate.domain";
+    public static String PARENT_MOUDLE_NAME = "inspection." + TABLE_SUFFIX;
+    public static String MAPPER_PATH = "/src/main/resources/mapper/";
+    ;
+    /**
+     * DTO/VO/QueryDTO 包名
+     */
+    public static String PARENT_DTO_PACKAGE = PARENT_PACKAGE + "." + PARENT_MOUDLE_NAME + ".dto";
+    public static String PARENT_VO_PACKAGE = PARENT_PACKAGE + "." + PARENT_MOUDLE_NAME + ".vo";
+    public static String PARENT_QUERY_DTO_PACKAGE = PARENT_PACKAGE + "." + PARENT_MOUDLE_NAME + ".query";
+    public static String PARENT_APPLICATION_SERVIE_PACKAGE = PARENT_PACKAGE + "." + PARENT_MOUDLE_NAME;
+    public static String PARENT_MODEL_PACKAGE = PARENT_PACKAGE + "." + PARENT_MOUDLE_NAME + ".model";
+    public static String PARENT_COMMAND_PACKAGE = PARENT_PACKAGE + "." + PARENT_MOUDLE_NAME + ".command";
+
+
+    /**
+     * DTO/VO/QueryDTO 自定义模板路径
+     */
+    public static String TEMPLATE_CONTROLLER_PATH = "template/java/controller.java.vm";
+    public static String TEMPLATE_SERVICE_PATH = "template/java/db/service.java.vm";
+    public static String TEMPLATE_SERVICEIMPL_PATH = "template/java/db/serviceImpl.java.vm";
+    public static String TEMPLATE_MAPPER_PATH = "template/java/db/mapper.java.vm";
+    public static String TEMPLATE_MAPPER_XML_PATH = "template/xml/mapper.xml.vm";
+    public static String TEMPLATE_ENTITY_PATH = "template/java/db/entity.java.vm";
+
+    public static String TEMPLATE_APPLICATION_SERVICE_PATH = "template/java/applicationService.java.vm";
+    public static String TEMPLATE_MODEL_PATH = "template/java/model/model.java.vm";
+    public static String TEMPLATE_MODELFACTORY_PATH = "template/java/model/modelFactory.java.vm";
+    public static String TEMPLATE_ADD_COMMAND_PATH = "template/java/command/addCommand.java.vm";
+    public static String TEMPLATE_UPDATE_COMMAND_PATH = "template/java/command/updateCommand.java.vm";
+    public static String TEMPLATE_DTO_PATH = "template/java/dto/dto.java.vm";
+    public static String TEMPLATE_VO_PATH = "template/java/dto/vo.java.vm";
+    public static String TEMPLATE_QUERY_DTO_PATH = "template/java/query/query.java.vm";
+    public static String TEMPLATE_PAGE_QUERY_DTO_PATH = "template/java/query/pageQuery.java.vm";
+
+
+    /**
+     * controller 层请求路径前缀
+     */
+    public static String REQUEST_PATH_PREFIX = "/";
+
+
+    /**
+     * DTO 忽略的字段
+     */
+    public static String DTO_IGNORE_FIELD = "id,createTime,updateTime,deleted";
+    public static String ENTITY_IGNORE_FIELD = "creator_id,updater_id,create_time,update_time,deleted";
+
+    /**
+     * 是否继承基类BaseEntity
+     */
+    public static Boolean isExtendsFromBaseEntity = true;
 
     public static void main(String[] args) {
-        // 配置数据库连接信息
-        String databaseUrl = "jdbc:mysql://localhost:3306/springboottemplate";
-        String username = "root";
-        String password = "DpVq8mVGCmykwYvVVfWGTSWx";
-
-        // 初始化代码生成器对象并设置基本参数
-        CodeGenerator generator = CodeGenerator.builder()
-            .databaseUrl(databaseUrl)
-            .username(username)
-            .password(password)
-            .author("Sleepyhead")
-            // 生成代码的目录路径
-            .module("/springboottemplate-orm/target/generated-code")
-            .parentPackage("com.springboottemplate")
-            .tableName("sys_menu")
-            // 决定是否继承基类
-            .isExtendsFromBaseEntity(true)
-            .build();
-
-        // 生成代码
-        generator.generateCode();
-    }
-
-    public void generateCode() {
-        // 创建代码生成器并配置数据库连接、查询方式和关键词处理
-        FastAutoGenerator generator = FastAutoGenerator.create(
-            new Builder(databaseUrl, username, password)
-                .keyWordsHandler(new MySqlKeyWordsHandler()));
-
-        // 各种生成器配置
-        globalConfig(generator);       // 全局配置
-        packageConfig(generator);      // 包配置
-        injectionConfig(generator);    // 自定义注入配置
-        strategyConfig(generator);     // 生成策略配置
-
-        // 默认使用 Velocity 模板引擎
-        generator.templateEngine(new VelocityTemplateEngine());
-        generator.execute();
-    }
-
-    // 全局配置
-    private void globalConfig(FastAutoGenerator generator) {
-        generator.globalConfig(
-            builder -> builder
-                // 指定生成的文件目录
-                .outputDir(System.getProperty("user.dir") + "/SpringBootTemplate" + module + "/src/main/java")
-                // 设置日期类型为 java.util 下的日期类型
-                .dateType(DateType.ONLY_DATE)
-                // 设置文件中的作者信息
-                .author(author)
-                // 开启 Swagger 注解生成
-                .enableSwagger()
-                // 设置生成文件中的注释日期格式
-                .commentDate("yyyy-MM-dd")
-                .build());
-    }
-
-    // 包配置
-    private void packageConfig(FastAutoGenerator generator) {
-        generator.packageConfig(builder -> builder
-            // 设置父包名称
-            .parent(parentPackage)
-            .moduleName("orm")
-            .entity("entity")
-            .service("service")
-            .serviceImpl("service.impl")
-            .mapper("mapper")
-            .xml("mapper.xml")
-            .controller("controller")
-            // 指定生成的 XML 文件的路径
-            .pathInfo(Collections.singletonMap(OutputFile.xml, System.getProperty("user.dir") + module
-                + "/src/main/resources/mapper/system/test"))
-            .build());
-    }
-
-    // 自定义注入配置
-    private void injectionConfig(FastAutoGenerator generator) {
-        generator.injectionConfig(builder -> {
-            // 自定义代码生成过程中的行为
-            builder.beforeOutputFile((tableInfo, objectMap) -> System.out.println("tableInfo: " +
-                    tableInfo.getEntityName() + " objectMap: " + objectMap.size()))
-                .build();
-        });
-    }
-
-    // 策略配置
-    private void strategyConfig(FastAutoGenerator generator) {
-        generator.strategyConfig(builder -> {
-            builder
-                // 启用大写命名方式
-                .enableCapitalMode()
-                // 跳过视图
-                .enableSkipView()
-                // 禁用 SQL 过滤
-                .disableSqlFilter()
-                // 仅生成指定的表
-                .addInclude(tableName);
-
-            entityConfig(builder);      // 实体配置
-            controllerConfig(builder);   // 控制器配置
-            serviceConfig(builder);      // 服务配置
-            mapperConfig(builder);       // Mapper 配置
-        });
-    }
-
-    // 实体配置
-    private void entityConfig(StrategyConfig.Builder builder) {
-        Entity.Builder entityBuilder = builder.entityBuilder();
-
-        entityBuilder
-            // 启用 Lombok 注解
-            .enableLombok()
-            // 启用表字段注解
-            .enableTableFieldAnnotation()
-            // 使用 ActiveRecord 模式
-            .enableActiveRecord()
-            // 设置逻辑删除字段
-            .logicDeleteColumnName("deleted")
-            // 使用下划线转驼峰命名
-            .naming(NamingStrategy.underline_to_camel)
-            .columnNaming(NamingStrategy.underline_to_camel)
-            // 字段自动填充配置
-            .addTableFills(new Column("create_time", FieldFill.INSERT))
-            .addTableFills(new Column("creator_id", FieldFill.INSERT))
-            .addTableFills(new Property("updateTime", FieldFill.INSERT_UPDATE))
-            .addTableFills(new Property("updaterId", FieldFill.INSERT_UPDATE))
-            // 设置主键生成策略
-            .idType(IdType.AUTO)
-            // 设置生成的文件名格式
-            .formatFileName("%sEntity");
-
-        // 判断是否继承基类 BaseEntity
-        if (isExtendsFromBaseEntity) {
-            entityBuilder
-                .superClass(BaseEntity.class)
-                .addSuperEntityColumns("creator_id", "create_time", "creator_name", "updater_id", "update_time",
-                    "updater_name", "deleted");
+        if ("".equals(TABLE_SUFFIX)) {
+            System.out.println("----->>>需要生成的表名为空");
+            return;
         }
 
-        entityBuilder.build();
+// 表拼接
+        List<String> tables;
+        if (TABLE_PREFIX.isEmpty()) {
+            // 如果没有表前缀，直接使用 TABLE_SUFFIX 中的表名
+            tables = Arrays.asList(TABLE_SUFFIX.split(","));
+        } else {
+            // 如果有表前缀，拼接每个表名
+            tables = Arrays.stream(TABLE_SUFFIX.split(","))
+                .map(table -> TABLE_PREFIX + table)  // 将前缀和表名拼接
+                .collect(Collectors.toList());
+        }
+// 输出拼接后的表名
+        System.out.println("表：");
+        tables.forEach(System.out::println);
+
+        FastAutoGenerator mpg = FastAutoGenerator.create(
+            new Builder(URL, USERNAME, PASSWORD).driverClassName(DRIVER_NAME));
+
+        // 全局配置
+        String projectPath = System.getProperty("user.dir");
+        mpg.globalConfig(builder -> builder
+            .disableOpenDir()
+            .outputDir(projectPath + "/" + MOUDLE_NAME + "/src/main/java") // 设置输出目录
+            .author(AUTHOR_NAME) // 设置作者名
+            .enableSwagger() // 开启 Swagger 模式
+            .dateType(DateType.ONLY_DATE) // 设置时间类型策略
+            .commentDate("yyyy-MM-dd") // 设置注释日期格式
+            .build());
+
+        mpg.packageConfig(builder -> builder
+            .parent(PARENT_PACKAGE) // 设置父包名
+            .moduleName(PARENT_MOUDLE_NAME) // 设置父包模块名
+            .entity("db") // 设置 Entity 包名
+            .service("db") // 设置 Service 包名
+            .serviceImpl("db") // 设置 Service Impl 包名
+            .mapper("db") // 设置 Mapper 包名
+//            .xml("mapper") // 设置 Mapper XML 包名
+//            .controller("controller") // 设置 Controller 包名
+            .build());
+
+        mpg.injectionConfig(builder -> builder
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("DTO" + StringPool.DOT_JAVA) //文件名称
+                .templatePath(TEMPLATE_DTO_PATH)
+                .packageName("dto")
+                .build()
+            )
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("VO" + StringPool.DOT_JAVA) //文件名称
+                .templatePath(TEMPLATE_VO_PATH)
+                .packageName("dto")
+                .build()
+            )
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("Query" + StringPool.DOT_JAVA) //文件名称
+                .templatePath(TEMPLATE_QUERY_DTO_PATH)
+                .packageName("query")
+                .build()
+            )
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("PageQuery" + StringPool.DOT_JAVA) //文件名称
+                .templatePath(TEMPLATE_PAGE_QUERY_DTO_PATH)
+                .packageName("query")
+                .build()
+            )
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("Controller.java")  // 生成的 Controller 文件名
+                .templatePath(TEMPLATE_CONTROLLER_PATH)  // 自定义的 Controller 模板路径
+                .packageName("controller")  // 目标包名
+                .build())
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("ApplicationService.java")
+                .templatePath(TEMPLATE_APPLICATION_SERVICE_PATH)
+                .packageName("")  // 目标包名
+                .build())
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return "Add" + capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("Command.java")
+                .templatePath(TEMPLATE_ADD_COMMAND_PATH)
+                .packageName("command")
+                .build())
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return "Update" + capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("Command.java")
+                .templatePath(TEMPLATE_UPDATE_COMMAND_PATH)
+                .packageName("command")
+                .build())
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("Model.java")
+                .templatePath(TEMPLATE_MODEL_PATH)
+                .packageName("model")
+                .build())
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("ModelFactory.java")
+                .templatePath(TEMPLATE_MODELFACTORY_PATH)
+                .packageName("model")
+                .build())
+
+            .customFile(new CustomFile.Builder()
+                .formatNameFunction(new Function<TableInfo, String>() {
+                    @Override
+                    public String apply(TableInfo tableInfo) {
+                        return capitalizeFirstLetter((underlineToCamel(tableInfo.getName())));
+                    }
+                })
+                .fileName("Entity.java")
+                .templatePath(TEMPLATE_ENTITY_PATH)
+                .packageName("db")
+                .build())
+
+//            .customFile(new CustomFile.Builder()
+//                .fileName("Service.java")  // 生成的 Service 文件名
+//                .templatePath(TEMPLATE_SERVICE_PATH)  // 自定义的 Service 模板路径
+//                .packageName("db")  // 目标包名
+//                .build())
+//            .customFile(new CustomFile.Builder()
+//                .fileName("ServiceImpl.java")  // 生成的 ServiceImpl 文件名
+//                .templatePath(TEMPLATE_SERVICEIMPL_PATH)  // 自定义的 ServiceImpl 模板路径
+//                .packageName("db")  // 目标包名
+//                .build())
+//            .customFile(new CustomFile.Builder()
+//                .fileName("Mapper.java")  // 生成的 Mapper 文件名
+//                .templatePath(TEMPLATE_MAPPER_PATH)  // 自定义的 Mapper 模板路径
+//                .packageName("db")  // 目标包名
+//                .build())
+//            .customFile(new CustomFile.Builder()
+//                .fileName("Mapper.xml")  // 生成的 Mapper XML 文件名
+//                .templatePath(TEMPLATE_MAPPER_XML_PATH)  // 自定义的 Mapper XML 模板路径
+//                .packageName("mapper")  // 目标包名
+//                .build())
+
+            .beforeOutputFile((tableInfo, objectMap) -> {
+                String entityName = tableInfo.getEntityName();
+                System.out.println("准备生成文件: " + tableInfo.getEntityName());
+                System.out.println("表名: " + tableInfo.getComment());
+                objectMap.put("entityName", entityName);  // 添加表名到 objectMap
+                objectMap.put("tableName", capitalizeFirstLetter((underlineToCamel(tableInfo.getName()))));
+                objectMap.put("tablename", (underlineToCamel(tableInfo.getName())));
+                objectMap.put("addCommandClass",
+                    "Add" + capitalizeFirstLetter(underlineToCamel(tableInfo.getName())) + "Command");
+                objectMap.put("updateCommandClass",
+                    "Update" + capitalizeFirstLetter(underlineToCamel(tableInfo.getName())) + "Command");
+                objectMap.put("applicationPackage", PARENT_APPLICATION_SERVIE_PACKAGE);
+                objectMap.put("modelPackage", PARENT_MODEL_PACKAGE);
+                objectMap.put("commandPackage", PARENT_COMMAND_PACKAGE);
+                objectMap.put("author", AUTHOR_NAME);
+                objectMap.put("requestPathPrefix", REQUEST_PATH_PREFIX);
+                objectMap.put("dtoPackage", PARENT_DTO_PACKAGE);
+                objectMap.put("queryDtoPackage", PARENT_QUERY_DTO_PACKAGE);
+                objectMap.put("dtoIgnoreFields", DTO_IGNORE_FIELD);
+                objectMap.put("entityIgnoreFields", ENTITY_IGNORE_FIELD);
+                objectMap.put("isExtendsFromBaseEntity", isExtendsFromBaseEntity);
+
+            })
+            .build());
+
+        mpg.strategyConfig(builder -> builder
+                .enableCapitalMode() // 开启大写命名
+                .enableSkipView() // 开启跳过视图
+                .disableSqlFilter() // 禁用 SQL 过滤
+                .addInclude(tables) // 增加表匹配
+                .addTablePrefix(TABLE_PREFIX) // 增加过滤表前缀
+                .addFieldSuffix(TABLE_SUFFIX) // 增加过滤字段后缀
+
+//            entity
+                .entityBuilder()
+                .disable()
+//                .superClass(BaseEntity.class)
+//                .disableSerialVersionUID()
+//                .enableChainModel()
+                .enableLombok()
+//                .enableRemoveIsPrefix()
+                .enableTableFieldAnnotation()
+                .enableActiveRecord()
+                .versionColumnName("version")
+                // deleted的字段设置成tinyint  长度为1
+                .logicDeleteColumnName("deleted")
+                .naming(NamingStrategy.underline_to_camel)
+                .columnNaming(NamingStrategy.underline_to_camel)
+//                .addSuperEntityColumns("id", "creator_id", "create_time", "updaterId", "updateTime")
+                .addTableFills(new Column("create_time", FieldFill.INSERT))
+                .addTableFills(new Column("creator_id", FieldFill.INSERT))
+                .addTableFills(new Property("updateTime", FieldFill.INSERT_UPDATE))
+                .addTableFills(new Property("updaterId", FieldFill.INSERT_UPDATE))
+                .idType(IdType.AUTO)
+                .formatFileName("%sEntity")
+                .build()
+
+                //controller
+                .controllerBuilder()
+                .superClass(BaseController.class)
+                .enableHyphenStyle()
+                .enableRestStyle()
+                .formatFileName("%sController")
+                // 禁止生成默认的Controller模板
+                .disable()
+                .build()
+
+                //service
+                .serviceBuilder()
+//                .superServiceClass(BaseService.class)
+//                .superServiceImplClass(BaseServiceImpl.class)
+                .formatServiceFileName("%sService")
+                .formatServiceImplFileName("%sServiceImp")
+                .build()
+
+                //mapper
+                .mapperBuilder()
+                .disableMapperXml()
+                .superClass(BaseMapper.class)
+//                .enableMapperAnnotation()
+//                .enableBaseResultMap()
+//                .enableBaseColumnList()
+                .formatMapperFileName("%sMapper")
+//                .formatXmlFileName("%sXml")
+                .build()
+
+        );
+
+        mpg.execute();
     }
 
-    // 控制器配置
-    private void controllerConfig(StrategyConfig.Builder builder) {
-        builder.controllerBuilder()
-            .superClass(BaseController.class)  // 继承自 BaseController
-            .enableHyphenStyle()               // 启用连字符命名
-            .enableRestStyle()                 // 启用 RESTful 风格
-            .formatFileName("%sController")    // 文件名格式
-            .build();
-    }
-
-    // 服务配置
-    private void serviceConfig(StrategyConfig.Builder builder) {
-        builder.serviceBuilder()
-            .formatServiceFileName("%sService")        // 设置 Service 文件名格式
-            .formatServiceImplFileName("%sServiceImpl")// 设置 ServiceImpl 文件名格式
-            .build();
-    }
-
-    // Mapper 配置
-    private void mapperConfig(StrategyConfig.Builder builder) {
-        builder.mapperBuilder()
-            .formatMapperFileName("%sMapper")          // 设置 Mapper 文件名格式
-            .formatXmlFileName("%sMapper")             // 设置 XML 文件名格式
-            .build();
+    private static String underlineToCamel(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        StringBuilder result = new StringBuilder();
+        String[] parts = str.toLowerCase().split("_");
+        for (int i = 0; i < parts.length; i++) {
+            if (i == 0) {
+                result.append(parts[i]); // 第一个单词保持小写（后续由 capitalizeFirstLetter 处理）
+            } else {
+                result.append(capitalizeFirstLetter(parts[i])); // 后续单词首字母大写
+            }
+        }
+        return result.toString();
     }
 }

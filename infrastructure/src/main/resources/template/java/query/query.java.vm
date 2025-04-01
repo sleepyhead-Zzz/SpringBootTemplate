@@ -1,0 +1,35 @@
+package ${queryDtoPackage};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.springboottemplate.common.core.page.AbstractQuery;
+
+import ${package.Entity}.${tableName}Entity;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+/**
+ * ${table.comment} 查询条件
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@EqualsAndHashCode(callSuper = true)
+@Data
+@NoArgsConstructor
+@Schema(description = "${table.comment}")
+public class ${tableName}Query extends AbstractQuery<${tableName}Entity> {
+
+    /**
+     * 添加查询条件
+     * @return QueryWrapper
+     */
+    @Override
+    public QueryWrapper<${tableName}Entity> addQueryCondition() {
+        QueryWrapper<${tableName}Entity> queryWrapper = new QueryWrapper<>();
+
+        return queryWrapper;
+    }
+}

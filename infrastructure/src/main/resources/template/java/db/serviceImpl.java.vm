@@ -1,0 +1,132 @@
+package ${package.ServiceImpl};
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.common.collect.Lists;
+
+import ${package.Mapper}.${entity}Mapper;
+import ${package.Entity}.${entity};
+import ${package.Service}.${entity}Service;
+import ${dtoPackage}.${entity}DTO;
+import ${queryDtoPackage}.${entity}QueryDTO;
+import ${voPackage}.${entity}VO;
+import com.wl.cloud.core.dto.DataStoreDTO;
+import com.wl.cloud.core.utils.PageUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/**
+ * $!{table.comment} 服务实现类
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceImplName} implements ${table.serviceName}{
+
+    @Autowired
+    private ${table.mapperName} ${table.entityPath}Mapper;
+
+    @Transactional(readOnly = true)
+    @Override
+    public DataStoreDTO<${entity}VO> page(Pageable pageable, ${entity}QueryDTO queryDto) {
+        QueryWrapper<${entity}> queryWrapper = this.buildQuery(queryDto);
+        Page<${entity}> page = PageUtils.transferPage(pageable);
+        Page<${entity}> result = this.${table.entityPath}Mapper.selectPage(page, queryWrapper);
+        return new DataStoreDTO(result.getTotal(), this.transferVo(result.getRecords()));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<${entity}VO> list(Sort sort, ${entity}QueryDTO queryDto) {
+        QueryWrapper<${entity}> queryWrapper = this.buildQuery(queryDto);
+        PageUtils.transferSort(queryWrapper, sort);
+        return this.transferVo(this.${table.entityPath}Mapper.selectList(queryWrapper));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void save(${entity}DTO dto) {
+        // TODO 唯一性字段校验
+        dto.setId(null);
+            ${table.entityPath}Mapper.insert(this.transferEntity(null, dto));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void update(${entity}DTO dto) {
+        Assert.hasText(dto.getId(), "id不能为空");
+        // TODO 唯一性字段校验
+        ${entity} entity = ${table.entityPath}Mapper.selectById(dto.getId());
+        Assert.notNull(entity, "找不到id为 " + dto.getId() + " 的记录");
+            ${table.entityPath}Mapper.updateById(this.transferEntity(entity, dto));
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void delete(Set<String> ids) {
+        if (CollectionUtils.isNotEmpty(ids)) {
+                ${table.entityPath}Mapper.deleteBatchIds(ids);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ${entity}VO get(String id) {
+        Assert.hasText(id, "id不能为空");
+        ${entity} entity = ${table.entityPath}Mapper.selectById(id);
+        Assert.notNull(entity, "找不到id为 " + id + " 的记录");
+        return this.transferVo(entity);
+    }
+
+    private QueryWrapper<${entity}> buildQuery(${entity}QueryDTO queryDto) {
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+        if (Objects.nonNull(queryDto)) {
+            queryWrapper.lambda()
+                .eq(StringUtils.isNotBlank(queryDto.getId()), ${entity}::getId, queryDto.getId());
+        }
+        return queryWrapper;
+    }
+
+    private ${entity} transferEntity(${entity} entity, ${entity}DTO dto) {
+        if (Objects.isNull(entity)) {
+            entity = new ${entity}();
+        }
+        BeanUtils.copyProperties(dto, entity);
+        return entity;
+    }
+
+    private List<${entity}VO> transferVo(List<${entity}> entities) {
+        if (CollectionUtils.isEmpty(entities)) {
+            return Lists.newArrayList();
+        }
+
+        List<${entity}VO> voList = entities.stream().map(entity -> {
+                ${entity}VO vo = new ${entity}VO();
+            BeanUtils.copyProperties(entity, vo);
+            return vo;
+        }).collect(Collectors.toList());
+        return voList;
+    }
+
+    private ${entity}VO transferVo(${entity} entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+            ${entity}VO vo = new ${entity}VO();
+        BeanUtils.copyProperties(entity, vo);
+        return vo;
+    }
+}

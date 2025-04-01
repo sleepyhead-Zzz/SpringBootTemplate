@@ -29,6 +29,12 @@ public class LogApplicationService {
 
     private final SysOperationLogService operationLogService;
 
+    public PageDTO<LoginLogDTO> page(LoginLogQuery query) {
+        Page<SysLoginInfoEntity> page = loginInfoService.page(query.toPage(), query.toQueryWrapper());
+        List<LoginLogDTO> records = page.getRecords().stream().map(LoginLogDTO::new).collect(Collectors.toList());
+        return new PageDTO<>(records, page.getTotal());
+    }
+
     public PageDTO<LoginLogDTO> getLoginInfoList(LoginLogQuery query) {
         Page<SysLoginInfoEntity> page = loginInfoService.page(query.toPage(), query.toQueryWrapper());
         List<LoginLogDTO> records = page.getRecords().stream().map(LoginLogDTO::new).collect(Collectors.toList());

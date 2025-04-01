@@ -1,0 +1,145 @@
+package ${package.Controller};
+
+import ${applicationPackage}.${tableName}ApplicationService;
+import ${dtoPackage}.${tableName}DTO;
+import ${dtoPackage}.${tableName}VO;
+import ${queryDtoPackage}.${tableName}Query;
+import ${queryDtoPackage}.${tableName}PageQuery;
+import ${commandPackage}.Add${tableName}Command;
+import ${commandPackage}.Update${tableName}Command;
+import com.springboottemplate.common.core.page.PageDTO;
+import com.springboottemplate.domain.common.command.BulkOperationCommand;
+import com.springboottemplate.common.core.dto.ResponseDTO;
+import org.springframework.web.bind.annotation.PutMapping;
+import com.springboottemplate.common.core.base.BaseController;
+import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import io.swagger.v3.oas.annotations.Parameter;
+import org.springdoc.core.annotations.ParameterObject;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * $!{table.comment} 前端控制器
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Tag(name = "$!{table.comment}", description = "${table.controllerName}")
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("${requestPathPrefix}${tablename}")
+public class ${table.controllerName} extends
+
+    BaseController {
+
+        private final ${tableName}ApplicationService ${tablename}ApplicationService;
+
+        /**
+         * 获取列表数据
+         *
+         * @param query 查询条件
+         * @return 列表数据
+         */
+        @Operation(summary = "获取${table.comment}列表")
+        @GetMapping(value = "/list")
+        public ResponseDTO<List<${tableName}DTO>> list${tableName}
+        (@ParameterObject @ModelAttribute ${tableName}Query query){
+            return ResponseDTO.ok(${tablename}ApplicationService.list(query));
+        }
+
+        /**
+         * 获取分页列表数据
+         *
+         * @param query 查询条件
+         * @return 列表数据
+         */
+        @Operation(summary = "分页获取${table.comment}列表")
+        @GetMapping(value = "/page")
+        public ResponseDTO<PageDTO<${tableName}DTO>> getPaged${tableName}s
+        (@ParameterObject @ModelAttribute ${tableName}PageQuery query){
+            PageDTO<${tableName}DTO> pageDTO = ${tablename}ApplicationService.page(query);
+            return ResponseDTO.ok(pageDTO);
+        }
+
+        /**
+         * 获取下拉列表
+         */
+        @Operation(summary = "${table.comment}下拉列表", description = "获取${table.comment}下拉列表")
+        @GetMapping("/dropdown")
+        public ResponseDTO<List<${tableName}VO>> dropdown${tableName}List () {
+            List<${tableName}VO> dropdownList = ${tablename}ApplicationService.getDropdownList();
+            return ResponseDTO.ok(
+                Objects.requireNonNullElse(dropdownList, Collections.emptyList()));
+        }
+
+        /**
+         * 根据 ID 获取详细信息
+         *
+         * @param id 主键ID
+         * @return 详情数据
+         */
+        @Operation(summary = "获取${table.comment}详情")
+        @GetMapping(value = "/{id}")
+        public ResponseDTO<${tableName}DTO> get${tableName}Info (
+            @Parameter(description = "记录ID") @PathVariable Long id){
+            return ResponseDTO.ok(${tablename}ApplicationService.getInfo(id));
+        }
+
+        /**
+         * 新增记录
+         *
+         * @param command 数据传输对象
+         * @return 操作结果
+         */
+        @Operation(summary = "新增${table.comment}")
+        @PostMapping("/add")
+        public ResponseDTO<Void> add${tableName}(@RequestBody Add${tableName}Command command){
+                ${tablename}ApplicationService.add(command);
+            return ResponseDTO.ok();
+        }
+
+        /**
+         * 更新记录
+         *
+         * @param command 数据传输对象
+         * @return 操作结果
+         */
+        @Operation(summary = "修改${table.comment}")
+        @PutMapping("{${tablename}Id}")
+        public ResponseDTO<Void> edit${tableName}(@PathVariable("${tablename}Id") Long
+            ${tablename}Id, @RequestBody Update${tableName}Command command){
+            command.set${tableName}Id(${tablename}Id);
+                ${tablename}ApplicationService.update(command);
+            return ResponseDTO.ok();
+        }
+
+        /**
+         * 删除记录
+         *
+         * @param ${tablename}Id 主键
+         * @return 操作结果
+         */
+        @Operation(summary = "删除${table.comment}")
+        @DeleteMapping("/remove/{${tablename}Id}")
+        public ResponseDTO<Void> remove${tableName}(@PathVariable @NotNull Long ${tablename}Id){
+                ${tablename}ApplicationService.remove(${tablename}Id);
+            return ResponseDTO.ok();
+        }
+
+        @Operation(summary = "批量删除${table.comment}")
+        @DeleteMapping("/")
+        public ResponseDTO<Void> remove${tableName}s (@RequestParam List < Long > ${tablename}Ids)
+        {
+                ${tablename}ApplicationService.delete${tableName}s(
+                new BulkOperationCommand<>(${tablename}Ids));
+            return ResponseDTO.ok();
+        }
+    }

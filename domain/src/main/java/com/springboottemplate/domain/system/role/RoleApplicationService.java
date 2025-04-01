@@ -47,7 +47,7 @@ public class RoleApplicationService {
     private final SysMenuService menuService;
 
 
-    public PageDTO<RoleDTO> getRoleList(RoleQuery query) {
+    public PageDTO<RoleDTO> page(RoleQuery query) {
         Page<SysRoleEntity> page = roleService.page(query.toPage(), query.toQueryWrapper());
         List<RoleDTO> records = page.getRecords().stream().map(RoleDTO::new).collect(Collectors.toList());
         return new PageDTO<>(records, page.getTotal());

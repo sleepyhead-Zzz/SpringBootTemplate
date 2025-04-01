@@ -20,10 +20,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "菜单API", description = "菜单相关的增删查改")
 @RestController
-@RequestMapping("/system/menus")
+@RequestMapping("/system/menu")
 @Validated
 @RequiredArgsConstructor
 public class SysMenuController {
@@ -45,8 +47,8 @@ public class SysMenuController {
      */
     @Operation(summary = "菜单列表")
     @PreAuthorize("@permission.has('system:menu:list')")
-    @GetMapping
-    public ResponseDTO<List<MenuDTO>> menuList(MenuQuery menuQuery) {
+    @PostMapping("list")
+    public ResponseDTO<List<MenuDTO>> listMenu(@ParameterObject @ModelAttribute MenuQuery menuQuery) {
         List<MenuDTO> menuList = menuApplicationService.getMenuList(menuQuery);
         return ResponseDTO.ok(menuList);
     }
@@ -67,7 +69,7 @@ public class SysMenuController {
      */
     @Operation(summary = "菜单列表（树级）", description = "菜单树级下拉框")
     @GetMapping("/dropdown")
-    public ResponseDTO<List<Tree<Long>>> dropdownList() {
+    public ResponseDTO<List<Tree<Long>>> dropdownMenuList() {
         SystemLoginUser loginUser = AuthenticationUtils.getSystemLoginUser();
         List<Tree<Long>> dropdownList = menuApplicationService.getDropdownList(loginUser);
         // 如果 dropdownList 为 null，则返回一个空列表
@@ -82,7 +84,7 @@ public class SysMenuController {
     @PreAuthorize("@permission.has('system:menu:add')")
     @AccessLog(title = "菜单管理", businessType = BusinessTypeEnum.ADD)
     @PostMapping
-    public ResponseDTO<Void> add(@RequestBody AddMenuCommand addCommand) {
+    public ResponseDTO<Void> addMenu(@RequestBody AddMenuCommand addCommand) {
         menuApplicationService.addMenu(addCommand);
         return ResponseDTO.ok();
     }
@@ -94,7 +96,8 @@ public class SysMenuController {
     @PreAuthorize("@permission.has('system:menu:edit')")
     @AccessLog(title = "菜单管理", businessType = BusinessTypeEnum.MODIFY)
     @PutMapping("/{menuId}")
-    public ResponseDTO<Void> edit(@PathVariable("menuId") Long menuId, @RequestBody UpdateMenuCommand updateCommand) {
+    public ResponseDTO<Void> editMenu(@PathVariable("menuId") Long menuId,
+        @RequestBody UpdateMenuCommand updateCommand) {
         updateCommand.setMenuId(menuId);
         menuApplicationService.updateMenu(updateCommand);
         return ResponseDTO.ok();
@@ -107,7 +110,7 @@ public class SysMenuController {
     @PreAuthorize("@permission.has('system:menu:remove')")
     @AccessLog(title = "菜单管理", businessType = BusinessTypeEnum.DELETE)
     @DeleteMapping("/{menuId}")
-    public ResponseDTO<Void> remove(@PathVariable("menuId") Long menuId) {
+    public ResponseDTO<Void> removeMenu(@PathVariable("menuId") Long menuId) {
         menuApplicationService.remove(menuId);
         return ResponseDTO.ok();
     }

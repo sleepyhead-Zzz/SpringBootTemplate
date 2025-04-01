@@ -1,0 +1,68 @@
+package ${package.Service};
+
+import com.wl.cloud.core.dto.DataStoreDTO;
+
+import ${dtoPackage}.${entity}DTO;
+import ${queryDtoPackage}.${entity}QueryDTO;
+import ${voPackage}.${entity}VO;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.util.List;
+import java.util.Set;
+
+/**
+ * $!{table.comment} 前端控制器
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${table.serviceName} {
+
+    /**
+     * 分页
+     *
+     * @param pageable
+     * @param queryDto
+     * @return
+     */
+    DataStoreDTO<${entity}VO> page(Pageable pageable, ${entity}QueryDTO queryDto);
+
+    /**
+     * 列表
+     *
+     * @param sort
+     * @param queryDto
+     * @return
+     */
+    List<${entity}VO> list(Sort sort, ${entity}QueryDTO queryDto);
+
+    /**
+     * 保存
+     *
+     * @param dto
+     */
+    void save(${entity}DTO dto);
+
+    /**
+     * 更新
+     *
+     * @param dto
+     */
+    void update(${entity}DTO dto);
+
+    /**
+     * 查看
+     *
+     * @param id
+     * @return
+     */
+        ${entity}VO get(String id);
+
+    /**
+     * 删除
+     *
+     * @param ids
+     */
+    void delete(Set<String> ids);
+}

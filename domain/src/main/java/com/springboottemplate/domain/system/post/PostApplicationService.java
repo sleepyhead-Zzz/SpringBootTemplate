@@ -28,7 +28,7 @@ public class PostApplicationService {
 
     private final SysPostService postService;
 
-    public PageDTO<PostDTO> getPostList(PostQuery query) {
+    public PageDTO<PostDTO> page(PostQuery query) {
         Page<SysPostEntity> page = postService.page(query.toPage(), query.toQueryWrapper());
         List<PostDTO> records = page.getRecords().stream().map(PostDTO::new).collect(Collectors.toList());
         return new PageDTO<>(records, page.getTotal());
